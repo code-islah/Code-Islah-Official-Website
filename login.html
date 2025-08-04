@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content=" ">
+  <meta name="description" content=" ">
+  <meta name="keywords" content=" ">
+  <link rel="shortcut icon" type="image/x-icon" href="./img/logo.png">
+  <link rel="stylesheet" href="./style/style.css" />
+  <link rel="stylesheet" href="./style/bootstrap-icons.css">
+  <title>Code With Islamic Analogy</title>
+</head>
+
+<body>
+  
+  <!-- LOGIN PAGE -->
+  <div class="d-grid place-content-center pos-fixed inset-0 clr-bg-primary blur-effect">
+    <span class="text-center clr-text-light"><a href="/register.html"><i class="bi bi-person-plus-fill"></a></i></span>
+    <h2 class="h2 uppercase clr-text-light text-center">Sign In</h2>
+    <form class="p-high" id="loginForm">
+      <div class="m-bottom-tiny">
+        <label class="fw-600 clr-text-accent p-tiny" for="userName">User Name or Email:</label>
+        <input class="width-100 fw-600 rounded p-tiny" type="text" name="userName" id="userName"
+          placeholder="Enter name or email">
+      </div>
+      <div class="m-bottom-tiny">
+        <label class="fw-600 clr-text-accent p-tiny" for="password">Password:</label>
+        <input class="width-100 fw-600 rounded p-tiny" type="text" name="password" id="password"
+          placeholder="Enter Password">
+      </div>
+      <div class="m-bottom d-flex gap-100 space-between">
+        <div>
+          <input class="shadow" type="checkbox" name="saveLogin" id="saveLogin">
+          <span class="clr-text-light-50">Save Login</span>
+        </div>
+        <div>
+          <span class="clr-text-light-50">Forget Password?</span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center gap-200">
+        <button class="btn rounded" type="submit">Sign In</button>
+        <button class="btn rounded" type="reset">Reset</button>
+      </div>
+    </form>
+  </div>
+
+   <header class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow">
+    <div class="container">
+      <nav class="nav nav-md-visible d-grid space-between pos-rel">
+        <div class="align-self-center d-flex align-items-center">
+          <a href="/index.html">
+            <img class="logo | width-100" src="./img/logo.png" alt="">
+          </a>
+        </div>
+        <div class="align-self-center">
+          <p class="banner h4 clr-text-accent">Code Islah</p>
+        </div>
+        <div class="d-grid m-top-tiny">
+          <div
+            class="border-common toggler toggler-md-hide p-tiny rounded d-flex place-content-center navbarToggler m-right">
+            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+              <path
+                d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
+            </svg>
+          </div>
+          <div class="height-0 opacity-0 transition navbar-md-collapse" id="navbar">
+            <ul class="text-right transition uppercase">
+              <li><a href="/index.html">
+                  Home
+                </a>
+              </li>
+              <li class="active">
+                <a href="/login.html">Sign In</a>
+              </li>
+              <li>
+                <a href="/downloads.html">Downloads</a>
+              </li>
+              <li>
+                <a href="/chlng.html">Challenges</a>
+              </li>
+              <li>
+                <a href="#">Playground</a>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+<script>
+
+ const navbarToggler = document.querySelector('.navbarToggler');
+
+ navbarToggler.addEventListener('click', () => {
+   const navbar = document.querySelector('#navbar');
+   const banner = document.querySelector('.banner');
+   navbar.classList.toggle('height-solid');
+   banner.classList.toggle("d-none")
+   navbar.classList.toggle('opacity-0');
+ });
+</script>
+    
+  </body>
+  </html>

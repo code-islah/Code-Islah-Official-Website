@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GRID Puzzle</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: rgba(223, 232, 173, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 2rem;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+      font: inherit;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+      width: 100%;
+    }
+
+    select {
+      background-color: rgba(223, 232, 173, 1);
+    }
+
+    button {
+      background-color: rgba(223, 232, 173, 1);
+      filter: brightness(120%);
+    }
+
+    button:hover {
+      background-color: rgba(75, 148, 209, 0.4);
+    }
+
+    input:focus {
+      background-color: rgba(75, 148, 209, 0.2);
+    }
+
+    /*/// Random GRID container ///*/
+    .container,
+    .grid-container {
+      width: 80%;
+      margin: 0 auto 20px;
+      text-align: center;
+      font-size: 2rem;
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 100px);
+    }
+
+    /* Body style */
+
+    /* Level Select*/
+    .levelSelect {
+      margin: 1rem;
+      font-size: 1.3rem;
+      display: grid;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .levelSelect * {
+      align-self: center;
+      padding-block: 10px;
+    }
+
+    .puzzleBtn {
+      display: grid;
+      place-items: center;
+      margin: 0 0 0 auto;
+    }
+
+    .puzzleBtn svg {
+      width: 60px;
+    }
+
+    .puzzleBtn:hover {
+      filter: brightness(75%);
+    }
+
+    /* GRID items */
+    .item,
+    .gitem {
+      position: relative;
+      background-color: #4b94d1;
+      border: 2px solid lightseagreen;
+      box-shadow: 0 0 5px 0 rgba(153, 216, 160, 0.9);
+    }
+
+    .item::before,
+    .gitem::before {
+      position: absolute;
+      content: "▣";
+      left: -15px;
+      top: 20px;
+    }
+
+    .grid-container>.gitem {
+      background-color: rgba(74, 209, 89, 1);
+    }
+
+    /* for animation on solved */
+    .gAniItem {
+      animation: solvedOnItem 1s linear;
+    }
+
+    @keyframes solvedOnItem {
+      0% {
+        border: 20px solid #0f0;
+      }
+
+      100% {
+        border: 2px solid rgba(158, 229, 93, 1);
+      }
+    }
+
+    .gContainerAni {
+      animation: solvedOnCont 1s linear;
+    }
+
+    @keyframes solvedOnCont {
+      0% {
+        background-size: 10% 10%;
+      }
+
+      100% {
+        background-size: 100% 100%;
+      }
+    }
+
+    /* GRID Select */
+    .gridSelect {
+      padding: 20px 5px;
+      display: grid;
+      grid-template-columns: 30% 15% 15% 30%;
+      justify-content: space-between;
+      align-items: start;
+      border-radius: 5px;
+      font-size: 1.3rem;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    #select {
+      text-align: center;
+      margin-right: 15px;
+    }
+
+    .puzzleAns {
+      height: 45px;
+      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      transition: height 0.1s linear;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .puzzleProgress {
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-align: center;
+      transition: height 0.1s linear;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .progressMeter>.scale {
+      width: 35px;
+      height: 35px;
+      display: inline-block;
+      border: 2px solid #a0a1ab;
+      background-color: rgba(223, 232, 173, 1);
+      filter: brightness(120%);
+    }
+
+    .puzzleAns:hover {
+      height: 116px;
+    }
+
+    /*/// GRID inpus ///*/
+    .gridInputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      font-size: 1.3rem;
+      justify-content: center;
+      gap: 15px;
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 1rem;
+    }
+
+    .gridInputs *:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .btn {
+      display: grid;
+      gap: 5px;
+      width: 20%;
+      margin: 10px auto;
+    }
+
+    /* GRID result */
+    .puzzleStatus {
+      display: block;
+      background: url("/circleCheck.svg") 50% 50% no-repeat;
+    }
+
+    @media (max-width: 768px) {
+      .gridSelect {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        width: 80%;
+        margin: 0 auto 20px;
+      }
+
+      .btn {
+        display: grid;
+        gap: 5px;
+        width: 50%;
+        margin: 10px auto;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .levelSelect {
+        width: 55%;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="levelSelect">
+    <h2>GRID Puzzle</h2>
+    <select name="" id="puzzleLvl">
+      <option value="">Easy</option>
+      <option value="">Medium</option>
+      <option value="">Hard</option>
+    </select>
+    <div class="puzzleBtn">
+      <svg fill="rgba(223, 232, 173, 1)" style="-webkit-filter: brightness(80%)" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512">
+        <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+        <path
+          d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zm395.3 11.3l-112 112c-4.6 4.6-11.5 5.9-17.4 3.5s-9.9-8.3-9.9-14.8l0-64-96 0c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32l96 0 0-64c0-6.5 3.9-12.3 9.9-14.8s12.9-1.1 17.4 3.5l112 112c6.2 6.2 6.2 16.4 0 22.6z" />
+      </svg>
+    </div>
+  </div>
+  <div class="container">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+    <div class="item item5">5</div>
+    <div class="item item6">6</div>
+    <div class="item item7">7</div>
+    <div class="item item8">8</div>
+    <div class="item item9">9</div>
+    <div class="item item10">10</div>
+    <div class="item item11">11</div>
+    <div class="item item12">12</div>
+    <div class="item item13">13</div>
+    <div class="item item14">14</div>
+    <div class="item item15">15</div>
+    <div class="item item16">16</div>
+    <div class="item item17">17</div>
+    <div class="item item18">18</div>
+    <div class="item item19">19</div>
+    <div class="item item20">20</div>
+    <div class="item item21">21</div>
+    <div class="item item22">22</div>
+    <div class="item item23">23</div>
+    <div class="item item24">24</div>
+    <div class="item item25">25</div>
+    <div class="item item26">26</div>
+    <div class="item item27">27</div>
+    <div class="item item28">28</div>
+    <div class="item item29">29</div>
+    <div class="item item30">30</div>
+    <div class="item item31">31</div>
+    <div class="item item32">32</div>
+    <div class="item item33">33</div>
+    <div class="item item34">34</div>
+    <div class="item item35">35</div>
+    <div class="item item36">36</div>
+  </div>
+  <div class="grid-container">
+    <div class="gitem gitem1">1</div>
+    <div class="gitem gitem2">2</div>
+    <div class="gitem gitem3">3</div>
+    <div class="gitem gitem4">4</div>
+    <div class="gitem gitem5">5</div>
+    <div class="gitem gitem6">6</div>
+    <div class="gitem gitem7">7</div>
+    <div class="gitem gitem8">8</div>
+    <div class="gitem gitem9">9</div>
+    <div class="gitem gitem10">10</div>
+    <div class="gitem gitem11">11</div>
+    <div class="gitem gitem12">12</div>
+    <div class="gitem gitem13">13</div>
+    <div class="gitem gitem14">14</div>
+    <div class="gitem gitem15">15</div>
+    <div class="gitem gitem16">16</div>
+    <div class="gitem gitem17">17</div>
+    <div class="gitem gitem18">18</div>
+    <div class="gitem gitem19">19</div>
+    <div class="gitem gitem20">20</div>
+    <div class="gitem gitem21">21</div>
+    <div class="gitem gitem22">22</div>
+    <div class="gitem gitem23">23</div>
+    <div class="gitem gitem24">24</div>
+    <div class="gitem gitem25">25</div>
+    <div class="gitem gitem26">26</div>
+    <div class="gitem gitem27">27</div>
+    <div class="gitem gitem28">28</div>
+    <div class="gitem gitem29">29</div>
+    <div class="gitem gitem30">30</div>
+    <div class="gitem gitem31">31</div>
+    <div class="gitem gitem32">32</div>
+    <div class="gitem gitem33">33</div>
+    <div class="gitem gitem34">34</div>
+    <div class="gitem gitem35">35</div>
+    <div class="gitem gitem36">36</div>
+  </div>
+  <div class="gridSelect">
+    <div class="puzzleProgress">
+      <h4 style="margin-bottom: 5px">🎯 Puzzle Solved »</h4>
+      <div class="progressMeter">
+        <span class="scale"></span>
+        <span class="scale"></span>
+        <span class="scale"></span>
+        <span class="scale"></span>
+        <span class="scale"></span>
+        <span class="scale"></span>
+      </div>
+    </div>
+    <select name="" id="select">
+      <option value="" selected>GridItem-1</option>
+      <option value="">GridItem-2</option>
+      <option value="">GridItem-3</option>
+      <option value="">GridItem-4</option>
+      <option value="">GridItem-5</option>
+      <option value="">GridItem-6</option>
+      <option value="">GridItem-7</option>
+      <option value="">GridItem-8</option>
+      <option value="">GridItem-9</option>
+      <option value="">GridItem-10</option>
+      <option value="">GridItem-11</option>
+      <option value="">GridItem-12</option>
+      <option value="">GridItem-13</option>
+      <option value="">GridItem-14</option>
+      <option value="">GridItem-15</option>
+      <option value="">GridItem-16</option>
+      <option value="">GridItem-17</option>
+      <option value="">GridItem-18</option>
+      <option value="">GridItem-19</option>
+      <option value="">GridItem-20</option>
+      <option value="">GridItem-21</option>
+      <option value="">GridItem-22</option>
+      <option value="">GridItem-23</option>
+      <option value="">GridItem-24</option>
+      <option value="">GridItem-25</option>
+      <option value="">GridItem-26</option>
+      <option value="">GridItem-27</option>
+      <option value="">GridItem-28</option>
+      <option value="">GridItem-29</option>
+      <option value="">GridItem-30</option>
+      <option value="">GridItem-31</option>
+      <option value="">GridItem-32</option>
+      <option value="">GridItem-33</option>
+      <option value="">GridItem-34</option>
+      <option value="">GridItem-35</option>
+      <option value="">GridItem-36</option>
+    </select>
+    <button id="resetBtn" type="reset">Clear All</button>
+    <div class="puzzleAns">
+      <h4 style="margin-bottom: 5px">🎁 Unbox the Answer »</h4>
+      <p style="
+            font-weight: 400;
+            font-size: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+          "></p>
+    </div>
+  </div>
+
+  <div class="gridInputs">
+    <div>
+      <p>grid-row</p>
+      <input type="text" placeholder="1 / 2 ,' span 2'" />
+    </div>
+    <div>
+      <p">grid-column</p>
+        <input type="text" placeholder=" 2 / 4" />
+        <div class="btn">
+          <button>Set</button>
+          <button>Reset</button>
+        </div>
+    </div>
+    <div>
+      <p>grid-area</p>
+      <input type="text" placeholder=" 2 / 4 / 6 / 6" />
+      <div class="btn">
+        <button>Set</button>
+        <button>Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let gridInput = document.querySelectorAll('.gridInput');
+    let gridBtn = document.querySelectorAll('.gridBtn');
+    let gitem = document.querySelectorAll('.gitem');
+    let select = document.querySelector('#select');
+    let resetBtn = document.querySelector('#resetBtn');
+    let gridRCReset = document.querySelector('.gridRCReset');
+    let gridAReset = document.querySelector('.gridAReset');
+
+    window.onchange = () => {
+      for (let i = 0; i < gitem.length; i++) {
+        if (select.selectedIndex === i) {
+          gitem[i].setAttribute('style', 'filter: brightness(140%)');
+        } else {
+          //gitem[i].removeAttribute('style');
+        }
+      }
+    }
+
+
+    //Random Puzzle
+    let gridContainer = document.querySelector('.grid-container');
+    let puzzleBtn = document.querySelector('.puzzleBtn');
+    let item = document.querySelectorAll('.item');
+    let scale = document.querySelectorAll('.scale');
+    let puzzleUnlock = document.querySelector('.puzzleAns p');
+
+    let puzzleScoreFirstMatch = 0,
+      puzzleScoreSecondMatch = 0,
+      puzzleScoreThirdMatch = 0;
+
+    puzzleBtn.onclick = () => {
+      let puzzleLvl = document.querySelector('#puzzleLvl');
+
+      let gridRowValue0 = Math.floor(Math.random() * 2 + 1);
+      let gridColValue0 = Math.floor(Math.random() * 2 + 1);
+
+      let gridRowValue5 = Math.floor(Math.random() * 4 + 1);
+      let gridColValue5 = Math.floor(Math.random() * 4 + 1);
+
+      let gridRowValue17 = Math.floor(Math.random() * 6 + 1);
+      let gridColValue17 = Math.floor(Math.random() * 6 + 1);
+
+      let gridRowValue23 = Math.floor(Math.random() * 2 + 1);
+      let gridColValue23 = Math.floor(Math.random() * 2 + 1);
+
+      let gridRowValue29 = Math.floor(Math.random() * 4 + 1);
+      let gridColValue29 = Math.floor(Math.random() * 4 + 1);
+
+      let gridRowValue35 = Math.floor(Math.random() * 6 + 1);
+      let gridColValue35 = Math.floor(Math.random() * 6 + 1);
+
+      //Level Easy
+      if (puzzleLvl.selectedIndex === 0) {
+        for (let i = 0; i < item.length; i++) {
+          item[0].setAttribute('style', 'grid-row:' + gridRowValue0 + "/" + gridRowValue17 + ';grid-column:' + gridColValue0 + "/" + gridColValue17 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #000');
+          item[5].setAttribute('style', 'grid-row:' + gridRowValue23 + "/" + gridRowValue35 + ';grid-column:' + gridColValue23 + "/" + gridColValue35 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #f00');
+          item[17].setAttribute('style', 'grid-row:' + gridRowValue5 + "/" + gridRowValue29 + ';grid-column:' + gridColValue5 + "/" + gridColValue29 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #0f0');
+          item[23].removeAttribute('style', 'grid-row:' + gridRowValue23 + "/" + gridRowValue29 + ';grid-column:' + gridColValue23 + "/" + gridColValue29 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #00f');
+          item[29].removeAttribute('style', 'grid-row:' + gridRowValue29 + "/" + gridRowValue35 + ';grid-column:' + gridColValue29 + "/" + gridColValue35 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #ff0');
+          item[35].removeAttribute('style', 'grid-row:' + gridRowValue35 + "/" + gridRowValue0 + ';grid-column:' + gridColValue35 + "/" + gridColValue0 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #0ff');
+          scale[3].setAttribute('style', '-webkit-filter:saturate(0)');
+          scale[4].setAttribute('style', '-webkit-filter:saturate(0)');
+          scale[5].setAttribute('style', '-webkit-filter:saturate(0)');
+        }
+      }
+
+      //Level Medium
+      else if (puzzleLvl.selectedIndex === 1)
+        for (let i = 0; i < item.length; i++) {
+          item[0].setAttribute('style', 'grid-row:' + gridRowValue0 + "/" + gridRowValue5 + ';grid-column:' + gridColValue0 + "/" + gridColValue5 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #000');
+          item[5].setAttribute('style', 'grid-row:' + gridRowValue5 + "/" + gridRowValue17 + ';grid-column:' + gridColValue5 + "/" + gridColValue17 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #f00');
+          item[17].setAttribute('style', 'grid-row:' + gridRowValue17 + "/" + gridRowValue23 + ';grid-column:' + gridColValue17 + "/" + gridColValue23 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #0f0');
+          item[23].setAttribute('style', 'grid-row:' + gridRowValue23 + "/" + gridRowValue29 + ';grid-column:' + gridColValue23 + "/" + gridColValue29 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #00f');
+          item[29].removeAttribute('style', 'grid-row:' + gridRowValue29 + "/" + gridRowValue35 + ';grid-column:' + gridColValue29 + "/" + gridColValue35 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #ff0');
+          item[35].removeAttribute('style', 'grid-row:' + gridRowValue35 + "/" + gridRowValue0 + ';grid-column:' + gridColValue35 + "/" + gridColValue0 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #0ff');
+          scale[3].setAttribute('style', '-webkit-filter:saturate(1)');
+          scale[4].setAttribute('style', '-webkit-filter:saturate(0)');
+          scale[5].setAttribute('style', '-webkit-filter:saturate(0)');
+        }
+
+      //Level Hard
+      else if (puzzleLvl.selectedIndex === 2) {
+        for (let i = 0; i < item.length; i++) {
+          item[0].setAttribute('style', 'grid-row:' + gridRowValue0 + "/" + gridRowValue5 + ';grid-column:' + gridColValue0 + "/" + gridColValue5 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #000');
+          item[5].setAttribute('style', 'grid-row:' + gridRowValue5 + "/" + gridRowValue17 + ';grid-column:' + gridColValue5 + "/" + gridColValue17 + ';-webkit-filter: brightness(140%);opacity: 0.7;border: 2px solid #f00');
+          item[17].setAttribute('style', 'grid-row:' + gridRowValue17 + "/" + gridRowValue23 + ';grid-column:' + gridColValue17 + "/" + gridColValue23 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #0f0');
+          item[23].setAttribute('style', 'grid-row:' + gridRowValue23 + "/" + gridRowValue29 + ';grid-column:' + gridColValue23 + "/" + gridColValue29 + ';-webkit-filter: brightness(140%);opacity:0.7;border: 2px solid #00f');
+          item[29].setAttribute('style', 'grid-row:' + gridRowValue29 + "/" + gridRowValue35 + ';grid-column:' + gridColValue29 + "/" + gridColValue35 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #ff0');
+          item[35].setAttribute('style', 'grid-row:' + gridRowValue35 + "/" + gridRowValue0 + ';grid-column:' + gridColValue35 + "/" + gridColValue0 + ';-webkit-filter: brightness(140%);opacity:.7;border: 2px solid #0ff');
+          scale[3].setAttribute('style', '-webkit-filter:saturate(1)');
+          scale[4].setAttribute('style', '-webkit-filter:saturate(1);-webkit-filter: brightness(90%)');
+          scale[5].setAttribute('style', '-webkit-filter:saturate(1);-webkit-filter: brightness(90%)');
+        }
+      }
+      //Answer box scripting
+      document.querySelector('.puzzleAns').onclick = () => {
+        puzzleUnlock.style.display = 'inline-block';
+        puzzleUnlock.innerHTML = "item1 : row " + gridRowValue0 + "/" + gridRowValue17 + " & col " + gridColValue0 + "/" + gridColValue17 + "<br>" + "item2 : row " + gridRowValue23 + "/" + gridRowValue35 + " & col " + gridColValue23 + "/" + gridColValue35 + "<br>" + "item3 : row " + gridRowValue5 + "/" + gridRowValue29 + " & col " + gridColValue5 + "/" + gridColValue29;
+      }
+
+      //Puzzle check button 1
+      gridBtn[0].onclick = () => {
+        let randomBorderColor = "#" + Math.floor(Math.random() * 999999 + 1);
+        for (let i = 0; i < gitem.length; i++) {
+          if (select.selectedIndex === i) {
+            gitem[i].setAttribute('style', 'grid-row:' + gridInput[0].value + ';grid-column:' + gridInput[1].value + ';-webkit-filter: brightness(140%);border: 2px solid ' + randomBorderColor);
+          }
+        }
+
+        // Progress Matching
+        if (gridInput[0].value === gridRowValue0 + "/" + gridRowValue17 && gridInput[1].value === gridColValue0 + "/" + gridColValue17) {
+          //if gridItem 1 matches
+          for (let i = 0; i < scale.length; i++) {
+            if (i === 1) {
+              break;
+            }
+            let imgForScale = document.createElement('img');
+            imgForScale.setAttribute('src', '/check.svg');
+            imgForScale.setAttribute('style', 'width: 40px;height:40px;position:absolute;left:-5px');
+            scale[i].appendChild(imgForScale);
+            puzzleScoreFirstMatch = 10;
+          }
+        } else if (gridInput[0].value === gridRowValue23 + "/" + gridRowValue35 && gridInput[1].value === gridColValue23 + "/" + gridColValue35) {
+          for (let i = 1; i < scale.length; i++) {
+            //if gridItem 2 matches
+            if (i === 2) {
+              break;
+            }
+            let imgForScale = document.createElement('img');
+            imgForScale.setAttribute('src', '/check.svg');
+            imgForScale.setAttribute('style', 'width: 40px;height:40px;position:absolute;left:-5px');
+            scale[i].appendChild(imgForScale);
+            puzzleScoreSecondMatch = 10;
+          }
+        } else if (gridInput[0].value === gridRowValue5 + "/" + gridRowValue29 && gridInput[1].value === gridColValue5 + "/" + gridColValue29) {
+          //if gridItem 3 matches
+          for (let i = 2; i < scale.length; i++) {
+            //if gridItem 3 matches
+            if (i === 3) {
+              break;
+            }
+            let imgForScale = document.createElement('img');
+            imgForScale.setAttribute('src', '/check.svg');
+            imgForScale.setAttribute('style', 'width: 40px;height:40px;position:absolute;left:-5px');
+            scale[i].appendChild(imgForScale);
+            puzzleScoreThirdMatch = 10;
+
+            if (puzzleScoreFirstMatch + puzzleScoreSecondMatch + puzzleScoreThirdMatch === 30) {
+              gridContainer.setAttribute('style', 'background: rgba(158,229,93,0.5) url(/circleCheck.svg) 50% 50% no-repeat;box-shadow: 0 0 10px 10px rgba(158,229,93,1)');
+              for (let i = 0; i < gitem.length; i++) {
+                gitem[i].style.color = 'transparent';
+                gitem[i].style.border = '2px solid rgba(158,229,93,1)';
+                gitem[i].classList.remove('gitem');
+                gitem[i].classList.add('gAniItem');
+              }
+              gridContainer.classList.add('gContainerAni');
+            }
+          }
+        }
+        else {
+          //if 0 matches
+        }
+
+      }
+      // shorthand of grid-row/column, puzzle check button 2
+      gridBtn[1].onclick = () => {
+        let randomBorderColor = "#" + Math.floor(Math.random() * 999999 + 1);
+        for (let i = 0; i < gitem.length; i++) {
+          if (select.selectedIndex === i) {
+            gitem[i].setAttribute('style', 'grid-area:' + gridInput[2].value + ';filter: brightness(140%);border: 2px solid' + randomBorderColor);
+          }
+        }
+      }
+    } //funt end
+
+
+
+    //Ordinary GRID Setup Buttons + Reset
+    gridBtn[0].onclick = () => {
+      let randomBorderColor = "#" + Math.floor(Math.random() * 999999 + 1);
+      for (let i = 0; i < gitem.length; i++) {
+        if (select.selectedIndex === i) {
+          gitem[i].setAttribute('style', 'grid-row:' + gridInput[0].value + ';grid-column:' + gridInput[1].value + ';-webkit-filter: brightness(140%);border: 2px solid ' + randomBorderColor);
+        }
+      }
+    }
+
+    gridBtn[1].onclick = () => {
+      let randomBorderColor = "#" + Math.floor(Math.random() * 999999 + 1);
+      for (let i = 0; i < gitem.length; i++) {
+        if (select.selectedIndex === i) {
+          gitem[i].setAttribute('style', 'grid-area:' + gridInput[2].value + ';filter: brightness(140%);border: 2px solid' + randomBorderColor);
+        }
+      }
+    }
+
+    resetBtn.onclick = () => {
+      puzzleUnlock.style.display = 'none !important';
+
+      for (let i = 0; i < gridInput.length; i++) {
+        gridInput[i].value = "";
+      }
+      for (let i = 0; i < gitem.length; i++) {
+        gitem[i].setAttribute('style', '');
+        gitem[i].style.color = '';
+        gitem[i].classList.add('gitem');
+      }
+      for (let i = 0; i < scale.length; i++) {
+        scale[i].innerHTML = '';
+      }
+      for (let i = 0; i < item.length; i++) {
+        item[i].removeAttribute('style');
+      }
+      gridContainer.classList.remove('gContainerAni');
+      gridContainer.setAttribute('style', '');
+    }
+
+
+    gridRCReset.onclick = () => {
+      gridInput[0].value = '';
+      gridInput[1].value = '';
+    }
+
+    gridAReset.onclick = () => {
+      gridInput[2].value = '';
+    }
+  </script>
+</body>
+
+</html>

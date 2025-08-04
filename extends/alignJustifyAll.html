@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox Salah Alignment</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #2e7d32;
+      }
+
+      .controls {
+        display: grid;
+        gap: 5%;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        margin-block: 2.5rem;
+        width: 100%;
+      }
+
+      .controls * {
+        display: flex;
+        gap: 10px;
+      }
+
+      .mosque {
+        width: 90%;
+        height: 400px;
+        margin: 0 auto;
+        background: url("https://img.icons8.com/color/96/000000/mosque.png")
+          no-repeat center 10px;
+        background-size: 100px;
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        padding: 50px 20px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .person {
+        background: #4caf50;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        min-width: 80px;
+        text-align: center;
+      }
+
+      .imam {
+        background: #8bc34a;
+        font-weight: bold;
+      }
+
+      .tall {
+        height: 80px;
+        background: #2e7d32;
+      }
+
+      .child {
+        height: 50px;
+        background: #81c784;
+      }
+
+      label {
+        width: 50%;
+      }
+      select {
+        padding: 0.5rem;
+        border-radius: 3px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🕌 Flexbox Salah Alignment (All 6 Properties)</h1>
+    <p>
+      Adjust Flexbox properties to see how Muslims align in prayer rows (Saff).
+    </p>
+
+    <div class="controls">
+      <!-- justify-content -->
+      <div>
+        <label for="justifyContent">justify-content:</label>
+        <select id="justifyContent">
+          <option value="flex-start">flex-start (Front)</option>
+          <option value="center">center (Middle)</option>
+          <option value="space-between">space-between (Spread Out)</option>
+          <option value="space-around">space-around (Even Gaps)</option>
+        </select>
+      </div>
+
+      <!-- align-items -->
+      <div>
+        <label for="alignItems">align-items:</label>
+        <select id="alignItems">
+          <option value="stretch">stretch (Shoulder-to-Shoulder)</option>
+          <option value="flex-start">flex-start (Children in Front)</option>
+          <option value="center">center (Aligned at Shoulders)</option>
+          <option value="baseline">baseline (Feet Aligned)</option>
+        </select>
+      </div>
+
+      <!-- align-content -->
+      <div>
+        <label for="alignContent">align-content:</label>
+        <select id="alignContent">
+          <option value="flex-start">flex-start (Rows at Top)</option>
+          <option value="center">center (Rows Centered)</option>
+          <option value="space-between">
+            space-between (Gaps Between Rows)
+          </option>
+        </select>
+      </div>
+
+      <!-- align-self (Imam) -->
+      <div>
+        <label for="alignSelf">align-self (Imam):</label>
+        <select id="alignSelf">
+          <option value="auto">auto (Default)</option>
+          <option value="flex-start">flex-start (Imam Ahead)</option>
+          <option value="center">center (Imam Centered)</option>
+        </select>
+      </div>
+
+      <!-- justify-items (Grid-like, rarely used in Flexbox) -->
+      <div>
+        <label for="justifyItems">justify-items:</label>
+        <select
+          id="justifyItems"
+          disabled
+          title="Not applicable in Flexbox (CSS Grid only)"
+        >
+          <option value="stretch">stretch (N/A in Flexbox)</option>
+        </select>
+      </div>
+
+      <!-- justify-self (Imam) -->
+      <div>
+        <label for="justifySelf">justify-self (Imam):</label>
+        <select id="justifySelf">
+          <option value="auto">auto (Default)</option>
+          <option value="flex-start">flex-start (Imam Left)</option>
+          <option value="center">center (Imam Horizontally Centered)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- The Mosque (Flex Container) -->
+    <div class="mosque" id="mosque">
+      <!-- Worshippers (Flex Items) -->
+      <div class="person imam">Imam</div>
+      <div class="person">Muslim 1</div>
+      <div class="person">Muslim 2</div>
+      <div class="person tall">Tall Muslim</div>
+      <div class="person child">Child</div>
+    </div>
+
+    <script>
+      const mosque = document.getElementById("mosque");
+      const justifyContentSelect = document.getElementById("justifyContent");
+      const alignItemsSelect = document.getElementById("alignItems");
+      const alignContentSelect = document.getElementById("alignContent");
+      const alignSelfSelect = document.getElementById("alignSelf");
+      const justifySelfSelect = document.getElementById("justifySelf");
+      const imam = document.querySelector(".imam");
+
+      // Update all Flexbox properties
+      function updateFlexbox() {
+        mosque.style.justifyContent = justifyContentSelect.value;
+        mosque.style.alignItems = alignItemsSelect.value;
+        mosque.style.alignContent = alignContentSelect.value;
+        imam.style.alignSelf = alignSelfSelect.value;
+        imam.style.justifySelf = justifySelfSelect.value;
+      }
+
+      // Event listeners
+      justifyContentSelect.addEventListener("change", updateFlexbox);
+      alignItemsSelect.addEventListener("change", updateFlexbox);
+      alignContentSelect.addEventListener("change", updateFlexbox);
+      alignSelfSelect.addEventListener("change", updateFlexbox);
+      justifySelfSelect.addEventListener("change", updateFlexbox);
+
+      // Initialize
+      updateFlexbox();
+    </script>
+  </body>
+</html>
