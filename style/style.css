@@ -565,6 +565,7 @@ i.bi {
 
 .pos-fixed {
   position: fixed;
+  z-index: 1000 !important;
 }
 
 .top {
@@ -624,6 +625,10 @@ i.bi {
 
 .index-100 {
   z-index: 100;
+}
+
+.z-index-0 {
+  z-index: -1;
 }
 
 .border-common {
@@ -710,6 +715,7 @@ i.bi {
 
 .container {
   margin-inline: var(--size-300);
+  z-index: 1000 !important;
 }
 
 section {
@@ -748,7 +754,7 @@ iframe {
 }
 
 .post {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
 }
 
 /* WHY ANALOGY */
@@ -766,7 +772,8 @@ iframe {
   inset: 0;
   z-index: -1;
   background: var(--clr-dark);
-  width: 95%;
+  width: 90%;
+  margin: 0 auto;
   transform: skewX(45deg);
   border-bottom: 1px solid var(--clr-flow);
   border-left: 10px solid var(--clr-accent);
@@ -925,9 +932,6 @@ iframe {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
 
-  .gallery__slide {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
   .navbar-md-collapse > ul li {
     padding: var(--size-100);
   }
@@ -978,8 +982,13 @@ iframe {
   :root {
     --fs-100: 0.9rem;
     --fs-300: 1.3rem;
-
+    --fs-600: 2rem;
     --size-solid-500: 100px;
+  }
+
+  .banner {
+    font-size: var(--fs-600);
+    white-space: nowrap;
   }
 
   .navbar-md-collapse > ul {
@@ -987,8 +996,8 @@ iframe {
   }
 
   .whyAnalogy ul li::before {
-  margin: 0 auto;
-  width: 85%;
+    margin: 0 auto;
+    width: 85%;
   }
   .main {
     background-position: 0 -450px;
@@ -1038,7 +1047,7 @@ iframe {
   transition: all 0.6s ease-out;
 }
 
-.animate-top.active {
+.animate-top.animate {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1049,7 +1058,27 @@ iframe {
   transition: all 0.6s ease-out;
 }
 
-.animate-left.active {
+.animate-left.animate {
   opacity: 1;
   transform: translateX(0);
+}
+.animate-right {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s ease-out;
+}
+
+.animate-right.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease-out;
+}
+
+.animate-scale.animate {
+  opacity: 1;
+  transform: scale(1);
 }
