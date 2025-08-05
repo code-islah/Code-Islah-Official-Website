@@ -808,6 +808,11 @@ iframe {
   z-index: -1;
 }
 
+.mentor {
+  display: grid;
+  align-content: space-between;
+}
+
 .mentor img {
   width: 50%;
   background: var(--clr-accent);
@@ -817,6 +822,8 @@ iframe {
 .tooltipWindow {
   height: 100%;
   transform: translateX(-100%);
+ z-index: 1000;
+
 }
 .tXtoggler {
   transform: translateX(0);
@@ -1082,3 +1089,14 @@ iframe {
   opacity: 1;
   transform: scale(1);
 }
+.animate-z {
+  opacity: 0;
+  transform: rotateY(180deg) scale(0.8);
+  transition: all 0.6s ease-out;
+}
+
+.animate-z.animate {
+  opacity: 1;
+  transform: rotateY(0deg) scale(1);
+}
+
