@@ -11,17 +11,25 @@ navbarToggler.addEventListener("click", () => {
 });
 
 // ONLOAD
-window.onload = () => {};
+window.onload = () => {
+  const chlngCountDisplayer = document.querySelector('.navbar-md-collapse > ul li:nth-child(4)');
+
+  chlngCountDisplayer.setAttribute('data-counted', localStorage.getItem('countChlng'));
+  console.log(localStorage.getItem('countChlng'));
+  
+};
 
 // FIXING THE TOP HEADER
 window.onscroll = () => {
-  if (
-    document.body.scrollTop > 200 ||
-    document.documentElement.scrollTop > 200
-  ) {
-    header.classList.add("pos-fixed");
-  } else {
-    header.classList.remove("pos-fixed");
+  if (document.documentElement.scrollHeight > 2000) {
+    if (
+      document.body.scrollTop > 200 ||
+      document.documentElement.scrollTop > 200
+    ) {
+      header.classList.add("pos-fixed");
+    } else {
+      header.classList.remove("pos-fixed");
+    }
   }
 };
 
@@ -36,9 +44,12 @@ function tooltip(elem) {
 }
 
 // CLOSE BUTTON
-close.addEventListener("click", () => {
-  tooltipWindow.classList.remove("tXtoggler");
-});
+if (close) {
+  close.addEventListener("click", () => {
+    tooltipWindow.classList.remove("tXtoggler");
+  });
+}
+
 
 //Intersection Observer
 document.addEventListener("DOMContentLoaded", function () {
@@ -69,3 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(element);
   });
 });
+
+// COUNTS AND SHOWS THE NUMBER ON CHALLENGES 
+
+const counter = document.querySelectorAll('.counter div').length; //FROM CHLNG PAGE
+localStorage.setItem('countChlng', counter);
+
+
+

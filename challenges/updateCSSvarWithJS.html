@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="icon" href="" />
+    <title>Update CSS Variable with JS</title>
+    <style>
+      :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+      }
+
+      img {
+        padding: var(--spacing);
+        background-color: var(--base);
+        filter: blur(var(--blur));
+      }
+
+      .highlight {
+        color: var(--base);
+      }
+      input[type="range"] {
+        accent-color: var(--clr-light);
+      }
+      label {
+        line-height: 3;
+        color: var(--clr-secondary);
+      }
+    </style>
+  </head>
+
+  <body class="m-medium">
+    <h4
+      class="arabic-bolder fs-600 text-center p-medium clr-text-accent text-shadow"
+    >
+      Update CSS Variables with <span class="highlight">JS</span>
+    </h4>
+
+    <div class="controls fs-400 m-bottom d-flex gap-200 place-items-center">
+      <label for="spacing">Spacing:</label>
+      <input
+        type="range"
+        name="spacing"
+        min="10"
+        max="200"
+        value="10"
+        data-sizing="px"
+      />
+      <label for="spacing">Blur:</label>
+      <input
+        type="range"
+        name="blur"
+        min="0"
+        max="25"
+        value="10"
+        data-sizing="px"
+      />
+      <label for="spacing">Base Color:</label>
+      <input
+        class="rounded outline-common"
+        type="color"
+        name="base"
+        value="#ffc600"
+      />
+    </div>
+
+    <img class="rounded" src="../img/nature_9.jpg" alt="" />
+
+    <script>
+     
+      const inputs = document.querySelectorAll("input");
+
+      function updateValue() {
+        const suffix = this.dataset.sizing || "";
+        document.documentElement.style.setProperty(
+          `--${this.name}`,
+          this.value + suffix
+        );
+      }
+
+      inputs.forEach((input) => {
+        input.addEventListener("change", updateValue);
+        input.addEventListener("mouseover", updateValue);
+      });
+    </script>
+  </body>
+</html>

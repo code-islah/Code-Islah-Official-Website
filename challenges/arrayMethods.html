@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="icon" href="" />
+    <title>Array Methods Practice</title>
+    <style>
+      .container div {
+        margin-bottom: var(--size-500);
+      }
+
+      .h5 {
+        color: var(--clr-flow);
+      }
+    </style>
+  </head>
+  <body class="m-medium">
+    <h4 class="arabic-bolder fs-600 text-center clr-text-accent text-shadow">
+      Array Methods Practice
+    </h4>
+    <div class="container flow-tiny p-block-high">
+      <div class="linear-grad p-medium rounded">
+        <h5 class="h5">1. Array.prototype. filter()</h5>
+        <p class="p lead clr-text-dark">
+          Filter the ist of inventors for those who were born in the 1500
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const under1600 = inventors.filter( (e) => e.year >= 1500 &&
+              e.year < 1600 );
+            </code>
+          </p>
+        </div>
+      </div>
+
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">2. Array.prototype.map()</h5>
+        <p class="p lead clr-text-dark">
+          Give us an array of the inventory first and last names
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const fullNames = inventors.map((e) => e.first +' '+ e.last );
+            </code>
+          </p>
+        </div>
+      </div>
+
+      <div class="linear-grad p-medium rounded">
+        <h5 class="h5">3. Array.prototype.sort()</h5>
+        <p class="p lead clr-text-dark">
+          Sort the inventors by birth date, oldest to youngest
+        </p>
+
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const sortedDate = inventors.sort((a, b) => { return a.year -
+              b.year });
+            </code>
+          </p>
+        </div>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">4. Array.prototype. reduce()</h5>
+        <p class="p lead clr-text-dark">How many yeans did all the inventors live?</p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const lived = inventors.reduce((acc, n) => { let total = n.passed
+              - n.year; return acc + total; }, 0); <br /><br />
+
+              const sep = inventors.map(e => { return `${e.first} ${e.last}
+              lived ${e.passed - e.year} years`; });
+            </code>
+          </p>
+        </div>
+      </div>
+      <div class="linear-grad p-medium rounded">
+        <h5 class="h5">S. Sort the inventors by years lived</h5>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">
+          6. create a Cist of Boulevards in Pants that contain 'de' anywhere in
+          the name
+        </h5>
+        <p class="p lead clr-text-dark">
+          https://en.wikipedia.ong/wiki/Categony:Boulevands_in_Pants
+        </p>
+      </div>
+      <div class="linear-grad p-medium rounded">
+        <h5 class="h5">7. sort Exercise</h5>
+        <p class="p lead clr-text-dark">Sort the people alphabetically by last name</p>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">8. Reduce Exercise</h5>
+        <p class="p lead clr-text-dark">Sum up the instances of each of these</p>
+      </div>
+    </div>
+
+    <script>
+      const inventors = [
+        { first: "Albert", last: "Einstein", year: 1879, passed: 1955 },
+        { first: "Isaac", last: "Newton", year: 1643, passed: 1727 },
+        { first: "Galileo", last: "Galilei", year: 1564, passed: 1642 },
+        { first: "Marie", last: "Curie", year: 1867, passed: 1934 },
+        { first: "Johannes", last: "Kepler", year: 1571, passed: 1630 },
+        { first: "Nicolaus", last: "Copernicus", year: 1473, passed: 1543 },
+        { first: "Max", last: "Planck", year: 1858, passed: 1947 },
+      ];
+
+      const people = [
+        "Beck, Glenn",
+        "Becker, Carl",
+        "Beckett, Samuel",
+        "Beddoes, Mick",
+        "Beecher, Henry",
+        "Beethoven, Ludwig",
+        "Begin, Menachem",
+        "Belloc, Hilaire",
+        "Bellow, Saul",
+        "Benchley, Robert",
+        "Benenson, Peter",
+        "Ben-Gurion, David",
+        "Benjamin, Walter",
+        "Benn, Tony",
+        "Bennington, Chester",
+        "Benson, Leana",
+        "Bent, Silas",
+        "Bentsen, Lloyd",
+        "Berger, Ric",
+        "Bergman, Ingmar",
+        "Berio, Luciano",
+        "Berle, Milton",
+        "Berlin, Irving",
+        "Berne, Eric",
+        "Bernhard, Sandra",
+        "Berra, Yogi",
+        "Berry, Halle",
+        "Berry, Wendell",
+        "Bethea, Erin",
+        "Bevan, Aneurin",
+        "Bevel, Ken",
+        "Biden, Joseph",
+        "Bierce, Ambrose",
+        "Biko, Steve",
+        "Billings, Josh",
+        "Biondo, Frank",
+        "Birrell, Augustine",
+        "Black, Elk",
+        "Blair, Robert",
+        "Blair, Tony",
+        "Blake, william",
+      ];
+
+
+
+    </script>
+  </body>
+</html>

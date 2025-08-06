@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="icon" href="" />
+    <title>Analog Clock</title>
+    <style>
+      .clock {
+        width: 30rem;
+        height: 30rem;
+        border: 15px solid var(--clr-secondary);
+        margin: 100px auto;
+        background-color: var(--clr-accent);
+        border-radius: 50%;
+        position: relative;
+        padding: var(--size-300);
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
+          inset 0 0 10px, 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform: translateY(-3px);
+      }
+      .hand {
+        width: 50%;
+        height: 6px;
+        background: var(--clr-btn);
+        position: absolute;
+        top: 50%;
+        border-radius: var(--rounded);
+        transform-origin: 100%;
+        transform: rotate(90deg);
+        transition: all 0.05s;
+        transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+      }
+
+      .center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 5%;
+        height: 5%;
+        background: radial-gradient(
+          rgba(203, 165, 37, 1),
+          rgba(246, 218, 136, 1),
+          #fff
+        );
+      }
+    </style>
+  </head>
+
+  <body>
+    <h4
+      class="arabic-bolder fs-600 text-center p-medium clr-text-accent text-shadow"
+    >
+      Analog Clock
+    </h4>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+        <div class="center circle"></div>
+      </div>
+    </div>
+
+    <script>
+      const secondHand = document.querySelector(".second-hand");
+      const minHand = document.querySelector(".min-hand");
+      const hourHand = document.querySelector(".hour-hand");
+
+      function setDate() {
+        const now = new Date();
+
+        const seconds = now.getSeconds();
+        const secondsDegrees = (seconds / 60) * 360 + 90;
+
+        const mins = now.getMinutes();
+        const minsDegrees = (mins / 60) * 360 + 90;
+
+        const hours = now.getHours();
+        const hoursDegrees = (hours / 12) * 360 + 90;
+
+        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+        minHand.style.transform = `rotate(${minsDegrees}deg)`;
+        hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+      }
+
+      setInterval(setDate, 1000);
+    </script>
+  </body>
+</html>

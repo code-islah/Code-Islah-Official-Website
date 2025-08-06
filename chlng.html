@@ -1,85 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/logo.png" />
+    <link rel="stylesheet" href="./style/style.css" />
+    <link rel="stylesheet" href="./style/chlng.css" />
+    <link rel="stylesheet" href="./style/bootstrap-icons.css" />
+    <script defer src="./js/main.js"></script>
+    <title>Meet Your Challenges</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content=" ">
-  <meta name="description" content=" ">
-  <meta name="keywords" content=" ">
-  <link rel="shortcut icon" type="image/x-icon" href="./img/logo.png">
-  <link rel="stylesheet" href="./style/style.css" />
-  <link rel="stylesheet" href="./style/bootstrap-icons.css">
-  <script defer src="./js/main.js"></script>
-  <title>Meet Your Challenges</title>
-</head>
-
-<body>
-  <header class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow">
-    <div class="container">
-      <nav class="nav d-grid space-between pos-rel">
-        <div class="align-self-center d-flex align-items-center">
-          <a href="#">
-            <img class="logo | width-100" src="./img/logo.png" alt="">
-          </a>
-        </div>
-        <div class="align-self-center">
-          <p class="banner h4 clr-text-accent">Code Islah</p>
-        </div>
-        <div class="d-grid m-top-tiny">
-          <div class="border-common toggler p-tiny rounded d-flex place-content-center navbarToggler m-right">
-            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
-              <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
-            </svg>
+  <body>
+    <header
+      class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow"
+    >
+      <div class="container">
+        <nav class="nav d-grid space-between pos-rel">
+          <div class="align-self-center d-flex align-items-center">
+            <a href="#">
+              <img class="logo | width-100" src="./img/logo.png" alt="" />
+            </a>
           </div>
-          <div class="height-0 opacity-0 transition" id="navbar">
-            <ul class="text-right transition uppercase m-top-tiny">
-              <li><a href="/index.html">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a class="loginToggler" href="login.html">Sign In</a>
-              </li>
-              <li>
-                <a href="/downloads.html">Downloads</a>
-              </li>
-              <li class="active">
-                <a href="/chlng.html">Challenges</a>
-              </li>
-              <li>
-                <a href="#">Playground</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-              </li>
-            </ul>
+          <div class="align-self-center">
+            <p class="banner h4 clr-text-accent">Code Islah</p>
           </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+          <div class="d-grid m-top-tiny">
+            <div
+              class="border-common toggler p-tiny rounded d-flex place-content-center navbarToggler m-right"
+            >
+              <svg
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+              >
+                <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+                <path
+                  d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+                />
+              </svg>
+            </div>
+            <div class="height-0 opacity-0 transition" id="navbar">
+              <ul class="text-right transition uppercase m-top-tiny">
+                <li><a href="/index.html"> Home </a></li>
+                <li>
+                  <a class="loginToggler" href="login.html">Sign In</a>
+                </li>
+                <li>
+                  <a href="/downloads.html">Downloads</a>
+                </li>
+                <li class="active">
+                  <a href="/chlng.html">Challenges</a>
+                </li>
+                <li>
+                  <a href="#">Playground</a>
+                </li>
+                <li>
+                  <a href="#">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-  <main>
-    <div class="container">
-      <section class="">
-        <h1 class="h4 text-center">JavaScript</h4>
+    <main>
+      <h1
+        class="h2 clr-text-accent text-shadow arabic-bolder h4 text-center m-top"
+      >
+        JavaScript
+      </h1>
+      <div class="container">
+        <section class="counter">
           <div class="border-common rounded p-medium shadow">
-            <h5 class="h5 lead">Alif Baa Taa</h5>
+            <h4 class="h4">Alif Baa Taa</h4>
             <p class="p m-bottom-tiny fw-600 clr-text-light-50">
               Languages : HTML, CSS & JS
             </p>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the letter.
+              Every button clicking vocals the correct pronunciation of the
+              letter.
             </p>
             <a href="/challenges/huruf.html">
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
-      </section>
-    </div>
-  </main>
-
-</body>
-
+          <div class="border-common rounded p-medium shadow linear-grad">
+            <h4 class="h4">Analog Clock</h4>
+            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+              Languages : HTML, CSS & JS
+            </p>
+            <p class="p m-bottom-tiny">
+              Every button clicking vocals the correct pronunciation of the
+              letter.
+            </p>
+            <a href="/challenges/analogClock.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow">
+            <h4 class="h4">Update CSS Variable with JS</h4>
+            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+              Languages : HTML, CSS & JS
+            </p>
+            <p class="p m-bottom-tiny">
+              Every button clicking vocals the correct pronunciation of the
+              letter.
+            </p>
+            <a href="/challenges/updateCSSvarWithJS.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow linear-grad">
+            <h4 class="h4">Array Methods Practice</h4>
+            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+              Languages : HTML, CSS & JS
+            </p>
+            <p class="p m-bottom-tiny">
+              Every button clicking vocals the correct pronunciation of the
+              letter.
+            </p>
+            <a href="/challenges/arrayMethods.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
 </html>
