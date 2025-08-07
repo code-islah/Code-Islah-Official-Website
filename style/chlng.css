@@ -5,10 +5,6 @@ kbd {
   color: var(--clr-light);
 }
 
-span {
-  font-family: arabic-bolder;
-}
-
 .keys {
   padding: var(--padd-normal);
   text-align: center;

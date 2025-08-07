@@ -11,18 +11,134 @@
     <link rel="stylesheet" href="/style/chlng.css" />
     <link rel="icon" href="" />
     <title>AJAX Type Ahead With fetch()</title>
-    <style></style>
-  </head>
-  <div class="container">
-    <input type="text" placeholder="City or State" />
-    <p class="City">Filter For A City</p>
-    <p class="State">Or A State</p>
-  </div>
+    <style>
+      body {
+        min-height: 100vh;
+        height: 100vh;
+      }
 
+      .container {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .searchForm input {
+        width: 100%;
+        grid-area: 1 / -1;
+      }
+
+      .suggestions {
+        counter-reset: step;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        perspective: 1800px;
+        place-content: center;
+      }
+
+      .suggestions li {
+        background: var(--clr-flow);
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5),
+          inset 0 0 5px 5px rgba(255, 255, 255, 0.2),
+          0 0 0 5px rgba(0, 0, 0, 0.1), 0 0 15px 5px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: var(--rounded);
+        padding: var(--padd-tiny);
+        color: var(--clr-primary);
+        font-weight: var(--fw-500);
+        counter-increment: step;
+        position: relative;
+        padding-left: var(--size-600);
+      }
+      .suggestions li::before {
+        content: counter(step);
+        position: absolute;
+        left: var(--size-100);
+        width: 30px;
+        text-align: center;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--clr-btn);
+      }
+
+      .population {
+        position: absolute;
+        right: var(--size-200);
+        font-weight: var(--size-100);
+        font-size: var(--fs-200);
+      }
+
+      .highlight {
+        color: var(--clr-accent);
+      }
+    </style>
+  </head>
   <body>
+    <h4
+      class="p-high arabic-bolder fs-600 text-center clr-text-accent text-shadow"
+    >
+      Find City or State
+    </h4>
+    <div class="container d-grid place-content-center">
+      <form class="searchForm">
+        <input
+          name="search"
+          id="input"
+          type="text"
+          placeholder="Search For City or State"
+          class="outline-common border-common rounded p-normal m-bottom"
+        />
+        <ul class="suggestions">
+          <li>Filter For A City</li>
+          <li>Or A State</li>
+        </ul>
+      </form>
+    </div>
+
     <script>
-      const data =
-        "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+      let data = [];
+
+      if (navigator.onLine) {
+        data =
+          "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+      } else {
+        fetch("/challenges/data/cities.json")
+          .then((res) => res.json())
+          .then((file) => {
+            data.push(...file);
+          });
+      }
+
+      function findMatches(wordToMatch, data) {
+        return data.filter((place) => {
+          const regex = new RegExp(wordToMatch, "gi");
+          return place.city.match(regex) || place.state.match(regex);
+        });
+      }
+
+      function displayMatches() {
+        const matchArr = findMatches(this.value, data);
+        const html = matchArr
+          .map((place) => {
+            const regex = new RegExp(this.value, "gi");
+            const cityName = place.city.replace(
+              regex,
+              `<span class="highlight">${this.value}</span>`
+            );
+            return `<li>
+          <span class="name">${cityName}, ${place.state}</span>
+          <span class="population">${place.population}</span>
+          </li>
+          `;
+          })
+          .join("");
+        suggestions.innerHTML = html;
+      }
+
+      const searchInput = document.querySelector("#input");
+      const suggestions = document.querySelector(".suggestions");
+
+      searchInput.addEventListener("change", displayMatches);
+      searchInput.addEventListener("keyup", displayMatches);
     </script>
   </body>
 </html>

@@ -136,15 +136,18 @@ a {
   --blur-abs: 30px;
 }
 
+
 body {
   font: 500 var(--size-300) / 1.5 customFont, sans-serif;
   overflow-x: hidden;
   /* max-height: 100vh; */
   background-color: var(--clr-bg);
   color: var(--clr-dark-50);
-  /*  background: url("/img/bg.jpg"); */
+   /* background: url("/img/bg.jpg"); */
   background-attachment: scroll;
   background-size: contain;
+  /* background-color: hsl(195, 60%, 20%); FOR DARK MODE */
+ 
 }
 
 /* utility */
@@ -501,7 +504,7 @@ i.bi {
 }
 
 .m-auto {
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
 .m-right {
@@ -1000,6 +1003,13 @@ iframe {
 
   .h2 {
     font-size: var(--fs-600);
+  }
+
+  .width-md-50 {
+    width: var(--width-50);
+  }
+  .width-md-75 {
+    width: var(--width-75);
   }
 
   .lead {
