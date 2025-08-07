@@ -59,7 +59,7 @@
                   <a href="#">Playground</a>
                 </li>
                 <li>
-                  <a href="#">About</a>
+                  <a href="/about.html">About</a>
                 </li>
               </ul>
             </div>
@@ -253,15 +253,15 @@
         key.classList.add("playing");
       }
 
-        function removeTransition(e) {
-          if (e.propertyName !== "transform") return;
-          this.classList.remove("playing");
-        }
-        
-        const keys = document.querySelectorAll(".key");
-        keys.forEach((key) => {
-          key.addEventListener("transitionend", removeTransition);
-        });
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return;
+        this.classList.remove("playing");
+      }
+
+      const keys = document.querySelectorAll(".key");
+      keys.forEach((key) => {
+        key.addEventListener("transitionend", removeTransition);
+      });
 
       function screenTap() {
         const keys = document.querySelectorAll(".key");

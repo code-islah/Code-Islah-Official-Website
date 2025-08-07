@@ -12,11 +12,14 @@ navbarToggler.addEventListener("click", () => {
 
 // ONLOAD
 window.onload = () => {
-  const chlngCountDisplayer = document.querySelector('.navbar-md-collapse > ul li:nth-child(4)');
+  const chlngCountDisplayer = document.querySelector(
+    ".navbar-md-collapse > ul li:nth-child(4)"
+  );
 
-  chlngCountDisplayer.setAttribute('data-counted', localStorage.getItem('countChlng'));
-  console.log(localStorage.getItem('countChlng'));
-  
+  chlngCountDisplayer.setAttribute(
+    "data-counted",
+    localStorage.getItem("countChlng")
+  );
 };
 
 // FIXING THE TOP HEADER
@@ -50,7 +53,6 @@ if (close) {
   });
 }
 
-
 //Intersection Observer
 document.addEventListener("DOMContentLoaded", function () {
   // Select all elements with any animate- class
@@ -80,11 +82,3 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(element);
   });
 });
-
-// COUNTS AND SHOWS THE NUMBER ON CHALLENGES 
-
-const counter = document.querySelectorAll('.counter div').length; //FROM CHLNG PAGE
-localStorage.setItem('countChlng', counter);
-
-
-

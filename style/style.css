@@ -756,16 +756,15 @@ iframe {
   position: relative;
 }
 .navbar-md-collapse > ul li:nth-child(4)::before {
-  content: "30";
+  content: attr(data-counted);
   width: 25px;
   height: 25px;
   background: var(--clr-btn);
   position: absolute;
   right: 0;
+  text-align: center;
   color: var(--clr-primary);
   font-weight: var(--fw-500);
-  text-align: center;
-  vertical-align: middle;
   aspect-ratio: 1;
   border-radius: 50%;
   box-shadow: 0 3px 3px -1px var(--clr-light);
@@ -787,6 +786,17 @@ iframe {
 .post {
   grid-template-columns: 1fr;
 }
+
+.post > div {
+  display: grid;
+  align-content: space-between;
+}
+
+.post div button {
+  width: fit-content;
+  margin: var(--size-200) auto;
+}
+
 
 /* WHY ANALOGY */
 

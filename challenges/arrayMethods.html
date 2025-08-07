@@ -19,6 +19,13 @@
       .h5 {
         color: var(--clr-flow);
       }
+
+      code {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     </style>
   </head>
   <body class="m-medium">
@@ -26,6 +33,9 @@
       Array Methods Practice
     </h4>
     <div class="container flow-tiny p-block-high">
+      <div class="border-common rounded">
+        <img class="rounded" src="../img/carbon.png" alt="" />
+      </div>
       <div class="linear-grad p-medium rounded">
         <h5 class="h5">1. Array.prototype. filter()</h5>
         <p class="p lead clr-text-dark">
@@ -75,7 +85,9 @@
       </div>
       <div class="shadow p-medium rounded">
         <h5 class="h5">4. Array.prototype. reduce()</h5>
-        <p class="p lead clr-text-dark">How many yeans did all the inventors live?</p>
+        <p class="p lead clr-text-dark">
+          How many yeans did all the inventors live?
+        </p>
         <div class="p-tiny">
           <span>Solution:</span>
           <p class="lead">
@@ -91,23 +103,68 @@
       </div>
       <div class="linear-grad p-medium rounded">
         <h5 class="h5">S. Sort the inventors by years lived</h5>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const ageSorted = inventors.sort((a, b) => { return b.passed -
+              b.year - (a.passed - a.year); }); console.table(ageSorted);<br /><br />
+              console.log( ageSorted.map((v) => { return v.passed - v.year; })
+              );
+            </code>
+          </p>
+        </div>
       </div>
       <div class="shadow p-medium rounded">
         <h5 class="h5">
-          6. create a Cist of Boulevards in Pants that contain 'de' anywhere in
+          6. Create a list of Boulevards in Paris that contain 'de' anywhere in
           the name
         </h5>
         <p class="p lead clr-text-dark">
-          https://en.wikipedia.ong/wiki/Categony:Boulevands_in_Pants
+          https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
         </p>
+
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const category = document.querySelector(".mw-category");<br />
+              const links = category.querySelectorAll("a"); <br /><br />
+              const de = links .map(link => link.textContent) .filter(streetName
+              => streetName.includes('de'));
+            </code>
+          </p>
+        </div>
       </div>
       <div class="linear-grad p-medium rounded">
-        <h5 class="h5">7. sort Exercise</h5>
-        <p class="p lead clr-text-dark">Sort the people alphabetically by last name</p>
+        <h5 class="h5">7. Sort Exercise</h5>
+        <p class="p lead clr-text-dark">
+          Sort the people alphabetically by last name
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const mapped = people.map((elem) => { return elem.split(",
+              ").reverse().toString().trim(); }); console.table(mapped.sort());
+            </code>
+          </p>
+        </div>
       </div>
       <div class="shadow p-medium rounded">
         <h5 class="h5">8. Reduce Exercise</h5>
-        <p class="p lead clr-text-dark">Sum up the instances of each of these</p>
+        <p class="p lead clr-text-dark">
+          Sum up the instances of each of these
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const occur = data.reduce((obj,item)=> { obj[item] = (obj[item] ||
+              0) + 1; return obj; },{}); console.table(occur);
+            </code>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -163,11 +220,25 @@
         "Black, Elk",
         "Blair, Robert",
         "Blair, Tony",
-        "Blake, william",
+        "Blake, William",
       ];
 
-
-
+      const data = [
+        "car",
+        "car",
+        "truck",
+        "truck",
+        "bike",
+        "walk",
+        "car",
+        "van",
+        "bike",
+        "walk",
+        "car",
+        "van",
+        "car",
+        "truck",
+      ];
     </script>
   </body>
 </html>

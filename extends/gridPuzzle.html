@@ -227,7 +227,7 @@
     .btn {
       display: grid;
       gap: 5px;
-      width: 20%;
+      width: 120px;
       margin: 10px auto;
     }
 
@@ -421,22 +421,22 @@
   <div class="gridInputs">
     <div>
       <p>grid-row</p>
-      <input type="text" placeholder="1 / 2 ,' span 2'" />
+      <input class="gridInput" type="text" placeholder="1 / 2 ,' span 2'" />
     </div>
     <div>
       <p">grid-column</p>
-        <input type="text" placeholder=" 2 / 4" />
+        <input class="gridInput" type="text" placeholder=" 2 / 4" />
         <div class="btn">
-          <button>Set</button>
-          <button>Reset</button>
+          <button class="gridBtn btn">Set</button>
+          <button type="reset">Reset</button>
         </div>
     </div>
     <div>
       <p>grid-area</p>
-      <input type="text" placeholder=" 2 / 4 / 6 / 6" />
+      <input class="gridInput" type="text" placeholder=" 2 / 4 / 6 / 6" />
       <div class="btn">
-        <button>Set</button>
-        <button>Reset</button>
+        <button class="gridBtn">Set</button>
+        <button type="reset">Reset</button>
       </div>
     </div>
   </div>
@@ -447,8 +447,7 @@
     let gitem = document.querySelectorAll('.gitem');
     let select = document.querySelector('#select');
     let resetBtn = document.querySelector('#resetBtn');
-    let gridRCReset = document.querySelector('.gridRCReset');
-    let gridAReset = document.querySelector('.gridAReset');
+
 
     window.onchange = () => {
       for (let i = 0; i < gitem.length; i++) {
@@ -638,36 +637,27 @@
       }
     }
 
-    resetBtn.onclick = () => {
-      puzzleUnlock.style.display = 'none !important';
+    // resetBtn.onclick = () => {
+    //   puzzleUnlock.style.display = 'none !important';
 
-      for (let i = 0; i < gridInput.length; i++) {
-        gridInput[i].value = "";
-      }
-      for (let i = 0; i < gitem.length; i++) {
-        gitem[i].setAttribute('style', '');
-        gitem[i].style.color = '';
-        gitem[i].classList.add('gitem');
-      }
-      for (let i = 0; i < scale.length; i++) {
-        scale[i].innerHTML = '';
-      }
-      for (let i = 0; i < item.length; i++) {
-        item[i].removeAttribute('style');
-      }
-      gridContainer.classList.remove('gContainerAni');
-      gridContainer.setAttribute('style', '');
-    }
+    //   for (let i = 0; i < gridInput.length; i++) {
+    //     gridInput[i].value = "";
+    //   }
+    //   for (let i = 0; i < gitem.length; i++) {
+    //     gitem[i].setAttribute('style', '');
+    //     gitem[i].style.color = '';
+    //     gitem[i].classList.add('gitem');
+    //   }
+    //   for (let i = 0; i < scale.length; i++) {
+    //     scale[i].innerHTML = '';
+    //   }
+    //   for (let i = 0; i < item.length; i++) {
+    //     item[i].removeAttribute('style');
+    //   }
+    //   gridContainer.classList.remove('gContainerAni');
+    //   gridContainer.setAttribute('style', '');
+    // }
 
-
-    gridRCReset.onclick = () => {
-      gridInput[0].value = '';
-      gridInput[1].value = '';
-    }
-
-    gridAReset.onclick = () => {
-      gridInput[2].value = '';
-    }
   </script>
 </body>
 
