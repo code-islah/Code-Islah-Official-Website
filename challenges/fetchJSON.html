@@ -30,9 +30,9 @@
       .suggestions {
         counter-reset: step;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        perspective: 1800px;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         place-content: center;
+        column-gap: var(--size-200);
       }
 
       .suggestions li {
@@ -68,7 +68,8 @@
       }
 
       .highlight {
-        color: var(--clr-accent);
+        color: var(--clr-dark-50);
+        background-color: var(--clr-light-50);
       }
     </style>
   </head>
@@ -115,6 +116,10 @@
         });
       }
 
+      function numberWithCommas(p) {
+        return p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
       function displayMatches() {
         const matchArr = findMatches(this.value, data);
         const html = matchArr
@@ -124,9 +129,13 @@
               regex,
               `<span class="highlight">${this.value}</span>`
             );
+            const stateName = place.state.replace(
+              regex,
+              `<span class="highlight">${this.value}</span>`
+            );
             return `<li>
-          <span class="name">${cityName}, ${place.state}</span>
-          <span class="population">${place.population}</span>
+          <span class="name">${cityName}, ${stateName}</span>
+          <span class="population">${numberWithCommas(place.population)}</span>
           </li>
           `;
           })
@@ -137,7 +146,7 @@
       const searchInput = document.querySelector("#input");
       const suggestions = document.querySelector(".suggestions");
 
-      searchInput.addEventListener("change", displayMatches);
+      searchInput.addEventListener("ch ange", displayMatches);
       searchInput.addEventListener("keyup", displayMatches);
     </script>
   </body>

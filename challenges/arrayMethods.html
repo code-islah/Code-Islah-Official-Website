@@ -26,6 +26,24 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
+      .p {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        display: block;
+        margin-right: var(--size-200);
+        text-align: left;
+        font-weight: var(--fw-300);
+      }
+
+      .h5 {
+        color: var(--clr-dark);
+        display: grid;
+        gap: var(--size-200);
+      }
     </style>
   </head>
   <body class="m-medium">
@@ -33,7 +51,27 @@
       Array Methods Practice
     </h4>
     <div class="container flow-tiny p-block-high width-md-75 m-auto">
-      <div class=" rounded">
+      <h5 class="h5 p-block-normal">
+        Almost every array methods have four things in common, they must have :
+        <span
+          ><b class="">1. Purpose</b> - forEach() executes a function for each
+          array elements, Its primarily used to iterate over arrays without
+          needing to manually manage loop counters.</span
+        >
+        <span
+          ><b>2. Parameters</b> - It takes up to three parameters, currentValue
+          (required), index and current array.</span
+        >
+        <span
+          ><b>3. Return</b> - It always returns undefined, so it cannot be
+          chained with other methods.</span
+        >
+        <span
+          ><b>4. Usages/Notes/Syntax</b> - Doesn't modify the original array.
+          Array.forEach(function(...params){});</span
+        >
+      </h5>
+      <div class="rounded">
         <img class="rounded" src="../img/carbon.png" alt="" />
       </div>
       <div class="linear-grad p-medium rounded">
@@ -166,6 +204,69 @@
           </p>
         </div>
       </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">9. some() Exercise</h5>
+        <p class="p lead clr-text-dark">
+          At least one element has to match to return true else false.
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const isAdult = people.some((person) => { const currentYear = new
+              Date().getFullYear(); return currentYear - person.year >= 19; });
+              console.log(isAdult);
+            </code>
+          </p>
+        </div>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">10. every() Exercise</h5>
+        <p class="p lead clr-text-dark">
+          It returns true if every elements match else false.
+        </p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded">
+              const allAdults = people.every((person) => { const currentYear =
+              new Date().getFullYear(); return currentYear - person.year >= 19;
+              }); console.log(allAdults);
+            </code>
+          </p>
+        </div>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">11. find() Exercise</h5>
+        <p class="p lead clr-text-dark">
+          Find is like filter, but instead returns just the one you are looking
+          for
+        </p>
+        <p>Find the comment with the ID of 823423</p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded"
+              >const comment = comments.find((comment) => { return comment.id
+              === 823423; }); console.log(comment);</code
+            >
+          </p>
+        </div>
+      </div>
+      <div class="shadow p-medium rounded">
+        <h5 class="h5">11. findIndex() Exercise</h5>
+        <p class="p lead clr-text-dark">Find the comment with this ID</p>
+        <p>Delete the comment with the ID of 823423</p>
+        <div class="p-tiny">
+          <span>Solution:</span>
+          <p class="lead">
+            <code class="clr-bg-dark clr-text-light p-tiny rounded"
+              >const comment = comments.findIndex((comment) => { return
+              comment.id === 823423; }); console.log(comment);</code
+            >
+          </p>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -179,7 +280,7 @@
         { first: "Max", last: "Planck", year: 1858, passed: 1947 },
       ];
 
-      const people = [
+      const peoples = [
         "Beck, Glenn",
         "Becker, Carl",
         "Beckett, Samuel",
@@ -238,6 +339,21 @@
         "van",
         "car",
         "truck",
+      ];
+
+      const people = [
+        { name: "Suaib", year: 1988 },
+        { name: "Khalid", year: 1986 },
+        { name: "Shahid", year: 1970 },
+        { name: "Farabi", year: 2015 },
+      ];
+
+      const comments = [
+        { text: "Bismillah", id: 523423 },
+        { text: "Alhamdulillah", id: 823423 },
+        { text: "Quran is the book of guidance", id: 2039842 },
+        { text: "I follow Islam", id: 123523 },
+        { text: "We are muslims", id: 542328 },
       ];
     </script>
   </body>

@@ -12,6 +12,48 @@
     <link rel="stylesheet" href="./style/bootstrap-icons.css" />
     <script defer src="./js/main.js"></script>
     <title>Meet Your Challenges</title>
+    <style>
+      .counter div {
+        background: linear-gradient(
+          45deg,
+          var(--clr-light-50),
+          var(--clr-dark-50)
+        );
+      }
+      .counter div:nth-child(odd) {
+        background: var(--clr-glass);
+      }
+
+      .percentages {
+        width: 100%;
+        height: 3px;
+        position: relative;
+        border-radius: var(--rounded);
+        margin: var(--size-300) 0;
+        outline: 1px solid var(--clr-glass);
+        display: flex;
+      }
+
+      .htmlColor {
+        background-color: #e37631;
+      }
+      .cssColor {
+        background-color: #469aba;
+      }
+      .jsColor {
+        background-color: #cbcb41;
+      }
+
+      .htmlColor,
+      .cssColor,
+      .jsColor {
+        display: inline-block;
+        height: 100%;
+        text-align: right;
+        font-size: var(--fs-100);
+        font-weight: var(--fw-600);
+      }
+    </style>
   </head>
 
   <body>
@@ -78,9 +120,10 @@
         <section class="counter">
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Alif Baa Taa</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
               Languages : HTML, CSS & JS
             </p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
               Every button clicking vocals the correct pronunciation of the
               letter.
@@ -89,14 +132,14 @@
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
-          <div class="border-common rounded p-medium shadow linear-grad">
+          <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Analog Clock</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
               Languages : HTML, CSS & JS
             </p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the
-              letter.
+              It has some mathematical approaches to follow.
             </p>
             <a href="/challenges/analogClock.html">
               <button class="btn rounded">Learn Now</button>
@@ -104,25 +147,24 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Update CSS Variable with JS</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
               Languages : HTML, CSS & JS
             </p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the
-              letter.
+              New concept of changing style declarations.
             </p>
+
             <a href="/challenges/updateCSSvarWithJS.html">
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
-          <div class="border-common rounded p-medium shadow linear-grad">
+          <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Array Methods Practice</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
-              Languages : HTML, CSS & JS
-            </p>
+            <p class="p m-bottom-tiny fw-600 clr-text-light">Languages : JS</p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the
-              letter.
+              Most of array methods which are super handy to manipulate data.
             </p>
             <a href="/challenges/arrayMethods.html">
               <button class="btn rounded">Learn Now</button>
@@ -130,12 +172,12 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Flexible Image Gallery</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
               Languages : HTML, CSS & JS
             </p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the
-              letter.
+              Where flex-grow got the focus of the developers.
             </p>
             <a href="/challenges/flexibleImageGallery.html">
               <button class="btn rounded">Learn Now</button>
@@ -143,12 +185,26 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">AJAX Type Ahead with fetch()</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light-50">
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
               Languages : HTML, CSS & JS
             </p>
+            <div class="percentages"></div>
             <p class="p m-bottom-tiny">
-              Every button clicking vocals the correct pronunciation of the
-              letter.
+              Strength your ability by working with large databases.
+            </p>
+            <a href="/challenges/flexibleImageGallery.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow">
+            <h4 class="h4">Canvas</h4>
+            <p class="p m-bottom-tiny fw-600 clr-text-light">
+              Languages : HTML, CSS & JS
+            </p>
+            <div class="percentages"></div>
+            <p class="p m-bottom-tiny">
+              Draw anything you want, not to behave like a child but to
+              comprehend the basics of canvas.
             </p>
             <a href="/challenges/flexibleImageGallery.html">
               <button class="btn rounded">Learn Now</button>
@@ -163,6 +219,38 @@
 
       const counter = document.querySelectorAll(".counter div").length; //FROM CHLNG PAGE
       localStorage.setItem("countChlng", counter);
+
+      //SHOW PERCENTAGES
+      const percentages = document.querySelectorAll(".percentages");
+
+      fetch("/challenges/data/percentages.json")
+        .then((res) => res.json())
+        .then((values) => {
+          percentages.forEach((v, i) => {
+            showPercent(values, i);
+          });
+        });
+
+      function showPercent(data, i) {
+        let total = data[i].html + data[i].css + data[i].js;
+        let left = 100 - total;
+        let leftDist = left / 3;
+
+        const html = data[i].html + leftDist;
+        const css = data[i].css + leftDist;
+        const js = data[i].js + leftDist;
+
+        percentages[
+          i
+        ].innerHTML = `<span class="htmlColor" style="width: ${html}%">${
+          parseInt(html) + "%"
+        }</span><span class="cssColor" style="width:${css}%">${
+          parseInt(css) + "%"
+        }</span><span class="jsColor" style="width:${js}%">${
+          parseInt(js) + "%"
+        }</span>`;
+      }
     </script>
+    <!-- <script src="/js/count.js"></script> -->
   </body>
 </html>
