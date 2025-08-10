@@ -76,9 +76,12 @@ a {
   --clr-dark-50: rgba(12, 35, 24, 0.5);
   --clr-light: rgba(15, 249, 144, 1);
   --clr-light-50: rgba(15, 249, 144, 0.5);
-  --clr-btn: linear-gradient(to left,
-      rgba(246, 218, 136, 1),
-      rgba(203, 165, 37, 1));
+  --clr-white: rgba(223, 247, 234, .7);
+  --clr-btn: linear-gradient(
+    to left,
+    rgba(246, 218, 136, 1),
+    rgba(203, 165, 37, 1)
+  );
   --clr-border: rgba(127, 150, 145, 1);
   --clr-flow: rgba(201, 228, 208, 1);
   --clr-glass: rgba(255, 255, 255, 0.1);
@@ -131,11 +134,10 @@ a {
   --width-50: 50%;
   --width-25: 25%;
   --width-10: 10%;
-   
+
   --blur-glass: 15px;
   --blur-abs: 30px;
 }
-
 
 body {
   font: 500 var(--size-300) / 1.5 customFont, sans-serif;
@@ -143,11 +145,10 @@ body {
   /* max-height: 100vh; */
   background-color: var(--clr-bg);
   color: var(--clr-dark-50);
-   /* background: url("/img/bg.jpg"); */
+  /* background: url("/img/bg.jpg"); */
   background-attachment: scroll;
   background-size: contain;
   /* background-color: hsl(195, 60%, 20%); FOR DARK MODE */
- 
 }
 
 /* utility */
@@ -234,11 +235,11 @@ i.bi {
   aspect-ratio: 1;
 }
 
-.flow *+* {
+.flow * + * {
   margin-top: var(--size-400);
 }
 
-.flow-tiny *+* {
+.flow-tiny * + * {
   margin-top: var(--size-200);
 }
 
@@ -630,7 +631,7 @@ i.bi {
   z-index: 100;
 }
 
-.z-index-0 {
+.index-0 {
   z-index: -1;
 }
 
@@ -667,7 +668,7 @@ i.bi {
 }
 
 .blur-high {
- backdrop-filter: blur(100px);
+  backdrop-filter: blur(100px);
 }
 
 .white-filter {
@@ -675,8 +676,8 @@ i.bi {
 }
 
 .blue-filter {
-  filter:
-    sepia(30%) hue-rotate(180deg) saturate(300%) brightness(90%) blur(var(--blur-abs));
+  filter: sepia(30%) hue-rotate(180deg) saturate(300%) brightness(90%)
+    blur(var(--blur-abs));
 }
 
 .overflow-hidden {
@@ -735,6 +736,10 @@ i.bi {
   color: var(--clr-dark-50);
 }
 
+.clr-text-white {
+  color: var(--clr-white);
+}
+
 /* HOVER & ACTIVE */
 
 .btn:hover {
@@ -786,11 +791,11 @@ iframe {
   z-index: 1000 !important;
 }
 
-.navbar-md-collapse>ul li:nth-child(4) {
+.navbar-md-collapse > ul li:nth-child(4) {
   position: relative;
 }
 
-.navbar-md-collapse>ul li:nth-child(4)::before {
+.navbar-md-collapse > ul li:nth-child(4)::before {
   content: attr(data-counted);
   width: 25px;
   height: 25px;
@@ -822,7 +827,7 @@ iframe {
   grid-template-columns: 1fr;
 }
 
-.post>div {
+.post > div {
   display: grid;
   align-content: space-between;
 }
@@ -1070,7 +1075,7 @@ iframe {
     font-size: var(--fs-200);
   }
 
-  .navbar-md-collapse>ul {
+  .navbar-md-collapse > ul {
     display: grid;
     grid-auto-flow: column;
     justify-content: end;
@@ -1078,7 +1083,7 @@ iframe {
     width: 100%;
   }
 
-  .navbar-md-collapse>ul li {
+  .navbar-md-collapse > ul li {
     padding: var(--size-100);
   }
 
@@ -1149,7 +1154,7 @@ iframe {
     white-space: nowrap;
   }
 
-  .navbar-md-collapse>ul {
+  .navbar-md-collapse > ul {
     gap: var(--size-300);
   }
 

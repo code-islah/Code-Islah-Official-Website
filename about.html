@@ -12,6 +12,39 @@
     <link rel="stylesheet" href="./style/bootstrap-icons.css" />
     <script defer src="./js/main.js"></script>
     <title>Meet Your Challenges</title>
+    <style>
+      .p {
+        width: 60vw;
+      }
+      img[src="/img/profile.png"] {
+        box-shadow: 8px 8px 2px 3px rgba(0, 0, 0, 0.2);
+      }
+      .social {
+        display: grid;
+        place-content: center;
+        grid-auto-flow: column;
+        gap: var(--size-300);
+        color: var(--clr-white);
+      }
+
+      .langs {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: var(--size-300);
+      }
+
+      .langs img {
+        display: inline-block;
+        width: var(--size-solid-400);
+        aspect-ratio: 1;
+      }
+
+      hr {
+        height: 1px;
+        border: 0;
+      }
+    </style>
   </head>
 
   <body>
@@ -73,11 +106,45 @@
         class="h2 clr-text-accent text-shadow arabic-bolder h4 text-center m-top"
       >
         About Me :
-     
-    </main>
+      </h1>
+      <img
+        class="width-25 rounded outline-common border-common m-auto"
+        src="/img/profile.png"
+        alt=""
+        srcset=""
+      />
+      <div class="d-grid place-content-center text-center index-100">
+        <h3 class="fw-600 fs-500 clr-text-white p-high">I am Md. Alamin</h3>
 
-    <script>
-     
-    </script>
+        <h4 class="p fs-300 clr-text-dark justify-self-center m-bottom">
+          I am currently working as a teacher, and also a student of Web
+          development, since I was a kid I had curiosity on technologies.
+          Following the past I am still finding a portion of me in the field of
+          tech, which may benefit me and others as well.
+        </h4>
+        <div class="social m-bottom">
+          <a href=""><i class="bi bi-facebook"></i></a>
+          <a href=""><i class="bi bi-twitter"></i></a>
+          <a href=""><i class="bi bi-whatsapp"></i></a>
+          <a href=""><i class="bi bi-linkedin"></i></a>
+          <a href=""><i class="bi bi-github"></i></a>
+        </div>
+
+        <hr class="width-50 m-auto clr-bg-accent rounded" />
+        <h5 class="h5 p m-top">I am getting familiar with :</h5>
+        <div class="langs flow m-bottom">
+          <img src="/img/html5.svg" alt="" srcset="" />
+          <img src="/img/css3.svg" alt="" srcset="" />
+          <img src="/img/js.svg" alt="" srcset="" />
+          <img src="/img/bootstrap.svg" alt="" srcset="" />
+        </div>
+      </div>
+    </main>
+    <img
+      class="pos-ab blur-front pos-ab width-75 top right white-filter opacity-50 index-0"
+      src="/img/pattern_1.png"
+      alt=""
+    />
+    <script></script>
   </body>
 </html>

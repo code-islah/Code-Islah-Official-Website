@@ -6,48 +6,80 @@
     <meta name="author" content=" " />
     <meta name="description" content=" " />
     <meta name="keywords" content=" " />
-
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/chlng.css" />
+       <link rel="stylesheet" href="/style/bootstrap-icons.css" />
     <link rel="icon" href="" />
     <title>Canvas</title>
-    <style>
-
-    </style>
+    <style></style>
   </head>
 
   <body>
-    <h4 class="arabic-bolder fs-600 text-center clr-text-accent text-shadow">
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <h4 class="arabic-bolder fs-600 text-center clr-text-accent text-shadow p-high">
       Canvas
     </h4>
-    <canvas id="draw" class="rounded m-auto d-block clr-bg-glass" width="800" height="800"></canvas>
+    <canvas
+      id="draw"
+      class="rounded m-auto d-block clr-bg-glass"
+      width="800"
+      height="800"
+    ></canvas>
     <script>
-        const canvas = document.querySelector('#draw');
-        const ctx = canvas.getContext('2d');
-        ctx.strokeStyle = 'crimson';
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
+      const canvas = document.querySelector("#draw");
+      const ctx = canvas.getContext("2d");
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.globalCompositeOperation = "xor";
 
-        let isDrawing = false;
-        let lastX = 0;
-        let lastY = 0;
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+      let hue = 0;
+      let direction = true;
 
-        function draw(e) {
-           if (!isDrawing) {
-             return;
-           }
-
-           ctx.beginPath();
-           ctx.moveTo(lastX, lastY);
-           ctx.lineTo(e.offsetX, e.offsetY);
-           ctx.stroke();
-            
+      function draw(e) {
+        if (!isDrawing) {
+          return;
         }
 
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mousedown', () => isDrawing = true);
-        canvas.addEventListener('mouseup', () => isDrawing = false);
-        canvas.addEventListener('mouseout', () => isDrawing = false);
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+        hue++;
+
+        console.log(hue);
+        if (hue >= 360) {
+          hue = 0;
+        }
+
+        if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+          direction = !direction;
+        }
+
+        if (direction) {
+          ctx.lineWidth++;
+        } else {
+          ctx.lineWidth--;
+        }
+      }
+
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+      canvas.addEventListener("mouseup", () => (isDrawing = false));
+      canvas.addEventListener("mouseout", () => (isDrawing = false));
     </script>
   </body>
 </html>

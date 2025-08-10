@@ -47,7 +47,6 @@
       .htmlColor,
       .cssColor,
       .jsColor {
-        display: inline-block;
         height: 100%;
         text-align: right;
         font-size: var(--fs-100);
@@ -120,10 +119,8 @@
         <section class="counter">
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Alif Baa Taa</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Every button clicking vocals the correct pronunciation of the
               letter.
@@ -134,10 +131,10 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Analog Clock</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+
+            <span class="percentages"></span>
+
             <p class="p m-bottom-tiny">
               It has some mathematical approaches to follow.
             </p>
@@ -147,10 +144,8 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Update CSS Variable with JS</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               New concept of changing style declarations.
             </p>
@@ -161,8 +156,8 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Array Methods Practice</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">Languages : JS</p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : JS</p>
+          <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Most of array methods which are super handy to manipulate data.
             </p>
@@ -172,10 +167,8 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Flexible Image Gallery</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Where flex-grow got the focus of the developers.
             </p>
@@ -185,28 +178,35 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">AJAX Type Ahead with fetch()</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Strength your ability by working with large databases.
             </p>
-            <a href="/challenges/flexibleImageGallery.html">
+            <a href="/challenges/fetchJSON.html">
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Canvas</h4>
-            <p class="p m-bottom-tiny fw-600 clr-text-light">
-              Languages : HTML, CSS & JS
-            </p>
-            <div class="percentages"></div>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Draw anything you want, not to behave like a child but to
               comprehend the basics of canvas.
             </p>
-            <a href="/challenges/flexibleImageGallery.html">
+            <a href="/challenges/canvas.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow">
+            <h4 class="h4">Checkboxes Multi Selection</h4>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+             <span class="percentages"></span>
+            <p class="p m-bottom-tiny">
+              Select multi checkboxes at once, a tricky JS Project.
+            </p>
+            <a href="/challenges/checkbox.html">
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
@@ -219,6 +219,7 @@
 
       const counter = document.querySelectorAll(".counter div").length; //FROM CHLNG PAGE
       localStorage.setItem("countChlng", counter);
+      
 
       //SHOW PERCENTAGES
       const percentages = document.querySelectorAll(".percentages");

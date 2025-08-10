@@ -6,9 +6,10 @@
     <meta name="author" content=" " />
     <meta name="description" content=" " />
     <meta name="keywords" content=" " />
-
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
     <link rel="icon" href="" />
     <title>AJAX Type Ahead With fetch()</title>
     <style>
@@ -74,6 +75,11 @@
     </style>
   </head>
   <body>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
     <h4
       class="p-high arabic-bolder fs-600 text-center clr-text-accent text-shadow"
     >
@@ -97,17 +103,11 @@
 
     <script>
       let data = [];
-
-      if (navigator.onLine) {
-        data =
-          "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
-      } else {
-        fetch("/challenges/data/cities.json")
-          .then((res) => res.json())
-          .then((file) => {
-            data.push(...file);
-          });
-      }
+      fetch("/challenges/data/cities.json")
+        .then((res) => res.json())
+        .then((file) => {
+          data.push(...file);
+        });
 
       function findMatches(wordToMatch, data) {
         return data.filter((place) => {
