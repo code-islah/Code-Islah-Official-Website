@@ -12,6 +12,46 @@
     <link rel="stylesheet" href="/style/bootstrap-icons.css" />
     <link rel="icon" href="" />
     <title>Alif Baa Taa</title>
+    <style>
+      kbd {
+        font-family: AAAGoldenLotusRegular;
+        display: block;
+        font-size: var(--fs-600);
+        color: var(--clr-light);
+      }
+
+      .keys {
+        padding: var(--padd-normal);
+        text-align: center;
+        /*  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr))*/
+        flex-direction: row-reverse;
+        overflow-x: scroll;
+        flex-wrap: wrap;
+      }
+
+      .key {
+        width: 18%;
+        margin: 0 auto;
+        border: 1px solid var(--clr-btn);
+        background: var(--clr-secondary);
+        border-radius: var(--rounded);
+        transition: all 200ms linear;
+      }
+
+      .keys div:hover {
+        transform: scale(0.96);
+        filter: brightness(120%);
+        transition: all 200ms linear;
+      }
+
+      .playing {
+        outline: 2px solid var(--clr-light);
+        color: var(--clr-light);
+        transform: scale(1.05);
+        background: var(--clr-dark);
+        box-shadow: 0 0 10px var(--clr-light-50);
+      }
+    </style>
   </head>
 
   <body>
@@ -20,7 +60,9 @@
         ><i class="bi bi-arrow-90deg-left clr-text-white"></i
       ></a>
     </div>
-    <h4 class="arabic-bolder fs-600 text-center clr-text-accent text-shadow p-high">
+    <h4
+      class="arabic-bolder fs-600 text-center clr-text-accent text-shadow p-high"
+    >
       Arabic Alphabets
     </h4>
     <div class="m-auto d-grid justify-content-center">

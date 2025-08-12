@@ -476,6 +476,18 @@ i.bi {
   margin-inline: var(--padd-high);
 }
 
+.m-block-normal {
+  padding-block: var(--padd-normal);
+}
+
+.m-block-medium {
+  padding-block: var(--padd-medium);
+}
+
+.m-block-high {
+  padding-block: var(--padd-high);
+}
+
 .m-normal {
   margin: var(--padd-normal);
 }
@@ -702,6 +714,9 @@ i.bi {
 
 .clr-bg-dark {
   background: var(--clr-dark);
+}
+.clr-bg-dark-50 {
+  background: var(--clr-dark-50);
 }
 
 .clr-bg-glass {

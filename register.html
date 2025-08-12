@@ -1,14 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/logo.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <title>Register New Account</title>
+    <style>
+      #signinForm {
+        display: grid;
+        gap: var(--size-300);
+        border: 1px solid var(--clr-flow);
+        background-color: var(--clr-glass);
+        color: var(--clr-secondary);
+        border-radius: var(--rounded);
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-</head>
+      }
+      #signinForm div {
+        display: flex;
+        gap: var(--size-300);
+      }
+      #signinForm div label {
+        font-weight: var(--fw-500);
+      }
+      #signinForm div input {
+        padding: var(--padd-tiny);
+        margin: 0 0 0 auto;
+        border-radius: var(--rounded);
+      }
 
-<body>
 
-</body>
+    </style>
+  </head>
 
+  <body>
+    <!-- LOGIN PAGE -->
+    <div
+      class="d-grid place-content-center pos-fixed inset-0 clr-bg-primary blur-effect"
+    >
+      <div class="pos-ab left m-high">
+        <a href="/index.html"
+          ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+        ></a>
+      </div>
+
+      <h2 class="h2 uppercase clr-text-light text-center">Sign Up</h2>
+      <form class="p-high m-top" id="signinForm">
+        <div>
+          <label for="userName">User Name :</label>
+          <input type="text" placeholder="Your name..." />
+        </div>
+        <div>
+          <label for="userName">Email :</label>
+          <input type="text" placeholder="Your email..." />
+        </div>
+        <div>
+          <label for="userName">Password :</label>
+          <input type="text" placeholder="Password..." />
+        </div>
+        <div>
+          <label for="userName">Re-type Password :</label>
+          <input type="text" placeholder="Enter again..." />
+        </div>
+        <div class="d-flex justify-content-center m-top-tiny">
+          <button class="btn rounded" type="submit">SUBMIT</button>
+          <button class="btn rounded" type="reset">RESET</button>
+        </div>
+      </form>
+    </div>
+
+    <header
+      class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow"
+    >
+      <div class="container">
+        <nav class="nav nav-md-visible d-grid space-between pos-rel">
+          <div class="align-self-center d-flex align-items-center">
+            <a href="/index.html">
+              <img class="logo | width-100" src="./img/logo.png" alt="" />
+            </a>
+          </div>
+          <div class="align-self-center">
+            <p class="banner h4 clr-text-accent">Code Islah</p>
+          </div>
+          <div class="d-grid m-top-tiny">
+            <div
+              class="border-common toggler toggler-md-hide p-tiny rounded d-flex place-content-center navbarToggler m-right"
+            >
+              <svg
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+              >
+                <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+                <path
+                  d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+                />
+              </svg>
+            </div>
+            <div
+              class="height-0 opacity-0 transition navbar-md-collapse"
+              id="navbar"
+            >
+              <ul class="text-right transition uppercase">
+                <li><a href="/index.html"> Home </a></li>
+                <li class="active">
+                  <a href="/login.html">Sign In</a>
+                </li>
+                <li>
+                  <a href="/downloads.html">Downloads</a>
+                </li>
+                <li>
+                  <a href="/chlng.html">Challenges</a>
+                </li>
+                <li>
+                  <a href="/playground.html">Playground</a>
+                </li>
+                <li>
+                  <a href="/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <script></script>
+  </body>
 </html>

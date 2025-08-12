@@ -11,8 +11,20 @@
     <link rel="stylesheet" href="./style/chlng.css" />
     <link rel="stylesheet" href="./style/bootstrap-icons.css" />
     <script defer src="./js/main.js"></script>
-    <title>Meet Your Challenges</title>
-    <style></style>
+    <title>Play Ground of Coding</title>
+    <style>
+      .jsText {
+        color: #e7e74a;
+      }
+
+      .container {
+        max-width: 992px;
+        margin: 0 auto;
+        padding: var(--padd-normal);
+        display: grid;
+        gap: var(--size-200);
+      }
+    </style>
   </head>
 
   <body>
@@ -48,15 +60,15 @@
               <ul class="text-right transition uppercase m-top-tiny">
                 <li><a href="/index.html"> Home </a></li>
                 <li>
-                  <a class="loginToggler" href="login.html">Sign In</a>
+                  <a href="login.html">Sign In</a>
                 </li>
                 <li>
                   <a href="/downloads.html">Downloads</a>
                 </li>
-                <li class="active">
+                <li>
                   <a href="/chlng.html">Challenges</a>
                 </li>
-                <li>
+                <li class="active">
                   <a href="/playground.html">Playground</a>
                 </li>
                 <li>
@@ -68,7 +80,110 @@
         </nav>
       </div>
     </header>
+    <main>
+      <div class="container clr-text-white">
+        <h2 class="m-block-high">Advance Use of Dev Tools</h2>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">
+            Check if you think some <i class="clr-text-light">styles</i> are
+            cascading from
+            <span onclick="giveColor()" class="jsText">JS</span> unnoticed :
+          </p>
+          <p>
+            Open DevTools on this page, click the JS word in selection mode then
+            you will see this in the markup, click on three dots, go to break on
+            then select attribute modification. This will make the execution to
+            pause then click on the text again a window will pop up which
+            indicates the modifications it has.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">With %c We can style inside console.log()</p>
+          <p>
+            Copy and paste this on the console : <br />
+            <span class="clr-text-light clr-bg-dark-50 p-tiny rounded"
+              >console.log('%c This is a styled text', 'font-size: 20px; color:
+              crimson; background-color:purple');</span
+            >
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">Console Variants</p>
+          <p class="clr-text-light clr-bg-dark-50 p-tiny rounded">
+            console.warn('Something is missing'); <br />
+            console.error('Something went wrong'); <br />
+            console.info('This is an unknown issue!') <br />
+            console.assert(p.classList.contains('dark-bg'), 'If false returns
+            this quote and for true nothing logs'); console.clear(); <br />
+            console.dir(); logs a comprehensive detail of the element, if is has
+            classes, datasets etc. <br />
+            console.groupCollapsed(from Obj) here more logs are grouped with
+            collapsible handler. console.groupEnd(from Obj) <br />
+            console.count('same') // same: 1 <br />
+            console.count('same')<br />
+            console.count('same') // same: 3<br />
+            console.time('starts and ends with same text') <br />
+            fetch(...)... <br />
+            console.timeEnd('starts and ends with same text'); <br />
+            console.table(an array) to show an array as a table.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">Setting Log Point</p>
+          <p>
+            You don't need to write log here and there in the code, go to dev
+            tool => Sources, right click on a number then Add logpoint, now it
+            logs on every time without having any manual log inside coding
+            interface. Furthermore, we can even add conditional breakpoint to
+            reveal unnoticed sneaky bugs.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">Check your usages of all files</p>
+          <p>
+            In the devTool click on three dots open More tools then click on
+            Coverage, refresh the window to see the unused bytes of files
+            attached to the current page.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">Inspecting an opened popup window</p>
+          <p>
+            Run command on devTool or press
+            <span class="uppercase"
+              ><i class="clr-text-light">ctrl+shift+p</i></span
+            >
+            to open it, type 'Rendering' then scroll below and check the Emulate
+            a focused page. Now a popup window wont disappear on click.
+          </p>
+          <p>
+            You can emulate media features such as prefers-color-scheme,
+            contrast, vision deficiencies and much more to explore.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">CSS Overview</p>
+          <p>
+            One of the best feature of More tools, It gives a full overview of
+            the CSS declarations in sections including the unused declarations.
+          </p>
+        </div>
+        <div class="border-common rounded p-normal">
+          <p class="lead fw-400">Add your own snippets</p>
+          <p>
+            Open the Sources tab then open the Snippets, make a snippet here to
+            use it anytime from any page.
+          </p>
+        </div>
+      </div>
+    </main>
+    <script>
+      function giveColor() {
+        const txt = document.querySelector(".jsText");
 
-    <script></script>
+        txt.style.color = "#CBCB41";
+        txt.style.fontSize = "24px";
+      }
+    </script>
   </body>
 </html>
