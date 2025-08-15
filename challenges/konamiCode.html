@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script src="/js/abstract.js" defer></script>
+    <link rel="icon" href="" />
+    <title>KONAMI CODE</title>
+  </head>
+
+  <body>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <div class="d-grid place-content-center p-high">
+      <h2>Type the secret code</h2>
+      <span
+        class="d-block m-top border-common rounded outline-common log p-medium clr-text-white"
+      ></span>
+    </div>
+    <script>
+      const log = document.querySelector(".log");
+      const pressed = [];
+      const secretCode = "islam";
+
+      window.addEventListener("keyup", (e) => {
+        pressed.push(e.key);
+        log.textContent = pressed.join("");
+        pressed.splice(
+          -secretCode.length - 1,
+          pressed.length - secretCode.length
+        );
+
+        if (pressed.join("").includes(secretCode)) {
+          abstractActive();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script src="/js/abstract.js" defer></script>
+    <title>Text Shadow On Mouse Move Event</title>
+    <style>
+      body {
+        height: 100vh;
+      }
+    </style>
+  </head>
+
+  <body class="d-grid place-items-center">
+    <div class="pos-ab top left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+
+    <div class="showcase">
+      <h1
+        class="p-high arabic-bolder fs-600 text-center clr-text-accent text-shadow h1"
+      >
+        Move Around Me!
+      </h1>
+    </div>
+
+    <script>
+      const showcase = document.querySelector(".showcase");
+      const text = showcase.querySelector("h1");
+      const walk = 100;
+
+      function shadow(e) {
+        const { offsetWidth: width, offsetHeight: height } = showcase;
+        let {offsetX: x, offsetY: y} = e;
+
+        if (condition) {
+            
+        }
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content=" " />
+  <meta name="description" content=" " />
+  <meta name="keywords" content=" " />
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png" />
+  <link rel="stylesheet" href="/style/style.css" />
+  <link rel="stylesheet" href="/style/chlng.css" />
+  <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+  <script src="/js/abstract.js" defer></script>
+  <title>Reference Vs Copy</title>
+  <style>
+    ol li {
+      list-style-type: decimal;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pos-ab left m-high">
+    <a href="/chlng.html"><i class="bi bi-arrow-90deg-left clr-text-white"></i></a>
+  </div>
+  <h4 class="arabic-bolder fs-600 text-center clr-text-accent text-shadow">
+    Reference Vs Copy
+  </h4>
+  <div class="container flow-tiny p-block-high width-md-75 m-auto">
+    <div class="clr-bg-glass p-medium rounded">
+      <h5 class="h5">
+        1. String, Number, Boolean can be copied by assigning to another
+        variable
+      </h5>
+      <p class="clr-text-white lead">
+        let a = 10; let b = a; both becomes 10; but if we change b a is not
+        changed unlike array. b = 9; Now, a is 10, but b is 9.
+      </p>
+    </div>
+    <div class="clr-bg-glass p-medium rounded">
+      <h5 class="h5">1. Array cannot be copied like others 3 data types</h5>
+      <p class="clr-text-white lead">
+        let arr = [1,2,3];
+
+        let arr2 = arr;
+
+        arr2[1] = 4;
+
+        Both has the same value now.
+
+        There are several ways to copy an array : <br>
+      <ol type="1" class="p-normal fw-400 clr-text-flow">
+        <li>arr.splice() without any parameters</li>
+        <li>[].concat(arr)</li>
+        <li>[...arr]</li>
+        <li>Array.from(arr)</li>
+      </ol>
+      </p>
+    </div>
+    <div class="clr-bg-glass p-medium rounded">
+      <h5 class="h5">1. Object also - assigning with another variable denotes reference </h5>
+      <p class="clr-text-white lead">
+        let a = {
+        name: 'mine',
+        age: 28
+        }
+
+        let a = b;
+
+        b['age'] = 29;
+
+        Both has the same value.
+
+        There are several ways to copy an object: <br>
+      <ol type="1" class="p-normal fw-400 clr-text-flow">
+        <li>Object.assign({}, anObj, {any : newValue})</li>
+        <li>{...anObj}</li>
+        <li>JSON.parse(JSON.stringify(anObj)) *Not recommended</li>
+
+      </ol>
+      </p>
+    </div>
+  </div>
+
+  <script>
+
+
+  </script>
+</body>
+
+</html>

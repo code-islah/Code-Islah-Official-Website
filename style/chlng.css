@@ -1,5 +1,31 @@
 section {
-    margin-block: var(--size-solid-100);
+  margin-block: var(--size-solid-100);
+}
+
+/* COUNTER*/
+
+.counter {
+  counter-reset: step;
+}
+.counter div {
+  counter-increment: step;
+  position: relative;
+}
+
+.counter div::after {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--size-600);
+  aspect-ratio: 1;
+  text-align: right;
+  padding: var(--size-100);
+  color: var(--clr-primary);
+  font-weight: var(--fw-300);
+  background: var(--clr-btn);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  border-top-right-radius: var(--rounded);
 }
 
 @media (min-width: 48em) {
@@ -17,5 +43,4 @@ section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
-
 }
