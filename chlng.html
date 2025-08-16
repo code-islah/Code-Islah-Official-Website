@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="stylesheet" href="./style/chlng.css" />
     <link rel="stylesheet" href="./style/bootstrap-icons.css" />
-    <script defer src="./js/main.js"></script>
+    <script defer src="/js/main.js"></script>
     <title>Meet Your Challenges</title>
     <style>
       .counter div {
@@ -52,12 +52,28 @@
         font-size: var(--fs-100);
         font-weight: var(--fw-600);
       }
+
+      .goTo input,
+      .goTo button {
+        padding: var(--size-100);
+      }
+
+      .goTo button {
+        border-top-right-radius: var(--rounded);
+        border-bottom-right-radius: var(--rounded);
+      }
+
+      .goTo input {
+        width: var(--size-solid-400);
+        border-top-left-radius: var(--rounded);
+        border-bottom-left-radius: var(--rounded);
+      }
     </style>
   </head>
 
   <body>
     <header
-      class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow"
+      class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow top"
     >
       <div class="container">
         <nav class="nav d-grid space-between pos-rel">
@@ -115,6 +131,15 @@
       >
         JavaScript
       </h1>
+      <div class="goTo right pos-fixed bottom m-high d-flex">
+        <input type="number" placeholder="E. 1" id="search" />
+        <button 
+          class="clr-bg-accent clr-text-white"
+          onclick="navigate()"
+        >
+          Go
+        </button>
+      </div>
       <div class="container">
         <section class="counter">
           <div class="border-common rounded p-medium shadow">
@@ -236,9 +261,7 @@
             <h4 class="h4">Slide In On Scroll</h4>
             <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
             <span class="percentages"></span>
-            <p class="p m-bottom-tiny">
-             Ordinary Image slide in on scroll.
-            </p>
+            <p class="p m-bottom-tiny">Ordinary Image slide in on scroll.</p>
             <a href="/challenges/slidenInOnScroll.html">
               <button class="btn rounded">Learn Now</button>
             </a>
@@ -248,7 +271,8 @@
             <p class="p fw-600 clr-text-light">Languages : JS</p>
             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
-             Know the difference between copy and reference for various data types.
+              Know the difference between copy and reference for various data
+              types.
             </p>
             <a href="/challenges/refVsCopy.html">
               <button class="btn rounded">Learn Now</button>
@@ -259,9 +283,32 @@
             <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
-            From hard approaches to easy one in handling with local storage and events.
+              From hard approaches to easy one in handling with local storage
+              and events.
             </p>
             <a href="/challenges/localStorage&EventDel.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow">
+            <h4 class="h4">Text Shadow on Mouse Move</h4>
+            <p class="p fw-600 clr-text-light">Languages : CSS & JS</p>
+            <span class="percentages"></span>
+            <p class="p m-bottom-tiny">
+              Move mouse around text to change CSS value.
+            </p>
+            <a href="/challenges/textShadowOnMouse.html">
+              <button class="btn rounded">Learn Now</button>
+            </a>
+          </div>
+          <div class="border-common rounded p-medium shadow">
+            <h4 class="h4">Sorting An Array Without Articles</h4>
+            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+            <span class="percentages"></span>
+            <p class="p m-bottom-tiny">
+              Usages of Array with Regular Expression.
+            </p>
+            <a href="/challenges/sortingWithoutArticles.html">
               <button class="btn rounded">Learn Now</button>
             </a>
           </div>
@@ -270,7 +317,7 @@
     </main>
 
     <script>
-      // COUNTS AND SHOWS THE NUMBER ON CHALLENGES
+   //   COUNTS AND SHOWS THE NUMBER ON CHALLENGES
 
       const counter = document.querySelectorAll(".counter div").length; //FROM CHLNG PAGE
       localStorage.setItem("countChlng", counter);
@@ -305,6 +352,27 @@
           parseInt(js) + "%"
         }</span>`;
       }
+
+      //
+      /*
+{
+    "0": {
+        "html": 32,
+        "css": 12,
+        "js": 10
+    },
+    "1": {
+        "html": 22,
+        "css": 5,
+        "js": 10
+    },
+    "2": {
+        "html": 12,
+        "css": 2,
+        "js": 4
+    }
+}
+      */
     </script>
     <!-- <script src="/js/count.js"></script> -->
   </body>

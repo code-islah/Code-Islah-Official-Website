@@ -20,17 +20,15 @@ function htmlCount() {
 }
 
 function cssCount() {
-    try {
-        
-        const cssCount = document.querySelector("style").textContent;
-    } catch (error) {
-       console.log(error);
-        
-       if (!cssCount) {
-         return;
-       }
-    }
+  try {
+    const cssCount = document.querySelector("style").textContent;
+  } catch (error) {
+    console.log(error);
 
+    if (!cssCount) {
+      return;
+    }
+  }
 
   const lines = cssCount.split("\n").map((line) => {
     return line.trim();

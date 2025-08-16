@@ -10,18 +10,6 @@ navbarToggler.addEventListener("click", () => {
   navbar.classList.toggle("opacity-0");
 });
 
-// ONLOAD
-window.onload = () => {
-  const chlngCountDisplayer = document.querySelector(
-    ".navbar-md-collapse > ul li:nth-child(4)"
-  );
-
-  chlngCountDisplayer.setAttribute(
-    "data-counted",
-    localStorage.getItem("countChlng")
-  );
-};
-
 // FIXING THE TOP HEADER
 window.onscroll = () => {
   if (document.documentElement.scrollHeight > 2000) {
@@ -82,3 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(element);
   });
 });
+
+// NAVIGATE TO ANY CHALLENGE
+
+function navigate() {
+  const list = document.querySelectorAll(".counter div");
+
+  let input = document.querySelector('.goTo input[type="number"]').value;
+
+  for (let i = 0; i < list.length; i++) {
+    list[i].setAttribute("ID", "item" + (i + 1));
+
+    if ("#item" + input) {
+      window.location.replace("#item" + input);
+    }
+  }
+}

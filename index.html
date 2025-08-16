@@ -517,5 +517,17 @@
         </h5>
       </div>
     </footer>
+    <script>
+      window.onload = () => {
+        const chlngCountDisplayer = document.querySelector(
+          ".navbar-md-collapse > ul li:nth-child(4)"
+        );
+
+        chlngCountDisplayer.setAttribute(
+          "data-counted",
+          localStorage.getItem("countChlng")
+        );
+      };
+    </script>
   </body>
 </html>

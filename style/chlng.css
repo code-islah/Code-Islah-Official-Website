@@ -22,10 +22,15 @@ section {
   text-align: right;
   padding: var(--size-100);
   color: var(--clr-primary);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-400);
   background: var(--clr-btn);
   clip-path: polygon(0 0, 100% 0, 100% 100%);
   border-top-right-radius: var(--rounded);
+}
+
+:target {
+  border: 2px solid var(--clr-flow);
+  transition: border 200ms linear;
 }
 
 @media (min-width: 48em) {

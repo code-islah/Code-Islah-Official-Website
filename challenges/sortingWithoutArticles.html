@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script src="/js/abstract.js" defer></script>
+    <link rel="icon" href="" />
+    <title>Sorting Without Articles</title>
+    <style>
+      ul,
+      li {
+        list-style-type: square;
+        line-height: 2.5;
+      }
+
+      .container {
+        padding: var(--size-200);
+        height: 100vh;
+        display: grid;
+        place-content: center;
+      }
+
+      .list {
+        background: var(--clr-white);
+        list-style-position: inside;
+        max-width: 450px;
+        width: 100vw;
+        border-radius: var(--rounded);
+      }
+
+      .list li {
+        color: var(--clr-dark);
+        padding: var(--size-100) var(--size-200);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+
+    <div class="container">
+      <ul class="list"></ul>
+      <p class="clr-text-warn p-tiny">
+        * actual array you get inside this page's script tag.
+      </p>
+    </div>
+
+    <script>
+      const list = document.querySelector(".list");
+      const arr = [
+        "A Book of Hadith",
+        "An old cover of Book",
+        "Life without light",
+        "Guidance from The Creator",
+        "The Iron",
+        "Search in yourself",
+        "The Journey for truth",
+        "We should follow the path",
+        "Heaven",
+        "Yaa, Rabbi",
+        "A moonlight night",
+        "Aim of life",
+        "An open discussion",
+      ];
+      const arr2 = arr.map((v) => {
+        return v.replace(/^(a | the | an)/i, "").trim();
+      });
+
+      const sorted = arr2.sort((a, b) => {
+        return a - b;
+      });
+
+      list.innerHTML = sorted
+        .map((v) => {
+          return `<li>${v}</li>`;
+        })
+        .join("");
+    </script>
+  </body>
+</html>

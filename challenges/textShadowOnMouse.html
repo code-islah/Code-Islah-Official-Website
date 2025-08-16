@@ -13,8 +13,14 @@
     <script src="/js/abstract.js" defer></script>
     <title>Text Shadow On Mouse Move Event</title>
     <style>
-      body {
+      .showcase {
         height: 100vh;
+        display: grid;
+        place-content: center;
+      }
+
+      h1 {
+        font-size: var(--size-solid-600) !important;
       }
     </style>
   </head>
@@ -41,13 +47,23 @@
 
       function shadow(e) {
         const { offsetWidth: width, offsetHeight: height } = showcase;
-        let {offsetX: x, offsetY: y} = e;
+        let { offsetX: x, offsetY: y } = e;
 
-        if (condition) {
-            
+        if (this !== e.target) {
+          x = x + e.target.offsetLeft;
+          y = y + e.target.offsetTop;
         }
+        const xWalk = Math.round((x / width) * walk - walk / 2);
+        const yWalk = Math.round((y / height) * walk - walk / 2);
+
+        text.style.textShadow = `${xWalk}px ${yWalk}px 0 var(--clr-light-50),${
+          xWalk * -1
+        }px ${yWalk}px 0 var(--clr-accent),${yWalk}px ${
+          xWalk * -1
+        }px 0 var(--clr-flow),${yWalk * -1}px ${xWalk}px 0 var(--clr-primary)`;
       }
 
+      showcase.addEventListener("mousemove", shadow);
     </script>
   </body>
 </html>
