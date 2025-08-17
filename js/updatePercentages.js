@@ -10,10 +10,8 @@ const branch = 'main';
 
 async function updateFile() {
   try {
-    console.log(`→ Fetching file: ${repo}/${branch}/${path}`);
 
     const { data: fileData } = await octokit.repos.getContent({ owner, repo, path, ref: branch });
-    console.log(`→ File SHA fetched: ${fileData.sha}`);
 
     let content = Buffer.from(fileData.content, 'base64').toString();
     let json = JSON.parse(content);
@@ -21,7 +19,6 @@ async function updateFile() {
 
     const newContent = Buffer.from(JSON.stringify(json, null, 2)).toString('base64');
 
-    console.log('→ Attempting to update the file...');
 
     await octokit.repos.createOrUpdateFileContents({
       owner, repo, path,

@@ -1,5 +1,6 @@
 section {
   margin-block: var(--size-solid-100);
+  gap: calc(var(--size-100) - 0.15rem);
 }
 
 /* COUNTER*/
@@ -28,8 +29,12 @@ section {
   border-top-right-radius: var(--rounded);
 }
 
+.percentage {
+ display: block;
+}
+
 :target {
-  border: 2px solid var(--clr-flow);
+  outline: 2px solid var(--clr-flow);
   transition: border 200ms linear;
 }
 

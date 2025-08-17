@@ -1,34 +1,35 @@
 function htmlCount() {
-  const htmlCount = document.querySelector("body").textContent;
-
+  const htmlCount = document.querySelector("body").innerHTML;
+  
   const lines = htmlCount.split("\n").map((line) => {
     return line.trim();
   });
-
+  
   const codeLines = lines.filter((line) => {
     return (
       line.length > 0 &&
       !line.startsWith("//") &&
       !line.startsWith("/*") &&
       !line.startsWith("*") &&
-      !line.startsWith("*/") &&
-      !line.startsWith("script")
+      !line.startsWith("*/")
     );
   });
 
-  return codeLines.length - jsCount();
+   return codeLines.length - jsCount();
 }
 
 function cssCount() {
-  try {
-    const cssCount = document.querySelector("style").textContent;
-  } catch (error) {
-    console.log(error);
-
-    if (!cssCount) {
-      return;
-    }
+  let cssCount = "";
+  if (document.querySelector("style")) {
+    cssCount = document
+      .querySelector("style")
+      .textContent.trim()
+      .replace(/\r\n/g, "\n");
   }
+
+  if (!cssCount) {
+    return 0;
+  } 
 
   const lines = cssCount.split("\n").map((line) => {
     return line.trim();
@@ -44,17 +45,28 @@ function cssCount() {
     );
   });
 
-  return codeLines.length;
+  if (codeLines.length === undefined) {
+    return 0;
+  } else {
+    return parseInt(codeLines.length);
+  }
 }
 
 function jsCount() {
-  const jsCount = document.querySelectorAll("script")[1].textContent;
+  let eachTagText = "";
+  const jsCount = document.querySelectorAll("script");
 
-  const lines = jsCount.split("\n").map((line) => {
+  jsCount.forEach((v) => {
+    if (!v.innerHTML.includes("refreshCSS()")) {
+      eachTagText += v.textContent;
+    }
+  });
+
+  const lines = eachTagText.split("\n").map((line) => {
     return line.trim();
   });
 
-  const codeLines = lines.filter((line) => {
+  let codeLines = lines.filter((line) => {
     return (
       line.length > 0 &&
       !line.startsWith("//") &&
@@ -64,11 +76,14 @@ function jsCount() {
     );
   });
 
-  return codeLines.length;
+  return parseInt(codeLines.length);
 }
 
-function caller() {
-  return htmlCount() || 0 + cssCount() || 0 + jsCount() || 0;
-}
+const displayer = document.querySelectorAll('.percentage span');
 
-console.log(caller());
+displayer[0].innerHTML = htmlCount() || 0;
+displayer[1].innerHTML = cssCount() || 0;
+displayer[2].innerHTML = jsCount() || 0;
+
+
+
