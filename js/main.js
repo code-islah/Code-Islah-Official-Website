@@ -1,3 +1,4 @@
+
 const navbarToggler = document.querySelector(".navbarToggler");
 const header = document.querySelector("header");
 const close = document.querySelector(".close");
@@ -22,6 +23,19 @@ window.onscroll = () => {
       header.classList.remove("pos-fixed");
     }
   }
+};
+
+// CHALLENGES COUNTED ON DOM LOAD
+window.onload = () => {
+  const chlngCountDisplayer = document.querySelector(
+    "#navbar > ul li:nth-child(4)"
+  );
+
+  fetch("/challenges/data/countData.json")
+    .then((res) => res.json())
+    .then((count) => {
+      chlngCountDisplayer.setAttribute("data-counted", count["count"]);
+    });
 };
 
 // TOOLTIP ON FOOTER

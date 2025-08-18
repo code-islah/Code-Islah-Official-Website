@@ -30,7 +30,7 @@ section {
 }
 
 .percentage {
- display: block;
+ display: none;
 }
 
 :target {

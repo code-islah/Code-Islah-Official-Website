@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="/style/chlng.css" />
     <link rel="stylesheet" href="/style/bootstrap-icons.css" />
-    <script defer src="/js/count.js"></script>
+    <script defer src="../js/count.js"></script>
     <title>Analog Clock</title>
     <style>
       .clock {
@@ -23,9 +23,9 @@
         position: relative;
         padding: var(--size-300);
         box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
-          inset 0 0 10px, 0 0 10px rgba(0, 0, 0, 0.2);
+        inset 0 0 10px, 0 0 10px rgba(0, 0, 0, 0.2);
       }
-
+      
       .clock-face {
         position: relative;
         width: 100%;
@@ -44,7 +44,7 @@
         transition: all 0.05s;
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
-
+      
       .center {
         position: absolute;
         left: 50%;
@@ -56,26 +56,26 @@
           rgba(203, 165, 37, 1),
           rgba(246, 218, 136, 1),
           #fff
-        );
-      }
-    </style>
+          );
+        }
+        </style>
   </head>
-
+  
   <body>
-     <!-- percentage count -->
-     <div class="percentage">
-      <span>12</span>
-      <span>24</span>
-      <span>36</span>
-     </div>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <div class="pos-ab left m-high">
       <a href="/chlng.html"
-        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
-      ></a>
-    </div>
-    <h4
+      ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+        ></a>
+      </div>
+      <h4
       class="arabic-bolder fs-600 text-center p-medium clr-text-accent text-shadow"
-    >
+      >
       Analog Clock
     </h4>
     <div class="clock">
@@ -86,39 +86,39 @@
         <div class="center circle"></div>
       </div>
     </div>
-
+    
     <script>
       const secondHand = document.querySelector(".second-hand");
       const minHand = document.querySelector(".min-hand");
       const hourHand = document.querySelector(".hour-hand");
-
+      
       function setDate() {
         const now = new Date();
-
+        
         const seconds = now.getSeconds();
         const secondsDegrees = (seconds / 60) * 360 + 90;
-
+        
         const mins = now.getMinutes();
         const minsDegrees = (mins / 60) * 360 + 90;
-
+        
         const hours = now.getHours();
         const hoursDegrees = (hours / 12) * 360 + 90;
-
+        
         secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
         minHand.style.transform = `rotate(${minsDegrees}deg)`;
         hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
       }
-
+      
       setInterval(setDate, 1000);
-    </script>
+      </script>
     <script>
       function htmlCount() {
         const htmlCount = document.querySelector("body").textContent;
-
+        
         const lines = htmlCount.split("\n").map((line) => {
           return line.trim();
         });
-
+        
         const codeLines = lines.filter((line) => {
           return (
             line.length > 0 &&
@@ -129,24 +129,24 @@
             !line.startsWith("script")
           );
         });
-
+        
         return codeLines.length - jsCount();
       }
-
+      
       function cssCount() {
         const cssCount = document
-          .querySelector("style")
-          .textContent.trim()
-          .replace(/\r\n/g, "\n");
-
+        .querySelector("style")
+        .textContent.trim()
+        .replace(/\r\n/g, "\n");
+        
         if (!cssCount) {
           return;
         }
-
+        
         const lines = cssCount.split("\n").map((line) => {
           return line.trim();
         });
-
+        
         const codeLines = lines.filter((line) => {
           return (
             line.length > 0 &&
@@ -156,17 +156,17 @@
             !line.startsWith("*/")
           );
         });
-
+        
         return codeLines.length;
       }
-
+      
       function jsCount() {
         const jsCount = document.querySelectorAll("script")[1].textContent;
-
+        
         const lines = jsCount.split("\n").map((line) => {
           return line.trim();
         });
-
+        
         const codeLines = lines.filter((line) => {
           return (
             line.length > 0 &&
@@ -176,15 +176,12 @@
             !line.startsWith("*/")
           );
         });
-
+        
         return codeLines.length;
       }
-
-
-      console.log(htmlCount());
-      console.log(cssCount());
-      console.log(jsCount());
-
-    </script>
+      
+      
+      </script>
   </body>
-</html>
+  </html>
+  

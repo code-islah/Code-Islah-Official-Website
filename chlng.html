@@ -110,7 +110,9 @@
                   <a href="/downloads.html">Downloads</a>
                 </li>
                 <li class="active">
-                  <a href="/chlng.html">Challenges</a>
+                  <a href="/chlng.html"
+                    >Challenges &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+                  >
                 </li>
                 <li>
                   <a href="/playground.html">Playground</a>
@@ -133,10 +135,7 @@
       </h1>
       <div class="goTo right pos-fixed bottom m-high d-flex">
         <input type="number" placeholder="E. 1" id="search" />
-        <button 
-          class="clr-bg-accent clr-text-white"
-          onclick="navigate()"
-        >
+        <button class="clr-bg-accent clr-text-white" onclick="navigate()">
           Go
         </button>
       </div>
@@ -214,7 +213,7 @@
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Canvas</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
+            <p class="p fw-600 clr-text-light">Languages : HTML & JS</p>
             <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Draw anything you want, not to behave like a child but to
@@ -317,30 +316,46 @@
     </main>
 
     <script>
-   //   COUNTS AND SHOWS THE NUMBER ON CHALLENGES
-
-      const counter = document.querySelectorAll(".counter div").length; //FROM CHLNG PAGE
-      localStorage.setItem("countChlng", counter);
-
       //SHOW PERCENTAGES
       const percentages = document.querySelectorAll(".percentages");
+      const links = document.querySelectorAll(".counter a");
 
       fetch("/challenges/data/percentages.json")
         .then((res) => res.json())
         .then((values) => {
+          const href = Array.from(links).map((a) => {
+            return a.href
+              .split("/")
+              .splice(length - 1, 1)
+              .join("");
+          });
           percentages.forEach((v, i) => {
-            showPercent(values, i);
+            showPercent(values, href, i);
           });
         });
 
-      function showPercent(data, i) {
-        let total = data[i].html + data[i].css + data[i].js;
-        let left = 100 - total;
-        let leftDist = left / 3;
+      function showPercent(data, name, i) {
+        let str = name[i].toString();
 
-        const html = data[i].html + leftDist;
-        const css = data[i].css + leftDist;
-        const js = data[i].js + leftDist;
+        const span1Value = data[str]["span1"];
+        const span2Value = data[str]["span2"];
+        const span3Value = data[str]["span3"];
+
+        let total = [
+          parseFloat(span1Value),
+          parseFloat(span2Value),
+          parseFloat(span3Value),
+        ];
+
+        let percentage = 100 / total.reduce((acc, v) => acc + v);
+
+        let multipleSpan1 = percentage * total[0];
+        let multipleSpan2 = percentage * total[1];
+        let multipleSpan3 = percentage * total[2];
+
+        const html = multipleSpan1;
+        const css = multipleSpan2;
+        const js = multipleSpan3;
 
         percentages[
           i
@@ -352,28 +367,6 @@
           parseInt(js) + "%"
         }</span>`;
       }
-
-      //
-      /*
-{
-    "0": {
-        "html": 32,
-        "css": 12,
-        "js": 10
-    },
-    "1": {
-        "html": 22,
-        "css": 5,
-        "js": 10
-    },
-    "2": {
-        "html": 12,
-        "css": 2,
-        "js": 4
-    }
-}
-      */
     </script>
-    <!-- <script src="/js/count.js"></script> -->
   </body>
 </html>

@@ -1,1 +1,77 @@
-{}
+{
+  "analogClock.html": {
+    "span1": "24",
+    "span2": "43",
+    "span3": "71"
+  },
+  "arrayMethods.html": {
+    "span1": "215",
+    "span2": "24",
+    "span3": "81"
+  },
+  "canvas.html": {
+    "span1": "15",
+    "span2": "0",
+    "span3": "41"
+  },
+  "checkbox.html": {
+    "span1": "56",
+    "span2": "27",
+    "span3": "20"
+  },
+  "fetchJSON.html": {
+    "span1": "23",
+    "span2": "53",
+    "span3": "41"
+  },
+  "flexibleImageGallery.html": {
+    "span1": "38",
+    "span2": "72",
+    "span3": "20"
+  },
+  "html5VideoPlayer.html": {
+    "span1": "27",
+    "span2": "136",
+    "span3": "59"
+  },
+  "huruf.html": {
+    "span1": "172",
+    "span2": "33",
+    "span3": "33"
+  },
+  "konamiCode.html": {
+    "span1": "15",
+    "span2": "0",
+    "span3": "14"
+  },
+  "localStorage&EventDel.html": {
+    "span1": "38",
+    "span2": "60",
+    "span3": "53"
+  },
+  "refVsCopy.html": {
+    "span1": "58",
+    "span2": "4",
+    "span3": "0"
+  },
+  "slidenInOnScroll.html": {
+    "span1": "216",
+    "span2": "29",
+    "span3": "31"
+  },
+  "sortingWithoutArticles.html": {
+    "span1": "16",
+    "span2": "23",
+    "span3": "27"
+  },
+  "textShadowOnMouse.html": {
+    "span1": "16",
+    "span2": "8",
+    "span3": "19"
+  },
+  "updateCSSvarWithJS.html": {
+    "span1": "23",
+    "span2": "20",
+    "span3": "12"
+  }
+}
