@@ -329,9 +329,11 @@
               .splice(length - 1, 1)
               .join("");
           });
-          percentages.forEach((v, i) => {
-            showPercent(values, href, i);
-          });
+          setTimeout(() => {
+            percentages.forEach((v, i) => {
+              showPercent(values, href, i);
+            });
+          }, 1000);
         });
 
       function showPercent(data, name, i) {
