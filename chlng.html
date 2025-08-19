@@ -323,25 +323,17 @@
       fetch("/challenges/data/percentages.json")
         .then((res) => res.json())
         .then((values) => {
-          const href = Array.from(links).map((a) => {
-            return a.href
-              .split("/")
-              .splice(length - 1, 1)
-              .join("");
-            console.log(href);
-          });
-
-          percentages.forEach((v, i) => {
-            showPercent(values, href, i);
+             percentages.forEach((v, i) => {
+            showPercent(values, i);
           });
         });
 
-      function showPercent(data, name, i) {
-        let str = name[i].toString();
+      function showPercent(data, i) {
+       
 
-        const span1Value = data[str]["span1"];
-        const span2Value = data[str]["span2"];
-        const span3Value = data[str]["span3"];
+        const span1Value = data[i]["span1"];
+        const span2Value = data[i]["span2"];
+        const span3Value = data[i]["span3"];
 
         let total = [
           parseFloat(span1Value),
@@ -351,13 +343,9 @@
 
         let percentage = 100 / total.reduce((acc, v) => acc + v);
 
-        let multipleSpan1 = percentage * total[0];
-        let multipleSpan2 = percentage * total[1];
-        let multipleSpan3 = percentage * total[2];
-
-        const html = multipleSpan1;
-        const css = multipleSpan2;
-        const js = multipleSpan3;
+        let html = percentage * total[0];
+        let css = percentage * total[1];
+        let js = percentage * total[2];
 
         percentages[
           i
