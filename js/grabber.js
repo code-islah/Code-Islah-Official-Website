@@ -23,6 +23,7 @@ async function extractWithProperLoading() {
     .readdirSync("./challenges")
     .filter((f) => f.endsWith(".html"));
 
+  let index = 0;
   for (const file of files) {
     const absolutePath = path.resolve("./challenges", file);
     try {
@@ -56,20 +57,21 @@ async function extractWithProperLoading() {
         els.slice(0, 3).map((el) => el.textContent.trim())
       );
 
-      results[file] = {
+      results[index.toString()] = {
         span1: spans[0],
         span2: spans[1],
         span3: spans[2],
       };
     } catch (err) {
       console.error(`Failed on ${file}:`, err);
-      results[file] = { error: err.message };
+      results[index.toString()] = { error: err.message };
 
       // Capture debug info
       await page.screenshot({ path: `debug_${file}.png` });
       const html = await page.content();
       fs.writeFileSync(`debug_${file}.html`, html);
     }
+    index++;
   }
 
   await browser.close();
