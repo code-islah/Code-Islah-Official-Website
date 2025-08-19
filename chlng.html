@@ -328,12 +328,12 @@
               .split("/")
               .splice(length - 1, 1)
               .join("");
+            console.log(href);
           });
-          setTimeout(() => {
-            percentages.forEach((v, i) => {
-              showPercent(values, href, i);
-            });
-          }, 5000);
+
+          percentages.forEach((v, i) => {
+            showPercent(values, href, i);
+          });
         });
 
       function showPercent(data, name, i) {
