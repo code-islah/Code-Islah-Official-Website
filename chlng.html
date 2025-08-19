@@ -20,6 +20,7 @@
           var(--clr-dark-50)
         );
       }
+
       .counter div:nth-child(odd) {
         background: var(--clr-glass);
       }
@@ -35,13 +36,15 @@
       }
 
       .htmlColor {
-        background-color: #e37631;
+        background-color: var(--clr-html);
       }
+
       .cssColor {
-        background-color: #469aba;
+        background-color: var(--clr-css);
       }
+
       .jsColor {
-        background-color: #cbcb41;
+        background-color: var(--clr-js);
       }
 
       .htmlColor,
@@ -67,6 +70,31 @@
         width: var(--size-solid-400);
         border-top-left-radius: var(--rounded);
         border-bottom-left-radius: var(--rounded);
+      }
+
+      /* LANGUAGE DOTS */
+      .langDots {
+        display: inline-flex;
+        gap: var(--size-100);
+      }
+
+      .langDots span {
+        display: inline-block;
+        border-radius: 50%;
+        width: calc(var(--size-300) - 2px);
+        aspect-ratio: 1;
+      }
+
+      .langDots span:first-child {
+        background-color: var(--clr-html);
+      }
+
+      .langDots span:nth-child(2) {
+        background-color: var(--clr-css);
+      }
+
+      .langDots span:nth-child(3) {
+        background-color: var(--clr-js);
       }
     </style>
   </head>
@@ -143,172 +171,273 @@
         <section class="counter">
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Alif Baa Taa</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Every button clicking vocals the correct pronunciation of the
               letter.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/huruf.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Analog Clock</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-
-            <span class="percentages"></span>
-
             <p class="p m-bottom-tiny">
               It has some mathematical approaches to follow.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+
+            <span class="percentages"></span>
+
             <a href="/challenges/analogClock.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Update CSS Variable with JS</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               New concept of changing style declarations.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
 
             <a href="/challenges/updateCSSvarWithJS.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Array Methods Practice</h4>
-            <p class="p fw-600 clr-text-light">Languages : JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Most of array methods which are super handy to manipulate data.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/arrayMethods.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Flexible Image Gallery</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Where flex-grow got the focus of the developers.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/flexibleImageGallery.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">AJAX Type Ahead with fetch()</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Strength your ability by working with large databases.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/fetchJSON.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Canvas</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Draw anything you want, not to behave like a child but to
               comprehend the basics of canvas.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/canvas.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Checkboxes Multi Selection</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Select multi checkboxes at once, a tricky JS Project.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/checkbox.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">HTML 5 Video Player</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Control the video using your JS powered custom controls.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/html5VideoPlayer.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">KONAMI Code</h4>
-            <p class="p fw-600 clr-text-light">Languages : CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Find the secret code and unlock the abstract pattern.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/konamiCode.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Slide In On Scroll</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">Ordinary Image slide in on scroll.</p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/slidenInOnScroll.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Reference Vs Copy</h4>
-            <p class="p fw-600 clr-text-light">Languages : JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Know the difference between copy and reference for various data
               types.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/refVsCopy.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">LocalStorage & Event Delegation</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               From hard approaches to easy one in handling with local storage
               and events.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/localStorage&EventDel.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Text Shadow on Mouse Move</h4>
-            <p class="p fw-600 clr-text-light">Languages : CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Move mouse around text to change CSS value.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/textShadowOnMouse.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
           <div class="border-common rounded p-medium shadow">
             <h4 class="h4">Sorting An Array Without Articles</h4>
-            <p class="p fw-600 clr-text-light">Languages : HTML, CSS & JS</p>
-            <span class="percentages"></span>
             <p class="p m-bottom-tiny">
               Usages of Array with Regular Expression.
             </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+                ><span></span>
+                <span></span>
+                <span></span
+              ></span>
+              : HTML, CSS & JS
+            </p>
+            <span class="percentages"></span>
             <a href="/challenges/sortingWithoutArticles.html">
-              <button class="btn rounded">Learn Now</button>
+              <button class="btn rounded m-top-tiny">Learn Now</button>
             </a>
           </div>
         </section>
@@ -323,14 +452,12 @@
       fetch("/challenges/data/percentages.json")
         .then((res) => res.json())
         .then((values) => {
-             percentages.forEach((v, i) => {
+          percentages.forEach((v, i) => {
             showPercent(values, i);
           });
         });
 
       function showPercent(data, i) {
-       
-
         const span1Value = data[i]["span1"];
         const span2Value = data[i]["span2"];
         const span3Value = data[i]["span3"];
@@ -340,6 +467,8 @@
           parseFloat(span2Value),
           parseFloat(span3Value),
         ];
+
+        dotsOutliner(total, i);
 
         let percentage = 100 / total.reduce((acc, v) => acc + v);
 
@@ -356,6 +485,30 @@
         }</span><span class="jsColor" style="width:${js}%">${
           parseInt(js) + "%"
         }</span>`;
+      }
+
+      function dotsOutliner(arr, i) {
+        const dots = document.querySelectorAll(".langDots");
+
+        let values = arr.map((v) => parseFloat(v));
+        // Get sorted indices (descending)
+        let sortedIndices = values
+          .map((v, idx) => [v, idx])
+          .sort((a, b) => b[0] - a[0])
+          .map((pair) => pair[1]);
+
+        // Outline widths: highest gets 3px, middle 2px, lowest 1px
+        let outlines = [0, 0, 0];
+        outlines[sortedIndices[0]] = 3;
+        outlines[sortedIndices[1]] = 2;
+        outlines[sortedIndices[2]] = 1;
+
+        const colors = ["var(--clr-html)", "var(--clr-css)", "var(--clr-js)"];
+        dots[i].innerHTML = `
+          <span style="outline:${outlines[0]}px solid ${colors[0]}"></span>
+          <span style="outline:${outlines[1]}px solid ${colors[1]}"></span>
+          <span style="outline:${outlines[2]}px solid ${colors[2]}"></span>
+        `;
       }
     </script>
   </body>
