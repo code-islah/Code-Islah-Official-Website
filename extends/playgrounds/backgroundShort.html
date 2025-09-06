@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Background Properties</title>
+        <style type="text/css" media="all">
+            body {
+                font-family: "Segoe UI", sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: #f5f5f5;
+            }
+
+            .controls {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            .control-group {
+                margin: 15px 0;
+            }
+
+            label {
+                display: inline-block;
+                width: 150px;
+                font-weight: bold;
+            }
+
+            input[type="range"],
+            select,
+            input[type="color"] {
+                vertical-align: middle;
+            }
+
+            .demo-area {
+                height: 500px;
+                border: 2px dashed #ccc;
+                position: relative;
+                overflow: auto;
+                transition: all 0.3s ease;
+            }
+
+            .content-box {
+                padding: 20px;
+                color: #333;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .controls {
+                    padding: 10px;
+                }
+                label {
+                    width: 100%;
+                    display: block;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="controls">
+            <h1>CSS Background Properties Playground</h1>
+
+            <!-- Image URL Input -->
+            <div class="control-group">
+                <label for="bg-image">Image URL:</label>
+                <input
+                    type="text"
+                    id="bg-image"
+                    value="./imgs/quran.jpg"
+                />
+            </div>
+
+            <!-- Background Position https://picsum.photos/800/600-->
+            <div class="control-group">
+                <label for="bg-position-x">Position X:</label>
+                <input
+                    type="range"
+                    id="bg-position-x"
+                    min="0"
+                    max="100"
+                    value="50"
+                />
+                <span id="position-x-value">50%</span>
+
+                <label for="bg-position-y">Position Y:</label>
+                <input
+                    type="range"
+                    id="bg-position-y"
+                    min="0"
+                    max="100"
+                    value="50"
+                />
+                <span id="position-y-value">50%</span>
+            </div>
+
+            <!-- Background Size -->
+            <div class="control-group">
+                <label for="bg-size">Size:</label>
+                <select id="bg-size">
+                    <option value="auto">auto</option>
+                    <option value="cover" selected>cover</option>
+                    <option value="contain">contain</option>
+                    <option value="custom">custom</option>
+                </select>
+                <div id="custom-size-controls" style="display: none">
+                    <input
+                        type="range"
+                        id="bg-size-width"
+                        min="0"
+                        max="200"
+                        value="100"
+                    />
+                    <span id="size-width-value">100%</span>
+                    <input
+                        type="range"
+                        id="bg-size-height"
+                        min="0"
+                        max="200"
+                        value="100"
+                    />
+                    <span id="size-height-value">100%</span>
+                </div>
+            </div>
+
+            <!-- Background Repeat -->
+            <div class="control-group">
+                <label for="bg-repeat">Repeat:</label>
+                <select id="bg-repeat">
+                    <option value="no-repeat" selected>no-repeat</option>
+                    <option value="repeat">repeat</option>
+                    <option value="repeat-x">repeat-x</option>
+                    <option value="repeat-y">repeat-y</option>
+                    <option value="space">space</option>
+                    <option value="round">round</option>
+                </select>
+            </div>
+
+            <!-- Background Attachment -->
+            <div class="control-group">
+                <label for="bg-attachment">Attachment:</label>
+                <select id="bg-attachment">
+                    <option value="scroll" selected>scroll</option>
+                    <option value="fixed">fixed</option>
+                    <option value="local">local</option>
+                </select>
+            </div>
+
+            <!-- Background Color -->
+            <div class="control-group">
+                <label for="bg-color">Background Color:</label>
+                <input type="color" id="bg-color" value="#ffffff" />
+            </div>
+        </div>
+
+        <!-- Demo Area -->
+        <div class="demo-area" id="demo-area">
+            <p>Drag the sliders to see changes in real-time!</p>
+            <div class="content-box">
+                Scrollable content to test attachment behavior...
+                <div style="height: 200vh"></div>
+            </div>
+        </div>
+
+        <script>
+            // DOM Elements
+            const demoArea = document.getElementById("demo-area");
+            const bgImageInput = document.getElementById("bg-image");
+            const bgPosX = document.getElementById("bg-position-x");
+            const bgPosY = document.getElementById("bg-position-y");
+            const posXValue = document.getElementById("position-x-value");
+            const posYValue = document.getElementById("position-y-value");
+            const bgSizeSelect = document.getElementById("bg-size");
+            const customSizeControls = document.getElementById(
+                "custom-size-controls"
+            );
+            const bgSizeWidth = document.getElementById("bg-size-width");
+            const bgSizeHeight = document.getElementById("bg-size-height");
+            const sizeWidthValue = document.getElementById("size-width-value");
+            const sizeHeightValue =
+                document.getElementById("size-height-value");
+            const bgRepeat = document.getElementById("bg-repeat");
+            const bgAttachment = document.getElementById("bg-attachment");
+            const bgColor = document.getElementById("bg-color");
+
+            // Update background properties
+            function updateBackground() {
+                // Get all values
+                const imageUrl = bgImageInput.value;
+                const posX = bgPosX.value + "%";
+                const posY = bgPosY.value + "%";
+                const sizeValue = bgSizeSelect.value;
+                const repeatValue = bgRepeat.value;
+                const attachmentValue = bgAttachment.value;
+                const colorValue = bgColor.value;
+
+                // Handle custom size
+                let size = sizeValue;
+                if (sizeValue === "custom") {
+                    size = `${bgSizeWidth.value}% ${bgSizeHeight.value}%`;
+                }
+
+                // Apply styles
+                demoArea.style.background = `${colorValue} url("${imageUrl}") ${posX} ${posY} / ${size} ${repeatValue} ${attachmentValue}`;
+
+                // Update displayed values
+                posXValue.textContent = posX;
+                posYValue.textContent = posY;
+                if (sizeValue === "custom") {
+                    sizeWidthValue.textContent = bgSizeWidth.value + "%";
+                    sizeHeightValue.textContent = bgSizeHeight.value + "%";
+                }
+            }
+
+            // Toggle custom size controls
+            bgSizeSelect.addEventListener("change", function () {
+                customSizeControls.style.display =
+                    this.value === "custom" ? "block" : "none";
+                updateBackground();
+            });
+
+            // Event listeners for all controls
+            [
+                bgImageInput,
+                bgPosX,
+                bgPosY,
+                bgSizeSelect,
+                bgSizeWidth,
+                bgSizeHeight,
+                bgRepeat,
+                bgAttachment,
+                bgColor
+            ].forEach(element => {
+                element.addEventListener("input", updateBackground);
+            });
+
+            // Initialize
+            updateBackground();
+        </script>
+    </body>
+</html>

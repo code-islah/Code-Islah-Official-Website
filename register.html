@@ -14,13 +14,15 @@
       #signinForm {
         display: grid;
         gap: var(--size-300);
-        border: 1px solid var(--clr-flow);
+        border: 1px solid var(--clr-secondary);
         background-color: var(--clr-glass);
         color: var(--clr-secondary);
         border-radius: var(--rounded);
       }
       #signinForm div {
+        position: relative;
         display: flex;
+        align-items: center;
         gap: var(--size-300);
       }
       #signinForm div label {
@@ -30,6 +32,44 @@
         padding: var(--padd-tiny);
         margin: 0 0 0 auto;
         border-radius: var(--rounded);
+      }
+
+      label {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      label::after {
+        color: var(--clr-light);
+      }
+
+      label[for="name"]::after {
+        content: attr(data-name);
+      }
+      label[for="email"]::after {
+        content: attr(data-email);
+      }
+      label[for="password"]::after {
+        content: attr(data-password);
+      }
+
+      .togglerIcon {
+        border: 2px solid var(--clr-secondary);
+        width: var(--size-400);
+        height: var(--size-300);
+        cursor: pointer;
+        border-radius: var(--circle);
+        z-index: 10;
+        position: absolute;
+        right: 2%;
+        display: grid;
+        place-content: center;
+      }
+
+      .togglerIcon::after {
+        content: "0";
       }
     </style>
   </head>
@@ -48,20 +88,44 @@
       <h2 class="h2 uppercase clr-text-light text-center">Sign Up</h2>
       <form class="p-high m-top" id="signinForm">
         <div>
-          <label for="userName">User Name :</label>
-          <input type="text" placeholder="Your name..." />
+          <label data-name="6" for="name">User Name :</label>
+          <input
+            id="userName"
+            type="text"
+            placeholder="Your name..."
+            autocomplete="true"
+            required
+          />
         </div>
         <div>
-          <label for="userName">Email :</label>
-          <input type="text" placeholder="Your email..." />
+          <label data-email="@mail.com" for="email">Email :</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Your email..."
+            autocomplete="true"
+            required
+          />
         </div>
         <div>
-          <label for="userName">Password :</label>
-          <input type="text" placeholder="Password..." />
+          <label data-password="6" for="password">Password :</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Password..."
+            autocomplete="true"
+            required
+          />
         </div>
         <div>
-          <label for="userName">Re-type Password :</label>
-          <input type="text" placeholder="Enter again..." />
+          <label for="rePass">Re-type Password :</label>
+          <input
+            id="rePass"
+            type="password"
+            placeholder="Enter again..."
+            autocomplete="true"
+            required
+          />
         </div>
         <div class="d-flex justify-content-center m-top-tiny">
           <button class="btn rounded" type="submit">SUBMIT</button>
@@ -70,63 +134,94 @@
       </form>
     </div>
 
-    <header
-      class="clr-bg-primary clr-text-light z-100 width-100 blur-effect shadow"
-    >
-      <div class="container">
-        <nav class="nav nav-md-visible d-grid space-between pos-rel">
-          <div class="align-self-center d-flex align-items-center">
-            <a href="/index.html">
-              <img class="logo | width-100" src="./img/logo.png" alt="" />
-            </a>
-          </div>
-          <div class="align-self-center">
-            <p class="banner h4 clr-text-accent">Code Islah</p>
-          </div>
-          <div class="d-grid m-top-tiny">
-            <div
-              class="border-common toggler toggler-md-hide p-tiny rounded d-flex place-content-center navbarToggler m-right"
-            >
-              <svg
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-              >
-                <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
-                <path
-                  d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
-                />
-              </svg>
-            </div>
-            <div
-              class="height-0 opacity-0 transition navbar-md-collapse"
-              id="navbar"
-            >
-              <ul class="text-right transition uppercase">
-                <li><a href="/index.html"> Home </a></li>
-                <li class="active">
-                  <a href="/login.html">Sign In</a>
-                </li>
-                <li>
-                  <a href="/downloads.html">Downloads</a>
-                </li>
-                <li>
-                  <a href="/chlng.html"
-                    >Challenges &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
-                  >
-                </li>
-                <li>
-                  <a href="/playground.html">Playground</a>
-                </li>
-                <li>
-                  <a href="/about.html">About</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <script></script>
+    <script>
+      const form = document.querySelector("#signinForm");
+      const inputs = document.querySelectorAll("input");
+      let flipper = 0;
+
+      inputs.forEach((inp) => {
+        inp.addEventListener("focus", (e) => {
+          e.target.style.outline = "3px solid var(--clr-white)";
+        });
+        inp.addEventListener("blur", (e) => {
+          e.target.style.outline = "";
+        });
+      });
+
+      inputs.forEach((input) => {
+        input.addEventListener("input", (e) => {
+          let currentData = e.target.previousElementSibling.getAttribute("for");
+          if (currentData !== "email") {
+            input.previousElementSibling.dataset[currentData] = lengthChecker(
+              input.value.length
+            );
+          }
+
+          function lengthChecker(v) {
+            let n = input.previousElementSibling.dataset[currentData];
+
+            if (v > flipper) {
+              flipper = v;
+              if (v <= 6 && n >= 0) {
+                n--;
+              }
+            } else {
+              flipper = v;
+              if (v < 6) {
+                n++;
+              }
+            }
+            return n;
+          }
+        });
+      });
+
+      Array.from(inputs)
+        .filter((inp) => {
+          return inp.type === "password";
+        })
+        .forEach((inp) => {
+          let togglerIcon = document.createElement("span");
+          togglerIcon.classList.add("togglerIcon");
+          inp.parentElement.appendChild(togglerIcon);
+          togglerIcon.addEventListener("click", (e) => {
+            if (e.target.previousElementSibling.type === "text") {
+              e.target.previousElementSibling.type = "password";
+            } else {
+              e.target.previousElementSibling.type = "text";
+            }
+          });
+        });
+
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const inputName = document.querySelector("#userName").value.trim();
+        const inputEmail = document.querySelector("#email").value.trim();
+        const inputPass = document.querySelector("#password").value.trim();
+        const inputRePass = document.querySelector("#rePass").value.trim();
+
+        if (
+          inputName.length > 6 &&
+          inputPass.length > 6 &&
+          inputPass === inputRePass
+        ) {
+          const userData = {inputName, inputEmail, inputPass};
+          
+          
+        } else {
+          form.style.border = "1px solid red";
+          form.addEventListener("transitionend", () => {
+            form.style.border = "";
+          });
+        }
+
+
+
+
+
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flex Shorthand</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9fafb;
+      background-image: url('imgs/pattern.jpg');
+      background-size: 50px 50px;
+      padding: 30px;
+      text-align: center;
+    }.row {
+  display: flex;
+  background-color: #e5e7eb;
+  padding: 10px;
+  height: 150px;
+  transition: all 0.3s;
+}
+
+.box {
+  margin: 10px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  padding-top: 60px;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.brother1 { background: #38bdf8; }
+.brother2 { background: #4ade80; }
+.brother3 { background: #f472b6; }
+
+label, select {
+  margin: 10px;
+  font-size: 16px;
+}
+
+.controls {
+  margin-bottom: 30px;
+}
+
+  </style>
+</head>
+<body>  <h2>🕌 Flex Shorthand – Interactive Salah Row Analogy</h2>  <div class="controls">
+    <div>
+      <label>Brother 1:</label>
+      <select onchange="updateFlex(0, this.value)">
+        <option value="1 1 200px">flex: 1 1 200px</option>
+        <option value="0 1 200px">flex: 0 1 200px</option>
+        <option value="2 0 100px">flex: 2 0 100px</option>
+      </select>
+    </div>
+    <div>
+      <label>Brother 2:</label>
+      <select onchange="updateFlex(1, this.value)">
+        <option value="0 1 200px">flex: 0 1 200px</option>
+        <option value="1 1 100px">flex: 1 1 100px</option>
+        <option value="2 1 150px">flex: 2 1 150px</option>
+      </select>
+    </div>
+    <div>
+      <label>Brother 3:</label>
+      <select onchange="updateFlex(2, this.value)">
+        <option value="2 1 150px">flex: 2 1 150px</option>
+        <option value="1 0 150px">flex: 1 0 150px</option>
+        <option value="1 1 0">flex: 1 1 0</option>
+      </select>
+    </div>
+  </div>  <div class="row">
+    <div class="box brother1" style="flex: 1 1 200px;">Brother 1<br><small class="desc">flex: 1 1 200px</small></div>
+    <div class="box brother2" style="flex: 0 1 200px;">Brother 2<br><small class="desc">flex: 0 1 200px</small></div>
+    <div class="box brother3" style="flex: 2 1 150px;">Brother 3<br><small class="desc">flex: 2 1 150px</small></div>
+  </div>  <p>↔ Resize the window to observe how each "brother" behaves.</p>  <script>
+    function updateFlex(index, value) {
+      const boxes = document.querySelectorAll('.box');
+      const descs = document.querySelectorAll('.desc');
+      boxes[index].style.flex = value;
+      descs[index].textContent = 'flex: ' + value;
+    }
+  </script></body>
+</html>

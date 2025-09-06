@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid Playground - The Divine Layout System</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #f72585;
+      --dark: #212529;
+      --light: #f8f9fa;
+      --gold: #ffd700;
+      --islamic-green: #228B22;
+    }
+    
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Amiri', 'Traditional Arabic', serif;
+      line-height: 1.6;
+      background: #f5f7fa;
+      color: var(--dark);
+      padding: 20px;
+      background-image: radial-gradient(circle, #f0f0f0 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--islamic-green), #1a5a1a);
+      color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    .subtitle {
+      font-style: italic;
+      opacity: 0.9;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+    }
+    
+    /* Controls Panel - Like a Mihrab Direction */
+    .controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+      border-right: 3px solid var(--gold);
+    }
+    
+    .control-group {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+    
+    .control-group:last-child {
+      border-bottom: none;
+    }
+    
+    .control-group h3 {
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Amiri', serif;
+    }
+    
+    .control-group h3::before {
+      content: "◯";
+      color: var(--islamic-green);
+      font-size: 0.8em;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    select, input[type="range"], input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      font-family: inherit;
+    }
+    
+    /* Demo Area - Like a Mosque Courtyard */
+    .demo-area {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+      border: 1px solid #eee;
+    }
+    
+    /* Grid Container - The Divine Structure */
+    .grid-container {
+      display: grid;
+      min-height: 500px;
+      background: #f8f8f8;
+      border: 2px dashed #ccc;
+      padding: 10px;
+      gap: 10px;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    /* Grid Items - Like Tiles in Islamic Patterns */
+    .grid-item {
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      min-height: 60px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .grid-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(45deg, transparent 65%, rgba(255,255,255,0.3) 65%),
+        linear-gradient(-45deg, transparent 65%, rgba(255,255,255,0.3) 65%);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+    
+    .grid-item:nth-child(1) { background: #4361ee; } /* Blue */
+    .grid-item:nth-child(2) { background: #3f37c9; } /* Deep Blue */
+    .grid-item:nth-child(3) { background: #4895ef; } /* Light Blue */
+    .grid-item:nth-child(4) { background: #4cc9f0; } /* Cyan */
+    .grid-item:nth-child(5) { background: #7209b7; } /* Purple */
+    .grid-item:nth-child(6) { background: #b5179e; } /* Magenta */
+    .grid-item:nth-child(7) { background: #f72585; } /* Pink */
+    .grid-item:nth-child(8) { background: #3a0ca3; } /* Royal Blue */
+    .grid-item:nth-child(9) { background: #480ca8; } /* Violet */
+    
+    /* Islamic Geometric Overlay */
+    .grid-item::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.1) 60%),
+        repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.1) 5px, rgba(255,255,255,0.1) 10px);
+      pointer-events: none;
+    }
+    
+    /* Code Preview - Like Illuminated Manuscript */
+    .code-preview {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--islamic-green);
+      position: relative;
+    }
+    
+    .code-preview::before {
+      content: "⌨";
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: var(--islamic-green);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    
+    /* Property Table - Like a Scholar's Notes */
+    .property-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      font-family: 'Amiri', serif;
+    }
+    
+    .property-table th, .property-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .property-table th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: var(--islamic-green);
+      border-bottom: 2px solid var(--gold);
+    }
+    
+    .property-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    /* Visual Guide - Like Geometric Patterns */
+    .visual-guide {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .visual-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-top: 3px solid var(--islamic-green);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .visual-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background: var(--gold);
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+    }
+    
+    .visual-card h4 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+    }
+    
+    /* Responsive Design - Like Adaptive Islamic Architecture */
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        position: static;
+        margin-bottom: 2rem;
+      }
+      
+      .grid-container {
+        min-height: 300px;
+      }
+    }
+    
+    /* Special Elements */
+    .value-display {
+      display: inline-block;
+      min-width: 40px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--islamic-green);
+    }
+    
+    .islamic-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(36deg, 
+          transparent, 
+          transparent 10px, 
+          rgba(58, 12, 163, 0.1) 10px, 
+          rgba(58, 12, 163, 0.1) 20px),
+        repeating-linear-gradient(72deg, 
+          transparent, 
+          transparent 10px, 
+          rgba(114, 9, 183, 0.1) 10px, 
+          rgba(114, 9, 183, 0.1) 20px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    /* Toggle Switch - Like a Mosque Lamp */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: var(--islamic-green);
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Islamic Pattern Overlay -->
+  <div class="islamic-pattern"></div>
+  
+  <header>
+    <h1>CSS Grid Playground</h1>
+    <p class="subtitle">"And We have made the heaven a roof, well-protected" (Quran 21:32)</p>
+  </header>
+  
+  <div class="container">
+    <div class="controls">
+      <!-- Grid Template Controls - Like the Foundation of a Mosque -->
+      <div class="control-group">
+        <h3>Grid Template</h3>
+        
+        <label>grid-template-columns <span id="columns-value" class="value-display">1fr 1fr 1fr</span></label>
+        <input type="text" id="grid-columns" value="1fr 1fr 1fr" placeholder="e.g.: 1fr 1fr 1fr">
+        
+        <label>grid-template-rows <span id="rows-value" class="value-display">100px auto</span></label>
+        <input type="text" id="grid-rows" value="100px auto" placeholder="e.g.: 100px auto">
+        
+        <label>grid-template-areas</label>
+        <textarea id="grid-areas" rows="3" placeholder='"header header header"\n"sidebar main main"\n"footer footer footer"'>"header header header"\n"sidebar main main"\n"footer footer footer"</textarea>
+      </div>
+      
+      <!-- Gap Controls - Like the Spacing in Geometric Patterns -->
+      <div class="control-group">
+        <h3>Gaps & Flow</h3>
+        
+        <label>gap (Gutter) <span id="gap-value" class="value-display">10px</span></label>
+        <input type="range" id="gap" min="0" max="50" value="10">
+        
+        <label>grid-auto-flow</label>
+        <select id="grid-auto-flow">
+          <option value="row">row</option>
+          <option value="column">column</option>
+          <option value="row dense">row dense</option>
+          <option value="column dense">column dense</option>
+        </select>
+      </div>
+      
+      <!-- Item Placement - Like Positioning in Prayer -->
+      <div class="control-group">
+        <h3>Item Placement</h3>
+        <label>Selected Item: <span id="selected-item" class="value-display">1</span></label>
+        <input type="range" id="item-selector" min="1" max="9" value="1">
+        
+        <label>grid-column <span id="grid-column-value" class="value-display">auto</span></label>
+        <input type="text" id="grid-column" value="auto" placeholder="e.g.: 1 / 3">
+        
+        <label>grid-row <span id="grid-row-value" class="value-display">auto</span></label>
+        <input type="text" id="grid-row" value="auto" placeholder="e.g.: 1 / span 2">
+        
+        <label>grid-area</label>
+        <input type="text" id="grid-area" value="" placeholder="e.g.: header">
+      </div>
+      
+      <!-- Alignment - Like the Harmony in Islamic Art -->
+      <div class="control-group">
+        <h3>Alignment</h3>
+        
+        <label>justify-items</label>
+        <select id="justify-items">
+          <option value="stretch" selected>stretch</option>
+          <option value="start">start</option>
+          <option value="end">end</option>
+          <option value="center">center</option>
+        </select>
+        
+        <label>align-items</label>
+        <select id="align-items">
+          <option value="stretch" selected>stretch</option>
+          <option value="start">start</option>
+          <option value="end">end</option>
+          <option value="center">center</option>
+        </select>
+        
+        <label>place-items</label>
+        <input type="text" id="place-items" value="" placeholder="align justify">
+      </div>
+      
+      <!-- Visual Controls - Like Illumination in Mosques -->
+      <div class="control-group">
+        <h3>Visual Settings</h3>
+        
+        <label>
+          Show Grid Lines
+          <label class="switch">
+            <input type="checkbox" id="show-grid-lines" checked>
+            <span class="slider"></span>
+          </label>
+        </label>
+        
+        <label>Number of Items</label>
+        <input type="range" id="item-count" min="1" max="9" value="9">
+      </div>
+    </div>
+    
+    <div class="demo-area">
+      <h2>Interactive Grid Demo</h2>
+      <p>"He who has measured the heavens and the earth with His balance." (Quran 55:7)</p>
+      
+      <!-- The Grid Container - Like a Perfectly Designed Mosque -->
+      <div class="grid-container" id="grid-container">
+        <div class="grid-item">1</div>
+        <div class="grid-item">2</div>
+        <div class="grid-item">3</div>
+        <div class="grid-item">4</div>
+        <div class="grid-item">5</div>
+        <div class="grid-item">6</div>
+        <div class="grid-item">7</div>
+        <div class="grid-item">8</div>
+        <div class="grid-item">9</div>
+      </div>
+      
+      <h3>Generated CSS</h3>
+      <div class="code-preview" id="css-code">
+/* Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px auto;
+  grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+  gap: 10px;
+}
+
+/* Items */
+.grid-item:nth-child(1) {
+  grid-column: auto;
+  grid-row: auto;
+  grid-area: header;
+}
+      </div>
+      
+      <h3>CSS Grid Property Reference</h3>
+      <table class="property-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Islamic Analogy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>grid-template-columns/rows</td>
+            <td>Defines track sizes</td>
+            <td>Like the pillars and arches defining a mosque's structure</td>
+          </tr>
+          <tr>
+            <td>grid-template-areas</td>
+            <td>Visual layout template</td>
+            <td>Like the precise geometric patterns in Islamic art</td>
+          </tr>
+          <tr>
+            <td>gap (gutter)</td>
+            <td>Space between tracks</td>
+            <td>Like the breathing space between arabesque designs</td>
+          </tr>
+          <tr>
+            <td>grid-column/row</td>
+            <td>Item placement</td>
+            <td>Like the mihrab indicating prayer direction</td>
+          </tr>
+          <tr>
+            <td>justify/align-items</td>
+            <td>Alignment within cells</td>
+            <td>Like the symmetry in a perfectly aligned prayer row</td>
+          </tr>
+          <tr>
+            <td>fr units</td>
+            <td>Fractional space distribution</td>
+            <td>Like the fair division prescribed in Islamic inheritance</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="visual-guide">
+        <div class="visual-card">
+          <h4>Grid vs Flexbox</h4>
+          <p><strong>Flexbox</strong> is for 1D layouts (like a straight prayer line)</p>
+          <p><strong>Grid</strong> is for 2D layouts (like complex mosque floorplans)</p>
+        </div>
+        
+        <div class="visual-card">
+          <h4>Fr Units</h4>
+          <p>Fractional units distribute space like inheritance in Islam:</p>
+          <code>grid-template-columns: 1fr 2fr</code>
+          <p>→ Second column gets twice the space of the first</p>
+        </div>
+        
+        <div class="visual-card">
+          <h4>Naming Grid Lines</h4>
+          <p>Like naming mosque gates for orientation:</p>
+          <code>
+            grid-template-columns:<br>
+            [main-start] 1fr [content-start] 1fr [content-end] 1fr [main-end];
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const gridContainer = document.getElementById('grid-container');
+    const cssCode = document.getElementById('css-code');
+    
+    // Grid Template Controls
+    const gridColumns = document.getElementById('grid-columns');
+    const columnsValue = document.getElementById('columns-value');
+    const gridRows = document.getElementById('grid-rows');
+    const rowsValue = document.getElementById('rows-value');
+    const gridAreas = document.getElementById('grid-areas');
+    
+    // Gap & Flow
+    const gap = document.getElementById('gap');
+    const gapValue = document.getElementById('gap-value');
+    const gridAutoFlow = document.getElementById('grid-auto-flow');
+    
+    // Item Placement
+    const itemSelector = document.getElementById('item-selector');
+    const selectedItem = document.getElementById('selected-item');
+    const gridColumn = document.getElementById('grid-column');
+    const gridColumnValue = document.getElementById('grid-column-value');
+    const gridRow = document.getElementById('grid-row');
+    const gridRowValue = document.getElementById('grid-row-value');
+    const gridArea = document.getElementById('grid-area');
+    
+    // Alignment
+    const justifyItems = document.getElementById('justify-items');
+    const alignItems = document.getElementById('align-items');
+    const placeItems = document.getElementById('place-items');
+    
+    // Visual Controls
+    const showGridLines = document.getElementById('show-grid-lines');
+    const itemCount = document.getElementById('item-count');
+    
+    // Initialize items
+    const items = Array.from(gridContainer.children);
+    
+    // Update grid container properties
+    function updateGrid() {
+      // Get values
+      const columns = gridColumns.value || '1fr';
+      const rows = gridRows.value || 'auto';
+      const areas = gridAreas.value ? gridAreas.value.split('\n').map(line => line.trim()).join('\n    ') : '';
+      const gapSize = gap.value + 'px';
+      const flow = gridAutoFlow.value;
+      const justify = justifyItems.value;
+      const align = alignItems.value;
+      const place = placeItems.value;
+      
+      // Apply to container
+      gridContainer.style.gridTemplateColumns = columns;
+      gridContainer.style.gridTemplateRows = rows;
+      gridContainer.style.gap = gapSize;
+      gridContainer.style.gridAutoFlow = flow;
+      gridContainer.style.justifyItems = justify;
+      gridContainer.style.alignItems = align;
+      
+      if (place) {
+        gridContainer.style.placeItems = place;
+      } else {
+        gridContainer.style.placeItems = '';
+      }
+      
+      if (areas) {
+        gridContainer.style.gridTemplateAreas = areas;
+      } else {
+        gridContainer.style.gridTemplateAreas = '';
+      }
+      
+      // Toggle grid lines
+      if (showGridLines.checked) {
+        gridContainer.style.backgroundImage = `
+          linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)`;
+      } else {
+        gridContainer.style.backgroundImage = 'none';
+      }
+      
+      // Update displayed values
+      columnsValue.textContent = columns;
+      rowsValue.textContent = rows;
+      gapValue.textContent = gapSize;
+      
+      // Update code preview
+      updateCode();
+    }
+    
+    // Update item properties
+    function updateItem() {
+      const selectedIndex = itemSelector.value - 1;
+      const item = items[selectedIndex];
+      
+      // Update UI
+      selectedItem.textContent = itemSelector.value;
+      
+      // Remove highlight from all items
+      items.forEach(i => i.style.boxShadow = 'none');
+      // Highlight selected item
+      item.style.boxShadow = '0 0 0 3px var(--gold)';
+      
+      // Apply properties
+      item.style.gridColumn = gridColumn.value;
+      item.style.gridRow = gridRow.value;
+      item.style.gridArea = gridArea.value;
+      
+      // Update displayed values
+      gridColumnValue.textContent = gridColumn.value || 'auto';
+      gridRowValue.textContent = gridRow.value || 'auto';
+      
+      // Update code preview
+      updateCode();
+    }
+    
+    // Update visual settings
+    function updateVisuals() {
+      // Show/hide items based on count
+      const count = parseInt(itemCount.value);
+      items.forEach((item, index) => {
+        item.style.display = index < count ? 'flex' : 'none';
+      });
+    }
+    
+    // Update code preview
+    function updateCode() {
+      const columns = gridColumns.value || '1fr';
+      const rows = gridRows.value || 'auto';
+      const areas = gridAreas.value ? gridAreas.value.split('\n').map(line => line.trim()).join('\n    ') : '';
+      const gapSize = gap.value + 'px';
+      const flow = gridAutoFlow.value;
+      const justify = justifyItems.value;
+      const align = alignItems.value;
+      const place = placeItems.value;
+      
+      const selectedIndex = itemSelector.value - 1;
+      const itemColumn = gridColumn.value || 'auto';
+      const itemRow = gridRow.value || 'auto';
+      const itemArea = gridArea.value || '';
+      
+      let containerCSS = `/* Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: ${columns};
+  grid-template-rows: ${rows};`;
+      
+      if (areas) {
+        containerCSS += `
+  grid-template-areas:
+    ${areas};`;
+      }
+      
+      containerCSS += `
+  gap: ${gapSize};
+  grid-auto-flow: ${flow};
+  justify-items: ${justify};
+  align-items: ${align};`;
+      
+      if (place) {
+        containerCSS += `
+  place-items: ${place};`;
+      }
+      
+      containerCSS += `
+}`;
+      
+      let itemCSS = `
+/* Items */
+.grid-item:nth-child(${selectedIndex + 1}) {
+  grid-column: ${itemColumn};
+  grid-row: ${itemRow};`;
+      
+      if (itemArea) {
+        itemCSS += `
+  grid-area: ${itemArea};`;
+      }
+      
+      itemCSS += `
+}`;
+      
+      cssCode.innerHTML = containerCSS + itemCSS;
+    }
+    
+    // Event Listeners
+    gridColumns.addEventListener('input', updateGrid);
+    gridRows.addEventListener('input', updateGrid);
+    gridAreas.addEventListener('input', updateGrid);
+    gap.addEventListener('input', updateGrid);
+    gridAutoFlow.addEventListener('change', updateGrid);
+    justifyItems.addEventListener('change', updateGrid);
+    alignItems.addEventListener('change', updateGrid);
+    placeItems.addEventListener('input', updateGrid);
+    
+    itemSelector.addEventListener('input', updateItem);
+    gridColumn.addEventListener('input', updateItem);
+    gridRow.addEventListener('input', updateItem);
+    gridArea.addEventListener('input', updateItem);
+    
+    showGridLines.addEventListener('change', updateGrid);
+    itemCount.addEventListener('input', updateVisuals);
+    
+    // Initialize
+    updateGrid();
+    updateItem();
+    updateVisuals();
+  </script>
+</body>
+</html>

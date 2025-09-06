@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Flexbox Playground</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --dark: #212529;
+      --light: #f8f9fa;
+      --success: #4cc9f0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      background: #f5f7fa;
+      color: var(--dark);
+      padding: 20px;
+    }
+    
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+    }
+    
+    .controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+    
+    .control-group {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+    
+    .control-group:last-child {
+      border-bottom: none;
+    }
+    
+    .control-group h3 {
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .control-group h3::before {
+      content: "•";
+      color: var(--primary);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    select, input[type="range"], input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .radio-option {
+      flex: 1;
+    }
+    
+    .radio-option input {
+      display: none;
+    }
+    
+    .radio-option label {
+      display: block;
+      padding: 0.5rem;
+      background: #f0f2f5;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .radio-option input:checked + label {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .demo-area {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+    
+    .flex-container {
+      display: flex;
+      min-height: 300px;
+      background: #f0f2f5;
+      border: 2px dashed #ccc;
+      padding: 10px;
+      gap: 10px;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .flex-item {
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      min-width: 60px;
+      min-height: 60px;
+      transition: all 0.3s ease;
+    }
+    
+    .flex-item:nth-child(1) { background: #4361ee; }
+    .flex-item:nth-child(2) { background: #3f37c9; }
+    .flex-item:nth-child(3) { background: #4895ef; }
+    .flex-item:nth-child(4) { background: #4cc9f0; }
+    .flex-item:nth-child(5) { background: #7209b7; }
+    
+    .code-preview {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+    
+    .property-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    
+    .property-table th, .property-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .property-table th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    
+    .value-display {
+      display: inline-block;
+      min-width: 40px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--secondary);
+    }
+    
+    .visual-guide {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .visual-card {
+      flex: 1;
+      min-width: 200px;
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ultimate Flexbox Playground</h1>
+    <p>Interactive visual guide to CSS Flexbox with real-time code generation</p>
+  </header>
+  
+  <div class="container">
+    <div class="controls">
+      <!-- Container Properties -->
+      <div class="control-group">
+        <h3>Flex Container</h3>
+        
+        <label>flex-direction</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="flex-direction" id="direction-row" value="row" checked>
+            <label for="direction-row">row</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="flex-direction" id="direction-row-reverse" value="row-reverse">
+            <label for="direction-row-reverse">row-reverse</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="flex-direction" id="direction-column" value="column">
+            <label for="direction-column">column</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="flex-direction" id="direction-column-reverse" value="column-reverse">
+            <label for="direction-column-reverse">column-reverse</label>
+          </div>
+        </div>
+        
+        <label>flex-wrap</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="flex-wrap" id="wrap-nowrap" value="nowrap" checked>
+            <label for="wrap-nowrap">nowrap</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="flex-wrap" id="wrap-wrap" value="wrap">
+            <label for="wrap-wrap">wrap</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="flex-wrap" id="wrap-wrap-reverse" value="wrap-reverse">
+            <label for="wrap-wrap-reverse">wrap-reverse</label>
+          </div>
+        </div>
+        
+        <label>justify-content</label>
+        <select id="justify-content">
+          <option value="flex-start" selected>flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="space-evenly">space-evenly</option>
+        </select>
+        
+        <label>align-items</label>
+        <select id="align-items">
+          <option value="stretch" selected>stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="baseline">baseline</option>
+        </select>
+        
+        <label>align-content</label>
+        <select id="align-content">
+          <option value="stretch" selected>stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+        </select>
+        
+        <label>gap <span id="gap-value" class="value-display">10px</span></label>
+        <input type="range" id="gap" min="0" max="50" value="10">
+      </div>
+      
+      <!-- Item Properties -->
+      <div class="control-group">
+        <h3>Flex Items</h3>
+        <label>Selected Item: <span id="selected-item" class="value-display">1</span></label>
+        <input type="range" id="item-selector" min="1" max="5" value="1">
+        
+        <label>order <span id="order-value" class="value-display">0</span></label>
+        <input type="range" id="order" min="-5" max="5" value="0">
+        
+        <label>flex-grow <span id="flex-grow-value" class="value-display">0</span></label>
+        <input type="range" id="flex-grow" min="0" max="5" value="0" step="0.1">
+        
+        <label>flex-shrink <span id="flex-shrink-value" class="value-display">1</span></label>
+        <input type="range" id="flex-shrink" min="0" max="5" value="1" step="0.1">
+        
+        <label>flex-basis</label>
+        <select id="flex-basis">
+          <option value="auto" selected>auto</option>
+          <option value="0">0</option>
+          <option value="50px">50px</option>
+          <option value="100px">100px</option>
+          <option value="200px">200px</option>
+          <option value="20%">20%</option>
+          <option value="50%">50%</option>
+        </select>
+        
+        <label>align-self</label>
+        <select id="align-self">
+          <option value="auto" selected>auto</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="baseline">baseline</option>
+          <option value="stretch">stretch</option>
+        </select>
+      </div>
+      
+      <!-- Visual Controls -->
+      <div class="control-group">
+        <h3>Visual Settings</h3>
+        <label>Number of Items</label>
+        <input type="range" id="item-count" min="1" max="10" value="5">
+        
+        <label>Container Height</label>
+        <select id="container-height">
+          <option value="300px">300px</option>
+          <option value="200px">200px</option>
+          <option value="400px" selected>400px</option>
+          <option value="auto">auto</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="demo-area">
+      <h2>Interactive Demo</h2>
+      <p>Adjust the controls to see Flexbox properties in action</p>
+      
+      <div class="flex-container" id="flex-container">
+        <div class="flex-item">1</div>
+        <div class="flex-item">2</div>
+        <div class="flex-item">3</div>
+        <div class="flex-item">4</div>
+        <div class="flex-item">5</div>
+      </div>
+      
+      <h3>Generated CSS</h3>
+      <div class="code-preview" id="css-code">
+        /* Container */
+        .flex-container {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          align-items: stretch;
+          gap: 10px;
+        }
+        
+        /* Items */
+        .flex-item:nth-child(1) {
+          order: 0;
+          flex-grow: 0;
+          flex-shrink: 1;
+          flex-basis: auto;
+          align-self: auto;
+        }
+      </div>
+      
+      <h3>Flexbox Property Reference</h3>
+      <table class="property-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Applies To</th>
+            <th>Description</th>
+            <th>Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>flex-direction</td>
+            <td>Container</td>
+            <td>Main axis direction</td>
+            <td>row | row-reverse | column | column-reverse</td>
+          </tr>
+          <tr>
+            <td>flex-wrap</td>
+            <td>Container</td>
+            <td>Single or multi-line</td>
+            <td>nowrap | wrap | wrap-reverse</td>
+          </tr>
+          <tr>
+            <td>justify-content</td>
+            <td>Container</td>
+            <td>Alignment along main axis</td>
+            <td>flex-start | flex-end | center | space-between | space-around | space-evenly</td>
+          </tr>
+          <tr>
+            <td>align-items</td>
+            <td>Container</td>
+            <td>Alignment along cross axis (per line)</td>
+            <td>stretch | flex-start | flex-end | center | baseline</td>
+          </tr>
+          <tr>
+            <td>align-content</td>
+            <td>Container</td>
+            <td>Alignment when extra space in cross axis</td>
+            <td>stretch | flex-start | flex-end | center | space-between | space-around</td>
+          </tr>
+          <tr>
+            <td>gap</td>
+            <td>Container</td>
+            <td>Space between items</td>
+            <td>length values (px, em, rem, etc.)</td>
+          </tr>
+          <tr>
+            <td>order</td>
+            <td>Items</td>
+            <td>Visual reordering</td>
+            <td>integer (negative/positive)</td>
+          </tr>
+          <tr>
+            <td>flex-grow</td>
+            <td>Items</td>
+            <td>Ability to grow if space available</td>
+            <td>unitless number (default 0)</td>
+          </tr>
+          <tr>
+            <td>flex-shrink</td>
+            <td>Items</td>
+            <td>Ability to shrink if needed</td>
+            <td>unitless number (default 1)</td>
+          </tr>
+          <tr>
+            <td>flex-basis</td>
+            <td>Items</td>
+            <td>Initial size before growing/shrinking</td>
+            <td>length | auto | content</td>
+          </tr>
+          <tr>
+            <td>align-self</td>
+            <td>Items</td>
+            <td>Override container's align-items</td>
+            <td>auto | flex-start | flex-end | center | baseline | stretch</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="visual-guide">
+        <div class="visual-card">
+          <h4>Main Axis</h4>
+          <p>Defined by <code>flex-direction</code>:</p>
+          <ul>
+            <li><strong>row</strong>: Left to right</li>
+            <li><strong>row-reverse</strong>: Right to left</li>
+            <li><strong>column</strong>: Top to bottom</li>
+            <li><strong>column-reverse</strong>: Bottom to top</li>
+          </ul>
+        </div>
+        
+        <div class="visual-card">
+          <h4>Cross Axis</h4>
+          <p>Perpendicular to main axis:</p>
+          <ul>
+            <li>For <code>row</code>: Vertical</li>
+            <li>For <code>column</code>: Horizontal</li>
+          </ul>
+        </div>
+        
+        <div class="visual-card">
+          <h4>Shorthand</h4>
+          <p><code>flex: grow shrink basis</code></p>
+          <ul>
+            <li><code>flex: 1</code> = <code>1 1 0</code></li>
+            <li><code>flex: auto</code> = <code>1 1 auto</code></li>
+            <li><code>flex: none</code> = <code>0 0 auto</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const flexContainer = document.getElementById('flex-container');
+    const cssCode = document.getElementById('css-code');
+    
+    // Container Properties
+    const flexDirection = document.querySelectorAll('input[name="flex-direction"]');
+    const flexWrap = document.querySelectorAll('input[name="flex-wrap"]');
+    const justifyContent = document.getElementById('justify-content');
+    const alignItems = document.getElementById('align-items');
+    const alignContent = document.getElementById('align-content');
+    const gap = document.getElementById('gap');
+    const gapValue = document.getElementById('gap-value');
+    
+    // Item Properties
+    const itemSelector = document.getElementById('item-selector');
+    const selectedItem = document.getElementById('selected-item');
+    const order = document.getElementById('order');
+    const orderValue = document.getElementById('order-value');
+    const flexGrow = document.getElementById('flex-grow');
+    const flexGrowValue = document.getElementById('flex-grow-value');
+    const flexShrink = document.getElementById('flex-shrink');
+    const flexShrinkValue = document.getElementById('flex-shrink-value');
+    const flexBasis = document.getElementById('flex-basis');
+    const alignSelf = document.getElementById('align-self');
+    
+    // Visual Controls
+    const itemCount = document.getElementById('item-count');
+    const containerHeight = document.getElementById('container-height');
+    
+    // Initialize items
+    const items = Array.from(flexContainer.children);
+    
+    // Update container properties
+    function updateContainer() {
+      // Get selected values
+      const direction = document.querySelector('input[name="flex-direction"]:checked').value;
+      const wrap = document.querySelector('input[name="flex-wrap"]:checked').value;
+      const justify = justifyContent.value;
+      const align = alignItems.value;
+      const contentAlign = alignContent.value;
+      const gapSize = gap.value + 'px';
+      
+      // Apply to container
+      flexContainer.style.flexDirection = direction;
+      flexContainer.style.flexWrap = wrap;
+      flexContainer.style.justifyContent = justify;
+      flexContainer.style.alignItems = align;
+      flexContainer.style.alignContent = contentAlign;
+      flexContainer.style.gap = gapSize;
+      
+      // Update displayed values
+      gapValue.textContent = gapSize;
+      
+      // Update code preview
+      updateCode();
+    }
+    
+    // Update item properties
+    function updateItem() {
+      const selectedIndex = itemSelector.value - 1;
+      const item = items[selectedIndex];
+      
+      // Update UI
+      selectedItem.textContent = itemSelector.value;
+      
+      // Remove highlight from all items
+      items.forEach(i => i.style.boxShadow = 'none');
+      // Highlight selected item
+      item.style.boxShadow = '0 0 0 3px #4cc9f0';
+      
+      // Apply properties
+      item.style.order = order.value;
+      item.style.flexGrow = flexGrow.value;
+      item.style.flexShrink = flexShrink.value;
+      item.style.flexBasis = flexBasis.value;
+      item.style.alignSelf = alignSelf.value;
+      
+      // Update displayed values
+      orderValue.textContent = order.value;
+      flexGrowValue.textContent = flexGrow.value;
+      flexShrinkValue.textContent = flexShrink.value;
+      
+      // Update code preview
+      updateCode();
+    }
+    
+    // Update visual settings
+    function updateVisuals() {
+      // Set container height
+      flexContainer.style.height = containerHeight.value;
+      
+      // Show/hide items based on count
+      const count = parseInt(itemCount.value);
+      items.forEach((item, index) => {
+        item.style.display = index < count ? 'flex' : 'none';
+      });
+    }
+    
+    // Update code preview
+    function updateCode() {
+      const direction = document.querySelector('input[name="flex-direction"]:checked').value;
+      const wrap = document.querySelector('input[name="flex-wrap"]:checked').value;
+      const justify = justifyContent.value;
+      const align = alignItems.value;
+      const contentAlign = alignContent.value;
+      const gapSize = gap.value + 'px';
+      
+      const selectedIndex = itemSelector.value - 1;
+      const itemOrder = order.value;
+      const itemGrow = flexGrow.value;
+      const itemShrink = flexShrink.value;
+      const itemBasis = flexBasis.value;
+      const itemAlignSelf = alignSelf.value;
+      
+      cssCode.innerHTML = `
+/* Container */
+.flex-container {
+  display: flex;
+  flex-direction: ${direction};
+  flex-wrap: ${wrap};
+  justify-content: ${justify};
+  align-items: ${align};
+  align-content: ${contentAlign};
+  gap: ${gapSize};
+}
+
+/* Items */
+.flex-item:nth-child(${selectedIndex + 1}) {
+  order: ${itemOrder};
+  flex-grow: ${itemGrow};
+  flex-shrink: ${itemShrink};
+  flex-basis: ${itemBasis};
+  align-self: ${itemAlignSelf};
+}`;
+    }
+    
+    // Event Listeners
+    flexDirection.forEach(radio => {
+      radio.addEventListener('change', updateContainer);
+    });
+    
+    flexWrap.forEach(radio => {
+      radio.addEventListener('change', updateContainer);
+    });
+    
+    justifyContent.addEventListener('change', updateContainer);
+    alignItems.addEventListener('change', updateContainer);
+    alignContent.addEventListener('change', updateContainer);
+    gap.addEventListener('input', updateContainer);
+    
+    itemSelector.addEventListener('input', updateItem);
+    order.addEventListener('input', updateItem);
+    flexGrow.addEventListener('input', updateItem);
+    flexShrink.addEventListener('input', updateItem);
+    flexBasis.addEventListener('change', updateItem);
+    alignSelf.addEventListener('change', updateItem);
+    
+    itemCount.addEventListener('input', updateVisuals);
+    containerHeight.addEventListener('change', updateVisuals);
+    
+    // Initialize
+    updateContainer();
+    updateItem();
+    updateVisuals();
+  </script>
+</body>
+</html>

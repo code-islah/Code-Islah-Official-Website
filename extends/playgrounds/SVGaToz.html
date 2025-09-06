@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate SVG</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #f72585;
+      --dark: #212529;
+      --light: #f8f9fa;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      background: #f5f7fa;
+      color: var(--dark);
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+    }
+    
+    .controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+    
+    .control-group {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+    
+    .control-group:last-child {
+      border-bottom: none;
+    }
+    
+    .control-group h3 {
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .control-group h3::before {
+      content: "•";
+      color: var(--primary);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    select, input[type="range"], input[type="text"], input[type="color"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    
+    input[type="color"] {
+      height: 40px;
+      padding: 2px;
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .radio-option {
+      flex: 1;
+      min-width: 80px;
+    }
+    
+    .radio-option input {
+      display: none;
+    }
+    
+    .radio-option label {
+      display: block;
+      padding: 0.5rem;
+      background: #f0f2f5;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .radio-option input:checked + label {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .demo-area {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+    
+    .svg-container {
+      width: 100%;
+      height: 400px;
+      border: 2px dashed #ccc;
+      background: #f8f9fa;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .code-preview {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+    
+    .property-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    
+    .property-table th, .property-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .property-table th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    
+    .value-display {
+      display: inline-block;
+      min-width: 40px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ultimate SVG Playground</h1>
+    <p>Interactive playground for mastering SVG elements, animations, and filters</p>
+  </header>
+  
+  <div class="container">
+    <div class="controls">
+      <!-- SVG Type Selection -->
+      <div class="control-group">
+        <h3>SVG Elements</h3>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-rect" value="rect" checked>
+            <label for="svg-rect">Rectangle</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-circle" value="circle">
+            <label for="svg-circle">Circle</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-ellipse" value="ellipse">
+            <label for="svg-ellipse">Ellipse</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-line" value="line">
+            <label for="svg-line">Line</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-polygon" value="polygon">
+            <label for="svg-polygon">Polygon</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-path" value="path">
+            <label for="svg-path">Path</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="svg-type" id="svg-text" value="text">
+            <label for="svg-text">Text</label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Shape Attributes -->
+      <div class="control-group" id="rect-controls">
+        <h3>Rectangle Attributes</h3>
+        <label>Width <span id="rect-width-value" class="value-display">100</span></label>
+        <input type="range" id="rect-width" min="10" max="300" value="100">
+        
+        <label>Height <span id="rect-height-value" class="value-display">80</span></label>
+        <input type="range" id="rect-height" min="10" max="300" value="80">
+        
+        <label>Corner Radius <span id="rect-rx-value" class="value-display">0</span></label>
+        <input type="range" id="rect-rx" min="0" max="50" value="0">
+      </div>
+      
+      <div class="control-group" id="circle-controls" style="display: none;">
+        <h3>Circle Attributes</h3>
+        <label>Radius <span id="circle-r-value" class="value-display">50</span></label>
+        <input type="range" id="circle-r" min="10" max="150" value="50">
+      </div>
+      
+      <div class="control-group" id="ellipse-controls" style="display: none;">
+        <h3>Ellipse Attributes</h3>
+        <label>Radius X <span id="ellipse-rx-value" class="value-display">60</span></label>
+        <input type="range" id="ellipse-rx" min="10" max="150" value="60">
+        
+        <label>Radius Y <span id="ellipse-ry-value" class="value-display">40</span></label>
+        <input type="range" id="ellipse-ry" min="10" max="150" value="40">
+      </div>
+      
+      <!-- Styling -->
+      <div class="control-group">
+        <h3>Styling</h3>
+        <label>Fill Color</label>
+        <input type="color" id="fill-color" value="#4361ee">
+        
+        <label>Stroke Color</label>
+        <input type="color" id="stroke-color" value="#3a0ca3">
+        
+        <label>Stroke Width <span id="stroke-width-value" class="value-display">2</span></label>
+        <input type="range" id="stroke-width" min="0" max="20" value="2">
+        
+        <label>Opacity <span id="opacity-value" class="value-display">1</span></label>
+        <input type="range" id="opacity" min="0" max="1" value="1" step="0.1">
+      </div>
+      
+      <!-- Transform -->
+      <div class="control-group">
+        <h3>Transform</h3>
+        <label>Translate X <span id="translate-x-value" class="value-display">0</span></label>
+        <input type="range" id="translate-x" min="-100" max="100" value="0">
+        
+        <label>Translate Y <span id="translate-y-value" class="value-display">0</span></label>
+        <input type="range" id="translate-y" min="-100" max="100" value="0">
+        
+        <label>Rotate <span id="rotate-value" class="value-display">0</span></label>
+        <input type="range" id="rotate" min="0" max="360" value="0">
+        
+        <label>Scale <span id="scale-value" class="value-display">1</span></label>
+        <input type="range" id="scale" min="0.1" max="3" value="1" step="0.1">
+      </div>
+      
+      <!-- Animation -->
+      <div class="control-group">
+        <h3>Animation</h3>
+        <label>Animate</label>
+        <select id="animate-property">
+          <option value="none">None</option>
+          <option value="rotate">Rotation</option>
+          <option value="pulse">Pulse Scale</option>
+          <option value="move">Horizontal Move</option>
+          <option value="color">Color Change</option>
+        </select>
+        
+        <label>Duration <span id="duration-value" class="value-display">2s</span></label>
+        <input type="range" id="duration" min="0.5" max="5" value="2" step="0.1">
+      </div>
+      
+      <!-- SVG Filters -->
+      <div class="control-group">
+        <h3>Filters</h3>
+        <label>Filter</label>
+        <select id="svg-filter">
+          <option value="none">None</option>
+          <option value="blur">Blur</option>
+          <option value="drop-shadow">Drop Shadow</option>
+          <option value="grayscale">Grayscale</option>
+        </select>
+        
+        <div id="blur-controls" style="display: none;">
+          <label>Blur Amount <span id="blur-value" class="value-display">5</span></label>
+          <input type="range" id="blur-amount" min="0" max="20" value="5">
+        </div>
+      </div>
+      
+      <button id="reset-btn" style="width: 100%; padding: 0.75rem; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 1rem;">
+        Reset SVG
+      </button>
+    </div>
+    
+    <div class="demo-area">
+      <h2>SVG Preview</h2>
+      <p>Edit the controls to see real-time changes to your SVG</p>
+      
+      <div class="svg-container" id="svg-container">
+        <svg id="svg-canvas" width="100%" height="100%" viewBox="0 0 300 200">
+          <rect id="svg-rect-element" x="100" y="60" width="100" height="80" fill="#4361ee" stroke="#3a0ca3" stroke-width="2"/>
+        </svg>
+      </div>
+      
+      <h3>Generated SVG Code</h3>
+      <div class="code-preview" id="svg-code">
+        <pre id="svg-code-content">&lt;svg width="300" height="200" viewBox="0 0 300 200"&gt;
+  &lt;rect x="100" y="60" width="100" height="80" 
+        fill="#4361ee" stroke="#3a0ca3" stroke-width="2"/&gt;
+&lt;/svg&gt;</pre>
+      </div>
+      
+      <h3>SVG Property Reference</h3>
+      <table class="property-table">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Key Attributes</th>
+            <th>Common Uses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>&lt;rect&gt;</td>
+            <td>x, y, width, height, rx, ry</td>
+            <td>Rectangles, rounded rectangles</td>
+          </tr>
+          <tr>
+            <td>&lt;circle&gt;</td>
+            <td>cx, cy, r</td>
+            <td>Perfect circles</td>
+          </tr>
+          <tr>
+            <td>&lt;ellipse&gt;</td>
+            <td>cx, cy, rx, ry</td>
+            <td>Ovals, stretched circles</td>
+          </tr>
+          <tr>
+            <td>&lt;line&gt;</td>
+            <td>x1, y1, x2, y2</td>
+            <td>Straight lines</td>
+          </tr>
+          <tr>
+            <td>&lt;polygon&gt;</td>
+            <td>points</td>
+            <td>Closed shapes with straight sides</td>
+          </tr>
+          <tr>
+            <td>&lt;path&gt;</td>
+            <td>d (path data)</td>
+            <td>Complex shapes, curves, icons</td>
+          </tr>
+          <tr>
+            <td>&lt;text&gt;</td>
+            <td>x, y, font-size, font-family</td>
+            <td>Text elements</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const svgCanvas = document.getElementById('svg-canvas');
+    const svgCodeContent = document.getElementById('svg-code-content');
+    
+    // SVG Type Controls
+    const svgTypeRadios = document.querySelectorAll('input[name="svg-type"]');
+    
+    // Shape Attribute Controls
+    const rectControls = document.getElementById('rect-controls');
+    const circleControls = document.getElementById('circle-controls');
+    const ellipseControls = document.getElementById('ellipse-controls');
+    
+    // Rectangle Controls
+    const rectWidth = document.getElementById('rect-width');
+    const rectWidthValue = document.getElementById('rect-width-value');
+    const rectHeight = document.getElementById('rect-height');
+    const rectHeightValue = document.getElementById('rect-height-value');
+    const rectRx = document.getElementById('rect-rx');
+    const rectRxValue = document.getElementById('rect-rx-value');
+    
+    // Circle Controls
+    const circleR = document.getElementById('circle-r');
+    const circleRValue = document.getElementById('circle-r-value');
+    
+    // Ellipse Controls
+    const ellipseRx = document.getElementById('ellipse-rx');
+    const ellipseRxValue = document.getElementById('ellipse-rx-value');
+    const ellipseRy = document.getElementById('ellipse-ry');
+    const ellipseRyValue = document.getElementById('ellipse-ry-value');
+    
+    // Styling Controls
+    const fillColor = document.getElementById('fill-color');
+    const strokeColor = document.getElementById('stroke-color');
+    const strokeWidth = document.getElementById('stroke-width');
+    const strokeWidthValue = document.getElementById('stroke-width-value');
+    const opacity = document.getElementById('opacity');
+    const opacityValue = document.getElementById('opacity-value');
+    
+    // Transform Controls
+    const translateX = document.getElementById('translate-x');
+    const translateXValue = document.getElementById('translate-x-value');
+    const translateY = document.getElementById('translate-y');
+    const translateYValue = document.getElementById('translate-y-value');
+    const rotate = document.getElementById('rotate');
+    const rotateValue = document.getElementById('rotate-value');
+    const scale = document.getElementById('scale');
+    const scaleValue = document.getElementById('scale-value');
+    
+    // Animation Controls
+    const animateProperty = document.getElementById('animate-property');
+    const duration = document.getElementById('duration');
+    const durationValue = document.getElementById('duration-value');
+    
+    // Filter Controls
+    const svgFilter = document.getElementById('svg-filter');
+    const blurControls = document.getElementById('blur-controls');
+    const blurAmount = document.getElementById('blur-amount');
+    const blurValue = document.getElementById('blur-value');
+    
+    // Current SVG element
+    let currentElement = document.getElementById('svg-rect-element');
+    let currentElementType = 'rect';
+    
+    // Initialize
+    updateSVG();
+    
+    // Update SVG based on controls
+    function updateSVG() {
+      // Clear existing animations
+      const existingAnimations = svgCanvas.querySelectorAll('animate, animateTransform');
+      existingAnimations.forEach(anim => anim.remove());
+      
+      // Clear existing filters
+      const existingFilters = svgCanvas.querySelectorAll('filter');
+      existingFilters.forEach(filter => filter.remove());
+      
+      // Get styling values
+      const fill = fillColor.value;
+      const stroke = strokeColor.value;
+      const strokeW = strokeWidth.value;
+      const opac = opacity.value;
+      
+      // Get transform values
+      const tx = translateX.value;
+      const ty = translateY.value;
+      const rot = rotate.value;
+      const sc = scale.value;
+      
+      // Apply transforms
+      currentElement.setAttribute('transform', `translate(${tx}, ${ty}) rotate(${rot}) scale(${sc})`);
+      
+      // Apply styles
+      currentElement.setAttribute('fill', fill);
+      currentElement.setAttribute('stroke', stroke);
+      currentElement.setAttribute('stroke-width', strokeW);
+      currentElement.setAttribute('opacity', opac);
+      
+      // Apply animations
+      applyAnimation();
+      
+      // Apply filters
+      applyFilter();
+      
+      // Update code preview
+      updateCodePreview();
+    }
+    
+    // Change SVG element type
+    function changeElementType(type) {
+      // Remove current element
+      svgCanvas.removeChild(currentElement);
+      
+      // Create new element
+      switch(type) {
+        case 'rect':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          currentElement.setAttribute('x', '100');
+          currentElement.setAttribute('y', '60');
+          currentElement.setAttribute('width', '100');
+          currentElement.setAttribute('height', '80');
+          break;
+          
+        case 'circle':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          currentElement.setAttribute('cx', '150');
+          currentElement.setAttribute('cy', '100');
+          currentElement.setAttribute('r', '50');
+          break;
+          
+        case 'ellipse':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+          currentElement.setAttribute('cx', '150');
+          currentElement.setAttribute('cy', '100');
+          currentElement.setAttribute('rx', '60');
+          currentElement.setAttribute('ry', '40');
+          break;
+          
+        case 'line':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          currentElement.setAttribute('x1', '50');
+          currentElement.setAttribute('y1', '50');
+          currentElement.setAttribute('x2', '250');
+          currentElement.setAttribute('y2', '150');
+          break;
+          
+        case 'polygon':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+          currentElement.setAttribute('points', '150,20 220,150 80,150');
+          break;
+          
+        case 'path':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          currentElement.setAttribute('d', 'M50 100 Q 150 20 250 100 T 450 100');
+          break;
+          
+        case 'text':
+          currentElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          currentElement.setAttribute('x', '150');
+          currentElement.setAttribute('y', '100');
+          currentElement.setAttribute('text-anchor', 'middle');
+          currentElement.setAttribute('dominant-baseline', 'middle');
+          currentElement.textContent = 'SVG Text';
+          break;
+      }
+      
+      // Add to SVG
+      svgCanvas.appendChild(currentElement);
+      currentElementType = type;
+      
+      // Update controls visibility
+      rectControls.style.display = type === 'rect' ? 'block' : 'none';
+      circleControls.style.display = type === 'circle' ? 'block' : 'none';
+      ellipseControls.style.display = type === 'ellipse' ? 'block' : 'none';
+      
+      // Reset transforms and styles
+      fillColor.value = '#4361ee';
+      strokeColor.value = '#3a0ca3';
+      strokeWidth.value = 2;
+      opacity.value = 1;
+      translateX.value = 0;
+      translateY.value = 0;
+      rotate.value = 0;
+      scale.value = 1;
+      animateProperty.value = 'none';
+      svgFilter.value = 'none';
+      blurControls.style.display = 'none';
+      
+      updateSVG();
+    }
+    
+    // Apply animation based on selection
+    function applyAnimation() {
+      const durationVal = duration.value + 's';
+      
+      switch(animateProperty.value) {
+        case 'rotate':
+          const rotateAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform');
+          rotateAnim.setAttribute('attributeName', 'transform');
+          rotateAnim.setAttribute('type', 'rotate');
+          rotateAnim.setAttribute('from', '0 150 100');
+          rotateAnim.setAttribute('to', '360 150 100');
+          rotateAnim.setAttribute('dur', durationVal);
+          rotateAnim.setAttribute('repeatCount', 'indefinite');
+          currentElement.appendChild(rotateAnim);
+          break;
+          
+        case 'pulse':
+          const pulseAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          pulseAnim.setAttribute('attributeName', 'transform');
+          pulseAnim.setAttribute('attributeType', 'XML');
+          pulseAnim.setAttribute('values', 'scale(1); scale(1.2); scale(1)');
+          pulseAnim.setAttribute('dur', durationVal);
+          pulseAnim.setAttribute('repeatCount', 'indefinite');
+          currentElement.appendChild(pulseAnim);
+          break;
+          
+        case 'move':
+          const moveAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          moveAnim.setAttribute('attributeName', 'x');
+          moveAnim.setAttribute('values', '100; 200; 100');
+          moveAnim.setAttribute('dur', durationVal);
+          moveAnim.setAttribute('repeatCount', 'indefinite');
+          currentElement.appendChild(moveAnim);
+          break;
+          
+        case 'color':
+          const colorAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          colorAnim.setAttribute('attributeName', 'fill');
+          colorAnim.setAttribute('values', '#4361ee; #f72585; #4cc9f0; #4361ee');
+          colorAnim.setAttribute('dur', durationVal);
+          colorAnim.setAttribute('repeatCount', 'indefinite');
+          currentElement.appendChild(colorAnim);
+          break;
+      }
+    }
+    
+    // Apply SVG filters
+    function applyFilter() {
+      if (svgFilter.value === 'none') return;
+      
+      const filterId = 'svg-filter-' + Date.now();
+      const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filter.setAttribute('id', filterId);
+      
+      switch(svgFilter.value) {
+        case 'blur':
+          const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+          blur.setAttribute('stdDeviation', blurAmount.value);
+          filter.appendChild(blur);
+          break;
+          
+        case 'drop-shadow':
+          const shadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
+          shadow.setAttribute('dx', '2');
+          shadow.setAttribute('dy', '2');
+          shadow.setAttribute('stdDeviation', '2');
+          shadow.setAttribute('flood-color', 'rgba(0,0,0,0.5)');
+          filter.appendChild(shadow);
+          break;
+          
+        case 'grayscale':
+          const grayscale = document.createElementNS('http://www.w3.org/2000/svg', 'feColorMatrix');
+          grayscale.setAttribute('type', 'saturate');
+          grayscale.setAttribute('values', '0');
+          filter.appendChild(grayscale);
+          break;
+      }
+      
+      svgCanvas.insertBefore(filter, svgCanvas.firstChild);
+      currentElement.setAttribute('filter', `url(#${filterId})`);
+    }
+    
+    // Update code preview
+    function updateCodePreview() {
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svgCanvas);
+      
+      // Format the SVG string
+      svgString = svgString
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\/>/g, '/&gt;')
+        .replace(/&lt;svg/g, '&lt;svg width="300" height="200"')
+        .replace(/ xmlns(:[a-z]+)?="[^"]*"/g, '');
+      
+      svgCodeContent.innerHTML = svgString;
+    }
+    
+    // Event Listeners
+    // SVG Type Change
+    svgTypeRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        changeElementType(e.target.value);
+      });
+    });
+    
+    // Rectangle Controls
+    rectWidth.addEventListener('input', () => {
+      rectWidthValue.textContent = rectWidth.value;
+      currentElement.setAttribute('width', rectWidth.value);
+      updateSVG();
+    });
+    
+    rectHeight.addEventListener('input', () => {
+      rectHeightValue.textContent = rectHeight.value;
+      currentElement.setAttribute('height', rectHeight.value);
+      updateSVG();
+    });
+    
+    rectRx.addEventListener('input', () => {
+      rectRxValue.textContent = rectRx.value;
+      currentElement.setAttribute('rx', rectRx.value);
+      currentElement.setAttribute('ry', rectRx.value);
+      updateSVG();
+    });
+    
+    // Circle Controls
+    circleR.addEventListener('input', () => {
+      circleRValue.textContent = circleR.value;
+      currentElement.setAttribute('r', circleR.value);
+      updateSVG();
+    });
+    
+    // Ellipse Controls
+    ellipseRx.addEventListener('input', () => {
+      ellipseRxValue.textContent = ellipseRx.value;
+      currentElement.setAttribute('rx', ellipseRx.value);
+      updateSVG();
+    });
+    
+    ellipseRy.addEventListener('input', () => {
+      ellipseRyValue.textContent = ellipseRy.value;
+      currentElement.setAttribute('ry', ellipseRy.value);
+      updateSVG();
+    });
+    
+    // Styling Controls
+    fillColor.addEventListener('input', updateSVG);
+    strokeColor.addEventListener('input', updateSVG);
+    strokeWidth.addEventListener('input', () => {
+      strokeWidthValue.textContent = strokeWidth.value;
+      updateSVG();
+    });
+    opacity.addEventListener('input', () => {
+      opacityValue.textContent = opacity.value;
+      updateSVG();
+    });
+    
+    // Transform Controls
+    translateX.addEventListener('input', () => {
+      translateXValue.textContent = translateX.value;
+      updateSVG();
+    });
+    
+    translateY.addEventListener('input', () => {
+      translateYValue.textContent = translateY.value;
+      updateSVG();
+    });
+    
+    rotate.addEventListener('input', () => {
+      rotateValue.textContent = rotate.value;
+      updateSVG();
+    });
+    
+    scale.addEventListener('input', () => {
+      scaleValue.textContent = scale.value;
+      updateSVG();
+    });
+    
+    // Animation Controls
+    animateProperty.addEventListener('change', updateSVG);
+    duration.addEventListener('input', () => {
+      durationValue.textContent = duration.value + 's';
+      updateSVG();
+    });
+    
+    // Filter Controls
+    svgFilter.addEventListener('change', () => {
+      blurControls.style.display = svgFilter.value === 'blur' ? 'block' : 'none';
+      updateSVG();
+    });
+    
+    blurAmount.addEventListener('input', () => {
+      blurValue.textContent = blurAmount.value;
+      updateSVG();
+    });
+    
+    // Reset Button
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      changeElementType(currentElementType);
+    });
+  </script>
+</body>
+</html>

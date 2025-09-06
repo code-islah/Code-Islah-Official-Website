@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Aspect Ratio</title>
+        <style type="text/css" media="all">
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: #f5f5f5;
+            }
+
+            .controls {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+            .control-group {
+                margin: 15px 0;
+            }
+
+            label {
+                display: inline-block;
+                width: 120px;
+            }
+
+            input[type="range"] {
+                width: 200px;
+                vertical-align: middle;
+            }
+
+            .demo-box {
+                width: 80%;
+                max-width: 500px;
+                margin: 0 auto;
+                background: #4caf50;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            /* Modern aspect-ratio */
+            .demo-box.modern {
+                aspect-ratio: var(--ratio-width) / var(--ratio-height);
+            }
+
+            /* Legacy padding hack */
+            .demo-box.legacy {
+                position: relative;
+                height: 0;
+                padding-top: calc(
+                    var(--ratio-height) / var(--ratio-width) * 100%
+                );
+            }
+            .demo-box.legacy p {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="controls">
+            <h1>CSS Aspect Ratio Playground</h1>
+
+            <!-- Ratio Controls -->
+            <div class="control-group">
+                <label for="ratio-width">Width:</label>
+                <input
+                    type="range"
+                    id="ratio-width"
+                    min="1"
+                    max="16"
+                    value="16"
+                />
+                <span id="width-value">16</span>
+            </div>
+
+            <div class="control-group">
+                <label for="ratio-height">Height:</label>
+                <input
+                    type="range"
+                    id="ratio-height"
+                    min="1"
+                    max="16"
+                    value="9"
+                />
+                <span id="height-value">9</span>
+            </div>
+
+            <!-- Toggle Method -->
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="toggle-legacy" /> Use Legacy
+                    "Padding Hack"
+                </label>
+            </div>
+        </div>
+
+        <!-- Demo Box -->
+        <div class="demo-box" id="demo-box">
+            <p>
+                Resize me! Current ratio: <span id="current-ratio">16 / 9</span>
+            </p>
+        </div>
+
+        <script>
+            // DOM Elements
+            const widthSlider = document.getElementById("ratio-width");
+            const heightSlider = document.getElementById("ratio-height");
+            const widthValue = document.getElementById("width-value");
+            const heightValue = document.getElementById("height-value");
+            const toggleLegacy = document.getElementById("toggle-legacy");
+            const demoBox = document.getElementById("demo-box");
+            const currentRatio = document.getElementById("current-ratio");
+
+            // Update ratio in real-time
+            function updateRatio() {
+                const width = widthSlider.value;
+                const height = heightSlider.value;
+
+                // Update displayed values
+                widthValue.textContent = width;
+                heightValue.textContent = height;
+                currentRatio.textContent = `${width} / ${height}`;
+
+                // Apply to demo box
+                demoBox.style.setProperty("--ratio-width", width);
+                demoBox.style.setProperty("--ratio-height", height);
+
+                // Toggle between modern and legacy methods
+                if (toggleLegacy.checked) {
+                    demoBox.classList.add("legacy");
+                    demoBox.classList.remove("modern");
+                } else {
+                    demoBox.classList.add("modern");
+                    demoBox.classList.remove("legacy");
+                }
+            }
+
+            // Event Listeners
+            widthSlider.addEventListener("input", updateRatio);
+            heightSlider.addEventListener("input", updateRatio);
+            toggleLegacy.addEventListener("change", updateRatio);
+
+            // Initialize
+            updateRatio();
+        </script>
+    </body>
+</html>

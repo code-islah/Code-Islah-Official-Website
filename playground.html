@@ -24,6 +24,16 @@
         display: grid;
         gap: var(--size-200);
       }
+      .iframe {
+        position: relative;
+      }
+
+      iframe + p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     </style>
   </head>
 
@@ -84,6 +94,26 @@
     </header>
     <main>
       <div class="container clr-text-white">
+        <div>
+          <h2 class="m-bottom">Select from the category :</h2>
+          <div class="d-flex place-content-center gap-200">
+            <select class="rounded width-50"></select>
+            <button class="btn rounded">Play</button>
+            <button class="btn rounded">Open</button>
+          </div>
+          <div class="iframe">
+            <iframe
+              class="clr-bg-glass m-top rounded border-common"
+              src=""
+              frameborder="0"
+            ></iframe>
+            <p
+              class="h1 width-100 fw-500 clr-text-white text-center opacity-50"
+            >
+              Playground may appear here
+            </p>
+          </div>
+        </div>
         <h2 class="m-block-high">Advance Use of Dev Tools</h2>
         <div class="border-common rounded p-normal">
           <p class="lead fw-400">
@@ -179,6 +209,7 @@
         </div>
       </div>
     </main>
+    <p>abc</p>
     <script>
       function giveColor() {
         const txt = document.querySelector(".jsText");
@@ -186,6 +217,53 @@
         txt.style.color = "#CBCB41";
         txt.style.fontSize = "24px";
       }
+
+      let refURL = "";
+      const select = document.querySelector("select");
+      fetch("./challenges/data/playObj.json")
+        .then((res) => res.json())
+        .then((data) => updateOption(data));
+
+      function updateOption(data) {
+        for (const keys in data) {
+          let opt = document.createElement("option");
+          opt.textContent = keys;
+          select.appendChild(opt);
+        }
+
+        const submit = document.querySelectorAll("button");
+        const frame = document.querySelector("iframe");
+
+        let key = Object.keys(data)[0];
+        let url = data[key].url;
+        select.addEventListener("change", (e) => {
+          key = e.target.children[select.selectedIndex].value;
+          url = data[key].url;
+        });
+
+        submit[0].addEventListener("click", () => {
+          frame.parentElement.lastElementChild.style.display = "none";
+          if (Object.keys(data).includes(key)) {
+            frame.src = url;
+          }
+        });
+
+        submit[1].addEventListener("click", () => {
+          window.location.href = url;
+        });
+      }
+
+      document.querySelector("iframe").addEventListener("load", (e) => {
+        let elem = e.target;
+        let size = elem.contentDocument.scrollingElement.offsetHeight + "px";
+
+        elem.style.height = size;
+
+        e.target.contentDocument.addEventListener("change", (e) => {
+          elem.style.height =
+            elem.contentDocument.scrollingElement.offsetHeight + 50 + "px";
+        });
+      });
     </script>
   </body>
 </html>

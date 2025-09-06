@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script src="/js/abstract.js" defer></script>
+    <script src="../js/count.js" defer></script>
+    <title>Speech Recognition</title>
+    <style>
+      .words {
+        width: 80%;
+        margin: 0 auto;
+        height: 100%;
+        background-color: var(--clr-white);
+        border-radius: var(--rounded);
+        color: var(--clr-dark);
+      }
+      .words p {
+        border-bottom: 1px solid var(--clr-white);
+        position: relative;
+        padding: 0 var(--size-700);
+        line-height: var(--size-500);
+      }
+      .words p::before {
+        content: "";
+        width: min-content;
+        height: 100%;
+        border-left: 1px solid var(--clr-warn);
+        position: absolute;
+        left: var(--size-400);
+      }
+      .words p::after {
+        content: "";
+        width: min-content;
+        height: 100%;
+        border-left: 1px solid var(--clr-warn);
+        position: absolute;
+        left: calc(var(--size-400) + 5px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <h4
+      class="arabic-bolder fs-600 text-center p-medium clr-text-accent text-shadow"
+    >
+      Speech Recognition Without External Library or API
+    </h4>
+
+    <div contenteditable="false" class="words"></div>
+    <script>
+      window.SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      const recognition = new SpeechRecognition();
+      recognition.interimResults = true;
+
+      let p = document.createElement("p");
+      const words = document.querySelector(".words");
+      words.appendChild(p);
+
+      recognition.addEventListener("result", (e) => {
+        console.log(e);
+        console.log(200);
+
+        const transcript = Array.from(e.results)
+          .map((result) => result[0].transcript)
+          .join("");
+
+        console.log(transcript);
+      });
+      recognition.addEventListener("error", (e) => {
+        console.error("SpeechRecognition error:", e.error);
+      });
+      recognition.addEventListener("end", () => {
+        console.log("SpeechRecognition ended, restarting...");
+        recognition.start();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+    <title>Unreal Webcam With getUserMedia()</title>
+    <style>
+      .photobooth {
+        position: relative;
+      }
+      .player {
+        border-radius: var(--rounded);
+        border: 1px solid var(--clr-flow);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0;
+        right: 2%;
+        transition: width 0.5s linear;
+      }
+
+      .photo {
+        margin-top: var(--size-500);
+        width: 100%;
+        border-radius: var(--rounded);
+        border: 1px solid var(--clr-secondary);
+      }
+
+      .strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: var(--size-200);
+        background-color: var(--clr-white);
+        padding: var(--size-200);
+      }
+      .strip a img {
+        border-radius: var(--rounded);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <h4
+      class="arabic-bolder fs-600 text-center clr-text-accent text-shadow p-high"
+    >
+      Unreal Webcam With getUserMedia()
+    </h4>
+    <div class="photobooth">
+      <div class="controls container flow-tiny">
+        <button class="btn rounded" onclick="takePhoto()">Take Photo</button>
+
+        <div class="rgb">
+          <label for="rmin">Red Min:</label>
+          <input type="range" name="rmin" id="rmin" min="0" max="255" />
+          <label for="rmax">Red Max:</label>
+          <input type="range" name="rmax" id="rmax" min="0" max="255" />
+
+          <br />
+
+          <label for="gmin">Green Min:</label>
+          <input type="range" name="gmin" id="gmin" min="0" max="255" />
+          <label for="gmax">Red Max:</label>
+          <input type="range" name="gmax" id="gmax" min="0" max="255" />
+          <br />
+
+          <label for="bmin">Blue Min:</label>
+          <input type="range" name="bmin" id="bmin" min="0" max="255" />
+          <label for="bmax">Blue Max:</label>
+          <input type="range" name="bmax" id="bmax" min="0" max="255" />
+        </div>
+      </div>
+      <canvas class="photo"></canvas>
+      <video class="player width-25" src=""></video>
+      <div class="strip"></div>
+    </div>
+
+    <script>
+      const video = document.querySelector(".player");
+      const canvas = document.querySelector(".photo");
+      const strip = document.querySelector(".strip");
+      const ctx = canvas.getContext("2d");
+
+      function getVideo() {
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: false })
+          .then((localMediaStream) => {
+            video.srcObject = localMediaStream; // Corrected line
+            video.play();
+          })
+          .catch((err) => console.log(`Oh no!`, err));
+      }
+
+      function paintToCanvas() {
+        video.addEventListener("loadedmetadata", function () {
+          const width = video.videoWidth;
+          const height = video.videoHeight;
+          canvas.width = width;
+          canvas.height = height;
+          return setInterval(() => {
+            ctx.drawImage(video, 0, 0, width, height);
+
+            //take the pixel out
+            let pixels = ctx.getImageData(0, 0, width, height);
+            // mess with them
+            // pixels = redEffect(pixels);
+            // pixels = rgbSplit(pixels);
+            pixels = greenScreen(pixels);
+            // put them back
+            ctx.putImageData(pixels, 0, 0);
+          }, 16);
+        });
+      }
+      function takePhoto() {
+        const data = canvas.toDataURL("image/jpeg");
+        const link = document.createElement("a");
+        link.href = data;
+        link.setAttribute("download", "campic");
+        link.innerHTML = `<img src="${data}" alt="campic">`;
+        strip.insertBefore(link, strip.firstChild);
+      }
+
+      function redEffect(pixels) {
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          pixels.data[i + 0] = pixels.data[i + 0] + 100;
+          pixels.data[i + 1] = pixels.data[i + 1] - 50;
+          pixels.data[i + 2] = pixels.data[i + 2] * 0.5;
+        }
+        return pixels;
+      }
+
+      function rgbSplit(pixels) {
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          pixels.data[i - 150] = pixels.data[i + 0];
+          pixels.data[i + 100] = pixels.data[i + 1];
+          pixels.data[i - 150] = pixels.data[i + 2];
+        }
+        return pixels;
+      }
+
+      function greenScreen(pixels) {
+        const levels = {};
+
+        document.querySelectorAll(".rgb input").forEach((input) => {
+          levels[input.name] = input.value;
+        });
+
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          red = pixels.data[i + 0];
+          green = pixels.data[i + 1];
+          blue = pixels.data[i + 2];
+          alpha = pixels.data[i + 3];
+
+          if (
+            red >= levels.rmin &&
+            green >= levels.gmin &&
+            blue >= levels.bmin &&
+            red <= levels.rmax &&
+            green <= levels.gmax &&
+            blue <= levels.bmax
+          ) {
+            pixels.data[i + 3] = 0;
+          }
+        }
+        return pixels;
+      }
+
+      getVideo();
+      paintToCanvas();
+
+      function widthToggle() {
+        video.classList.toggle("width-75");
+        if (video.classList.contains("width-25")) {
+          video.classList.remove("width-25");
+        } else {
+          video.classList.add("width-25");
+        }
+      }
+      video.addEventListener("click", widthToggle);
+    </script>
+  </body>
+</html>

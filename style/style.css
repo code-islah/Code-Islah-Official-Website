@@ -49,7 +49,8 @@ h5,
 p,
 figure,
 picture,
-label {
+label,
+select {
   margin: 0;
 }
 
@@ -107,6 +108,7 @@ a {
   --size-solid-600: 100px;
 
   --rounded: 3px;
+  --circle: 50%;
 
   --padd-btn: 5px;
   --padd-tiny: 5px;
@@ -571,7 +573,7 @@ i.bi {
 
 .circle {
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: var(--circle);
 }
 
 .pos-ab {

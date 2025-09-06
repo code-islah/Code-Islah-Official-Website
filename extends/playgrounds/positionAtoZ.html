@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Positioning</title>
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --dark: #212529;
+        --light: #f8f9fa;
+        --islamic-green: #228b22;
+        --gold: #ffd700;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Amiri", "Traditional Arabic", sans-serif;
+        line-height: 1.6;
+        background: #f5f7fa;
+        color: var(--dark);
+        padding: 20px;
+        background-image: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 20px 20px;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--islamic-green), #1a5a1a);
+        color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        border-bottom: 3px solid var(--gold);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+      }
+
+      /* Controls Panel - Like a Mihrab */
+      .controls {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+        border-right: 3px solid var(--gold);
+      }
+
+      .control-group {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.5rem;
+      }
+
+      .control-group:last-child {
+        border-bottom: none;
+      }
+
+      .control-group h3 {
+        margin-bottom: 1rem;
+        color: var(--islamic-green);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Amiri", serif;
+      }
+
+      .control-group h3::before {
+        content: "◯";
+        color: var(--gold);
+        font-size: 0.8em;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      select,
+      input[type="range"],
+      input[type="number"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-family: inherit;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .radio-option {
+        flex: 1;
+        min-width: 80px;
+      }
+
+      .radio-option input {
+        display: none;
+      }
+
+      .radio-option label {
+        display: block;
+        padding: 0.5rem;
+        background: #f0f2f5;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .radio-option input:checked + label {
+        background: var(--islamic-green);
+        color: white;
+      }
+
+      /* Demo Area - Like a Prayer Mat */
+      .demo-area {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+        position: relative;
+        min-height: 500px;
+        border: 1px solid #eee;
+      }
+
+      .positioning-container {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        background: #f8f8f8;
+        border: 2px dashed #ccc;
+        margin-bottom: 2rem;
+        background-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .positioned-element {
+        width: 100px;
+        height: 100px;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        position: absolute;
+      }
+
+      /* Code Preview - Like an Illuminated Manuscript */
+      .code-preview {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1rem;
+        border-radius: 6px;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--islamic-green);
+        position: relative;
+      }
+
+      .code-preview::before {
+        content: "⌨";
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background: var(--islamic-green);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+
+      /* Property Table - Like a Scholar's Notes */
+      .property-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        font-family: "Amiri", serif;
+      }
+
+      .property-table th,
+      .property-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      .property-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: var(--islamic-green);
+        border-bottom: 2px solid var(--gold);
+      }
+
+      .property-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .value-display {
+        display: inline-block;
+        min-width: 40px;
+        text-align: center;
+        font-weight: bold;
+        color: var(--islamic-green);
+      }
+
+      @media (max-width: 1024px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        .controls {
+          position: static;
+        }
+      }
+
+      /* Islamic Pattern Overlay */
+      .islamic-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            36deg,
+            transparent,
+            transparent 10px,
+            rgba(34, 139, 34, 0.1) 10px,
+            rgba(34, 139, 34, 0.1) 20px
+          ),
+          repeating-linear-gradient(
+            72deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 215, 0, 0.1) 10px,
+            rgba(255, 215, 0, 0.1) 20px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Islamic Pattern Overlay -->
+    <div class="islamic-pattern"></div>
+
+    <header>
+      <h1>CSS Positioning Playground</h1>
+      <p>"And We have made the heaven a roof, well-protected" (Quran 21:32)</p>
+    </header>
+
+    <div class="container">
+      <div class="controls">
+        <!-- Positioning Type -->
+        <div class="control-group">
+          <h3>Position Type</h3>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="position-type"
+                id="position-static"
+                value="static"
+              />
+              <label for="position-static">static</label>
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="position-type"
+                id="position-relative"
+                value="relative"
+              />
+              <label for="position-relative">relative</label>
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="position-type"
+                id="position-absolute"
+                value="absolute"
+                checked
+              />
+              <label for="position-absolute">absolute</label>
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="position-type"
+                id="position-fixed"
+                value="fixed"
+              />
+              <label for="position-fixed">fixed</label>
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="position-type"
+                id="position-sticky"
+                value="sticky"
+              />
+              <label for="position-sticky">sticky</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offset Properties -->
+        <div class="control-group">
+          <h3>Offset Values</h3>
+
+          <label
+            >top <span id="top-value" class="value-display">50px</span></label
+          >
+          <input type="range" id="top" min="0" max="300" value="50" />
+
+          <label
+            >right
+            <span id="right-value" class="value-display">auto</span></label
+          >
+          <input type="range" id="right" min="0" max="300" value="0" disabled />
+
+          <label
+            >bottom
+            <span id="bottom-value" class="value-display">auto</span></label
+          >
+          <input
+            type="range"
+            id="bottom"
+            min="0"
+            max="300"
+            value="0"
+            disabled
+          />
+
+          <label
+            >left <span id="left-value" class="value-display">50px</span></label
+          >
+          <input type="range" id="left" min="0" max="300" value="50" />
+        </div>
+
+        <!-- Z-Index -->
+        <div class="control-group">
+          <h3>Stacking Order</h3>
+          <label
+            >z-index
+            <span id="zindex-value" class="value-display">auto</span></label
+          >
+          <input type="range" id="zindex" min="0" max="10" value="0" />
+        </div>
+
+        <!-- Parent Positioning -->
+        <div class="control-group">
+          <h3>Parent Positioning</h3>
+          <label>
+            <input type="checkbox" id="parent-positioned" /> Parent is
+            positioned
+            <small>(relative/absolute/fixed)</small>
+          </label>
+        </div>
+      </div>
+
+      <div class="demo-area">
+        <h2>Positioning Demo</h2>
+        <p>Adjust the controls to see positioning behavior in real-time</p>
+
+        <div class="positioning-container" id="positioning-container">
+          <div class="positioned-element" id="positioned-element">Element</div>
+          <div
+            class="positioned-element"
+            style="
+              background: var(--islamic-green);
+              left: 150px;
+              top: 150px;
+              z-index: 1;
+            "
+          >
+            Reference
+          </div>
+        </div>
+
+        <h3>Generated CSS</h3>
+        <div class="code-preview" id="css-code">
+          .positioned-element { position: absolute; top: 50px; left: 50px;
+          z-index: auto; }
+        </div>
+
+        <h3>CSS Positioning Reference</h3>
+        <table class="property-table">
+          <thead>
+            <tr>
+              <th>Position Value</th>
+              <th>Behavior</th>
+              <th>Islamic Analogy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>static (default)</td>
+              <td>In normal document flow</td>
+              <td>Like a worshipper in straight prayer rows</td>
+            </tr>
+            <tr>
+              <td>relative</td>
+              <td>Positioned relative to itself</td>
+              <td>Like adjusting your position within your prayer space</td>
+            </tr>
+            <tr>
+              <td>absolute</td>
+              <td>Positioned relative to nearest positioned ancestor</td>
+              <td>Like the mihrab indicating qibla direction</td>
+            </tr>
+            <tr>
+              <td>fixed</td>
+              <td>Positioned relative to viewport</td>
+              <td>Like the Kaaba - fixed reference for all</td>
+            </tr>
+            <tr>
+              <td>sticky</td>
+              <td>Hybrid of relative and fixed</td>
+              <td>Like a prayer leader who stays visible when others scroll</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="control-group">
+          <h3>Key Positioning Concepts</h3>
+          <ul style="padding-left: 1.5rem">
+            <li>
+              <strong>Document Flow</strong>: Like the natural order of prayer
+              rows (static positioning)
+            </li>
+            <li>
+              <strong>Positioning Context</strong>: The ancestor that becomes
+              the reference point (like the mosque structure)
+            </li>
+            <li>
+              <strong>Z-Index</strong>: The stacking order, like priority in
+              prayer lines
+            </li>
+            <li>
+              <strong>Fixed vs Absolute</strong>: Fixed to viewport (like the
+              Kaaba) vs absolute to parent (like mihrab in a mosque)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // DOM Elements
+      const positionedElement = document.getElementById("positioned-element");
+      const positioningContainer = document.getElementById(
+        "positioning-container"
+      );
+      const cssCode = document.getElementById("css-code");
+
+      // Positioning Controls
+      const positionTypeRadios = document.querySelectorAll(
+        'input[name="position-type"]'
+      );
+      const topInput = document.getElementById("top");
+      const topValue = document.getElementById("top-value");
+      const rightInput = document.getElementById("right");
+      const rightValue = document.getElementById("right-value");
+      const bottomInput = document.getElementById("bottom");
+      const bottomValue = document.getElementById("bottom-value");
+      const leftInput = document.getElementById("left");
+      const leftValue = document.getElementById("left-value");
+      const zindexInput = document.getElementById("zindex");
+      const zindexValue = document.getElementById("zindex-value");
+      const parentPositionedCheckbox =
+        document.getElementById("parent-positioned");
+
+      // Initialize
+      updatePositioning();
+
+      // Update positioning based on controls
+      function updatePositioning() {
+        // Get selected position type
+        let positionType = "absolute";
+        positionTypeRadios.forEach((radio) => {
+          if (radio.checked) positionType = radio.value;
+        });
+
+        // Get offset values
+        const topVal = topInput.value + "px";
+        const rightVal =
+          rightInput.value === "0" ? "auto" : rightInput.value + "px";
+        const bottomVal =
+          bottomInput.value === "0" ? "auto" : bottomInput.value + "px";
+        const leftVal = leftInput.value + "px";
+        const zindexVal =
+          zindexInput.value === "0" ? "auto" : zindexInput.value;
+
+        // Apply to element
+        positionedElement.style.position = positionType;
+        positionedElement.style.top =
+          positionType !== "static" ? topVal : "auto";
+        positionedElement.style.right =
+          positionType !== "static" ? rightVal : "auto";
+        positionedElement.style.bottom =
+          positionType !== "static" ? bottomVal : "auto";
+        positionedElement.style.left =
+          positionType !== "static" ? leftVal : "auto";
+        positionedElement.style.zIndex = zindexVal;
+
+        // Update parent positioning
+        if (parentPositionedCheckbox.checked) {
+          positioningContainer.style.position = "relative";
+          positioningContainer.style.border = "2px dashed var(--islamic-green)";
+        } else {
+          positioningContainer.style.position = "static";
+          positioningContainer.style.border = "2px dashed #ccc";
+        }
+
+        // Update displayed values
+        topValue.textContent = topVal;
+        rightValue.textContent = rightVal;
+        bottomValue.textContent = bottomVal;
+        leftValue.textContent = leftVal;
+        zindexValue.textContent = zindexVal;
+
+        // Update code preview
+        updateCodePreview(
+          positionType,
+          topVal,
+          rightVal,
+          bottomVal,
+          leftVal,
+          zindexVal
+        );
+      }
+
+      // Update code preview
+      function updateCodePreview(position, top, right, bottom, left, zindex) {
+        cssCode.innerHTML = `.positioned-element {
+  position: ${position};
+  top: ${top};
+  right: ${right};
+  bottom: ${bottom};
+  left: ${left};
+  z-index: ${zindex};
+}`;
+
+        if (parentPositionedCheckbox.checked) {
+          cssCode.innerHTML += `\n\n/* Parent element */
+.container {
+  position: relative;
+}`;
+        }
+      }
+
+      // Toggle offset input availability
+      function toggleOffsetInputs() {
+        const positionType = document.querySelector(
+          'input[name="position-type"]:checked'
+        ).value;
+        const isStatic = positionType === "static";
+
+        topInput.disabled = isStatic;
+        rightInput.disabled = isStatic;
+        bottomInput.disabled = isStatic;
+        leftInput.disabled = isStatic;
+      }
+
+      // Event Listeners
+      positionTypeRadios.forEach((radio) => {
+        radio.addEventListener("change", () => {
+          toggleOffsetInputs();
+          updatePositioning();
+        });
+      });
+
+      topInput.addEventListener("input", () => {
+        if (topInput.value !== "0") {
+          bottomInput.value = "0";
+          bottomValue.textContent = "auto";
+        }
+        updatePositioning();
+      });
+
+      rightInput.addEventListener("input", () => {
+        if (rightInput.value !== "0") {
+          leftInput.value = "0";
+          leftValue.textContent = "auto";
+        }
+        updatePositioning();
+      });
+
+      bottomInput.addEventListener("input", () => {
+        if (bottomInput.value !== "0") {
+          topInput.value = "0";
+          topValue.textContent = "auto";
+        }
+        updatePositioning();
+      });
+
+      leftInput.addEventListener("input", () => {
+        if (leftInput.value !== "0") {
+          rightInput.value = "0";
+          rightValue.textContent = "auto";
+        }
+        updatePositioning();
+      });
+
+      zindexInput.addEventListener("input", updatePositioning);
+      parentPositionedCheckbox.addEventListener("change", updatePositioning);
+
+      // Initialize input states
+      toggleOffsetInputs();
+    </script>
+  </body>
+</html>
