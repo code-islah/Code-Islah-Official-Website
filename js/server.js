@@ -9,27 +9,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Connect to MongoDB Atlas
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err.message));
-
-// Simple test route
-app.get("/", (req, res) => {
-  res.send("Server is working!");
-});
-
-app.use("api/auth", authRoutes);
-
-app.listen(process.env.PORT, () => {
-  console.log(`🚀 Server running on port ${process.env.PORT}`);
-});
-
 // Allow both your live site and local development
 const allowedOrigins = [
   "https://codeislah.netlify.app",
   "http://127.0.0.1:5500",
+  "http://127.0.0.1:5501",
   "http://localhost:5000",
 ];
 
@@ -49,3 +33,20 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Connect to MongoDB Atlas
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err.message));
+
+app.use("/api/auth", authRoutes);
+
+// Simple test route
+app.get("/", (req, res) => {
+  res.send("Server is working!");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`🚀 Server running on port ${process.env.PORT}`);
+});
