@@ -193,34 +193,35 @@
           });
         });
 
-
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const inputName = document.querySelector("#userName").value.trim();
-        const inputEmail = document.querySelector("#email").value.trim();
-        const inputPass = document.querySelector("#password").value.trim();
+        const name = document.querySelector("#userName").value.trim();
+        const email = document.querySelector("#email").value.trim();
+        const password = document.querySelector("#password").value.trim();
         const inputRePass = document.querySelector("#rePass").value.trim();
 
         if (
-          inputName.length > 6 &&
-          inputPass.length > 6 &&
-          inputPass === inputRePass
+          name.length > 6 &&
+          password.length > 6 &&
+          password === inputRePass
         ) {
-          const userData = {inputName, inputEmail, inputPass};
-          
-          
+          const userData = { name, email, password };
+
+          const res = await fetch("http://localhost:5000/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData),
+          });
+
+          const data = await res.json();
+          alert(data.message || "Registered!");
         } else {
           form.style.border = "1px solid red";
           form.addEventListener("transitionend", () => {
             form.style.border = "";
           });
         }
-
-
-
-
-
       });
     </script>
   </body>
