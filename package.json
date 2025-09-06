@@ -11,8 +11,10 @@
   "name": "code-islah-official-website",
   "version": "1.0.0",
   "description": "Go to [Site](https://codeislah.netlify.app/)",
-  "main": "index.js",
-  "scripts": {},
+  "main": "js/server.js",
+  "scripts": {
+    "start": "node js/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/code-islah/Code-Islah-Official-Website.git"
