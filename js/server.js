@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
+const authMiddleware = require("./middleware/auth"); 
 
 dotenv.config();
 
@@ -46,6 +47,13 @@ app.use("/api/auth", authRoutes);
 // Simple test route
 app.get("/", (req, res) => {
   res.send("Server is working!");
+});
+
+app.get("/api/protected", authMiddleware, (req, res) => {
+  res.json({
+    message: "You have access to a protected route 🎉",
+    user: req.user,
+  });
 });
 
 app.listen(process.env.PORT, () => {

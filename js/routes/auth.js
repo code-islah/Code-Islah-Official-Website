@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user"); // Import the User model
+const jwt = require("jsonwebtoken");
 
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
@@ -44,8 +45,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
 router.post("/login", async (req, res) => {
+  try {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -54,8 +55,21 @@ router.post("/login", async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-  res.json({ message: "Login successful", user: { id: user._id, name: user.name, email: user.email } });
-});
+  const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET, // make sure JWT_SECRET exists in .env & Render
+      { expiresIn: "1h" }
+    );
 
+  res.json({
+    message: "Login successful",
+    token: token,
+    user: { id: user._id, name: user.name, email: user.email },
+  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error logging in" });
+  }
+});
 
 module.exports = router;
