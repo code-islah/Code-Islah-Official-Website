@@ -1,14 +1,14 @@
 const token = localStorage.getItem("token");
 
-if (token) {
-  fetch("https://code-islah-official-website.onrender.com/api/protected", {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+fetch("https://code-islah-official-website.onrender.com/api/auth/verify", {
+  headers: { Authorization: "Bearer " + token }
+})
+  .then(res => {
+    if (!res.ok) throw new Error("Token invalid or expired");
+    return res.json();
   })
-    .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.error("Error:", err));
-} else {
-  console.log("No token found, please log in.");
-}
+  .then(user => console.log("Logged in user:", user))
+  .catch(err => {
+    localStorage.clear();
+    window.location.href = "/login.html"; // redirect if not logged in
+  });

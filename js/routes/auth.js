@@ -72,4 +72,21 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+router.get("/verify", async (req, res) => {
+  try {
+    const authHeader = req.header("Authorization");
+    if (!authHeader) return res.status(401).json({ message: "No token, authorization denied" });
+
+    const token = authHeader.replace("Bearer ", "");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: "Token is not valid" });
+  }
+});
+
 module.exports = router;

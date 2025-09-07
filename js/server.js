@@ -49,11 +49,16 @@ app.get("/", (req, res) => {
   res.send("Server is working!");
 });
 
-app.get("/api/protected", authMiddleware, (req, res) => {
-  res.json({
-    message: "You have access to a protected route 🎉",
-    user: req.user,
-  });
+app.get('/api/auth/verify', async (req, res) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select('-password');
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Token is not valid.' });
+  }
 });
 
 app.listen(process.env.PORT, () => {
