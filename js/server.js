@@ -64,3 +64,5 @@ app.get('/api/auth/verify', async (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`🚀 Server running on port ${process.env.PORT}`);
 });
+
+app.use("/api/admin", require("./routes/admin"));

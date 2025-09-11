@@ -34,6 +34,12 @@
         border-radius: var(--rounded);
       }
 
+      input[type="file"] {
+        background-color: var(--clr-flow);
+        width: 65%;
+        color: var(--clr-dark);
+      }
+
       label {
         position: relative;
         display: flex;
@@ -127,6 +133,10 @@
             required
           />
         </div>
+        <div>
+          <label for="upload">Upload Profile Image:</label>
+          <input type="file" name="file" id="file" />
+        </div>
         <div class="d-flex justify-content-center m-top-tiny">
           <button class="btn rounded" type="submit">SUBMIT</button>
           <button class="btn rounded" type="reset">RESET</button>
@@ -200,19 +210,23 @@
         const email = document.querySelector("#email").value.trim();
         const password = document.querySelector("#password").value.trim();
         const inputRePass = document.querySelector("#rePass").value.trim();
+        const file = document.querySelector("#file").value;
 
         if (
           name.length > 6 &&
           password.length > 6 &&
           password === inputRePass
         ) {
-          const userData = { name, email, password };
+          const userData = { name, email, password, file };
 
-          const res = await fetch("https://code-islah-official-website.onrender.com/api/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
-          });
+          const res = await fetch(
+            "https://code-islah-official-website.onrender.com/api/auth/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(userData),
+            }
+          );
 
           const data = await res.json();
           alert(data.message || "Registered!");
