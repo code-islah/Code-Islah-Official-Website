@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6 // Enforces a minimum password length
+  },
+  imageFile: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true // Optional: Adds `createdAt` and `updatedAt` fields automatically

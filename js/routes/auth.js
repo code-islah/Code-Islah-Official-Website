@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 router.post("/register", async (req, res) => {
   try {
     // 1. Get user data from the request body (sent by your frontend)
-    const { name, email, password } = req.body;
+    const { name, email, password, imageFile} = req.body;
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -18,6 +18,7 @@ router.post("/register", async (req, res) => {
       name,
       email,
       password: hashedPassword, // NOTE: We will hash this password next
+      imageFile,
     });
 
     // 3. Save the new user to the database
@@ -64,7 +65,7 @@ router.post("/login", async (req, res) => {
   res.json({
     message: "Login successful",
     token: token,
-    user: { id: user._id, name: user.name, email: user.email },
+    user: { id: user._id, name: user.name, email: user.email, imageFile: user.imageFile, },
   });
   } catch (error) {
     console.error(error);
