@@ -102,6 +102,91 @@
       .highlight {
         color: var(--clr-light);
       }
+
+      /* CREATING A NEW CHALLENGE */
+      #newChallenge {
+        display: grid;
+        background-color: var(--clr-accent);
+        color: var(--clr-white);
+        box-shadow: 0 0 3px 3px var(--clr-accent);
+        width: 90%;
+        gap: var(--size-200);
+        outline: 1px solid var(--clr-glass);
+        padding: var(--size-300);
+        position: fixed;
+        left: 50%;
+        top: 15%;
+        transform: translate(-50%, -10%);
+        z-index: 1000;
+      }
+      #newChallenge div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      #newChallenge div:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--size-200);
+        margin-top: var(--size-400);
+      }
+
+      #newChallenge div input,
+      textarea {
+        padding: var(--size-100);
+        width: 50% !important;
+      }
+
+      label[for="info"] {
+        align-self: start;
+        white-space: nowrap;
+      }
+
+      #newChallenge textarea {
+        max-width: 100%;
+        resize: vertical;
+      }
+
+      #newChallenge label {
+        padding: var(--size-400) 0;
+      }
+
+      #newChallenge input[type="file"] {
+        background: var(--clr-white);
+        color: var(--clr-dark);
+        width: min-content;
+        padding: var(--size-200);
+      }
+
+      @media (max-width: 48em) {
+        #newChallenge {
+          top: 5%;
+        }
+
+        #newChallenge div {
+          display: grid;
+          justify-content: center;
+        }
+        #newChallenge div input {
+          width: 100% !important;
+        }
+
+        #newChallenge textarea {
+          width: 100% !important;
+        }
+
+        #newChallenge input[type="file"] {
+          width: 100%;
+          padding: var(--size-100);
+        }
+      }
+
+      @media (min-width: 64em) {
+        #newChallenge {
+          width: 680px;
+        }
+      }
     </style>
   </head>
 
@@ -177,7 +262,7 @@
             id="search"
             placeholder="Ex. Alif Baa"
           />
-          <button class="btn fs-100" type="button">
+          <button class="btn fs-100 createChallenge" type="button">
             Create a new challenge
           </button>
         </div>
@@ -629,6 +714,57 @@
           `<span class="clr-text-primary">${marker}</span>`
         );
       }
+
+      const creatorWindow = document.createElement("div");
+      document
+        .querySelector(".createChallenge")
+        .addEventListener("click", () => {
+          creatorWindow.setAttribute(
+            "style",
+            "position: absolute;inset:0;height: " +
+              window.document.scrollingElement.offsetHeight +
+              "px;background: var(--clr-dark-50);backdrop-filter: blur(5px);z-index: 2000"
+          );
+          creatorWindow.innerHTML = ` <div class="container">
+      <form class="d-grid width-75 m-auto rounded" id="newChallenge">
+        <h2 class="text-center text-shadow">Add New Challenge</h2>
+        <div>
+          <label for="name">Challenge Name</label>
+          <input type="text" name="inp" id="name" placeholder="Page Header Name" />
+        </div>
+        <div>
+          <label for="info">Add extra information</label>
+          <textarea
+            style="height: 150px"
+            name="inp"
+            id="info"
+            placeholder="Write its purpose..."
+          ></textarea>
+        </div>
+        <div class="d-flex">
+          <label for="file">Attach Your File (HTML)</label>
+          <input type="file" name="inp" id=file">
+        </div>
+        <div>
+          <button class="btn" type="submit">Submit</button>
+          <button class="btn" type="reset">Reset</button>
+        </div>
+      </form>
+    </div>`;
+          window.document.body.insertBefore(
+            creatorWindow,
+            document.body.firstElementChild
+          );
+
+          creatorWindow.querySelectorAll('[name="inp"]').forEach((e) => {
+            e.addEventListener("focus", (e) => {
+              e.target.style.outline = "3px solid var(--clr-flow)";
+            });
+            e.addEventListener("blur", (e) => {
+              e.target.style.outline = "";
+            });
+          });
+        });
     </script>
   </body>
 </html>
