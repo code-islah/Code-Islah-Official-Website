@@ -8,6 +8,7 @@ fetch("https://code-islah-official-website.onrender.com/api/auth/verify", {
     return res.json();
   })
   .then((user) => {
+    loggedProfile();
     console.log("Logged in user:", user);
   })
   .catch((err) => {
@@ -21,8 +22,12 @@ function loggedProfile() {
   profile.innerHTML = `<span data-close="true">╳</span>
    <img src="../img/profile.png" class="circle">
    <div class="d-none profName p-normal">
-   <h4 class="clr-text-dark">${JSON.parse(localStorage.getItem('user') || 'null')?.name ?? undefined}</h4>
-   <p class="clr-text-primary">${JSON.parse(localStorage.getItem('user') || 'null')?.email ?? undefined}</p>
+   <h4 class="clr-text-dark">${
+     JSON.parse(localStorage.getItem("user") || "null")?.name ?? undefined
+   }</h4>
+   <p class="clr-text-primary">${
+     JSON.parse(localStorage.getItem("user") || "null")?.email ?? undefined
+   }</p>
    </div>
  <div>
   <span data-update="true"><i class="bi bi-repeat clr-text-white"></i></span>
@@ -82,7 +87,6 @@ function loggedProfile() {
     list.innerHTML = "";
   }
 }
-loggedProfile();
 
 function updateNodeModules(container) {
   function writer(txt) {
