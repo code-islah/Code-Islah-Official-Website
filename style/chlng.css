@@ -1,12 +1,15 @@
 section {
   margin-block: var(--size-solid-100);
-  gap: calc(var(--size-100) - 0.15rem);
+  gap: var(--size-100);
 }
 
 /* COUNTER*/
 
 .counter {
   counter-reset: step;
+  display: grid;
+
+
 }
 .counter div {
   counter-increment: step;

@@ -20,6 +20,7 @@
           var(--clr-light-50),
           var(--clr-dark-50)
         );
+        margin-bottom: var(--size-100);
       }
 
       .counter div:nth-child(odd) {
@@ -97,6 +98,10 @@
       .langDots span:nth-child(3) {
         background-color: var(--clr-js);
       }
+
+      .highlight {
+        color: var(--clr-light);
+      }
     </style>
   </head>
 
@@ -157,11 +162,27 @@
     </header>
 
     <main>
-      <h1
-        class="h2 clr-text-accent text-shadow arabic-bolder h4 text-center m-top"
-      >
-        JavaScript
-      </h1>
+      <div class="flow-tiny p-tiny">
+        <h1
+          class="h2 clr-text-accent text-shadow arabic-bolder h4 text-center m-top"
+        >
+          JavaScript
+        </h1>
+        <div class="d-flex justify-content-center align-items-center gap-300">
+          <p class="clr-text-white">Search Challenge :</p>
+          <input
+            class="p-tiny"
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Ex. Alif Baa"
+          />
+          <button class="btn fs-100" type="button">
+            Create a new challenge
+          </button>
+        </div>
+      </div>
+
       <div class="goTo right pos-fixed bottom m-high d-flex">
         <input type="number" placeholder="E. 1" id="search" />
         <button class="clr-bg-accent clr-text-white" onclick="navigate()">
@@ -548,6 +569,65 @@
           <span style="outline:${outlines[1]}px solid ${colors[1]}"></span>
           <span style="outline:${outlines[2]}px solid ${colors[2]}"></span>
         `;
+      }
+
+      const search = document.querySelector("#search");
+      search.addEventListener("input", (e) => {
+        const searchValue = e.target.value.toLowerCase();
+        const items = document.querySelectorAll(".counter > div .h4");
+        let count = 0;
+        let emptyChecker = false;
+        for (const item of items) {
+          item.parentElement.style.order = 0;
+          if (
+            item.textContent.toLowerCase().startsWith(searchValue) &&
+            searchValue !== ""
+          ) {
+            count++;
+            item.classList.add("highlight");
+            emptyChecker = true;
+
+            reorder(item, count, e);
+          } else {
+            item.classList.remove("highlight");
+            item.parentElement.style.background = "";
+            item.parentElement.style.outline = "";
+          }
+        }
+        if (!emptyChecker) {
+          if (e.target.value.length <= 0) {
+            e.target.style.background = "";
+            items.forEach((i) => {
+              i.querySelector(".clr-text-primary").classList.remove(
+                "clr-text-primary"
+              );
+            });
+          } else {
+            e.target.style.background = "var(--clr-warn)";
+          }
+        } else {
+          e.target.style.background = "";
+        }
+      });
+
+      search.addEventListener("focus", (e) => {
+        e.target.style.outline = "3px solid var(--clr-white)";
+      });
+      search.addEventListener("blur", (e) => {
+        e.target.style.outline = "";
+      });
+
+      function reorder(el, i, ev) {
+        el.parentElement.style.order = -i;
+        el.parentElement.style.background = "var(--clr-accent)";
+        el.parentElement.style.outline = "2px solid var(--clr-flow)";
+
+        const text = el.textContent;
+        const marker = text.slice(0, ev.target.value.length);
+        el.innerHTML = text.replace(
+          marker,
+          `<span class="clr-text-primary">${marker}</span>`
+        );
       }
     </script>
   </body>

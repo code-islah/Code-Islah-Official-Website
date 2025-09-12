@@ -1,4 +1,3 @@
-
 const navbarToggler = document.querySelector(".navbarToggler");
 const header = document.querySelector("header");
 const close = document.querySelector(".close");
@@ -85,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// NAVIGATE TO ANY CHALLENGE
+// NAVIGATE TO ANY CHALLENGE SECTION
 
 function navigate() {
   const list = document.querySelectorAll(".counter div");
