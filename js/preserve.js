@@ -20,7 +20,9 @@ function loggedProfile() {
   const profile = document.createElement("div");
   profile.classList.add("profile");
   profile.innerHTML = `<span data-close="true">╳</span>
-   <img src="../img/profile.png" class="circle">
+   <img src="${
+     JSON.parse(localStorage.getItem("user") || "null")?.imageFile ?? undefined
+   }" class="circle">
    <div class="d-none profName p-normal">
    <h4 class="clr-text-dark">${
      JSON.parse(localStorage.getItem("user") || "null")?.name ?? undefined
@@ -41,8 +43,6 @@ function loggedProfile() {
 
   profile.querySelector("img").addEventListener("click", (e) => {
     profile.classList.add("active");
-    e.target.src = "../img/profile.png";
-
     profile.querySelector(".profName").style.display = "block";
   });
 

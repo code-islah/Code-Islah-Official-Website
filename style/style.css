@@ -1360,7 +1360,7 @@ iframe {
     width: calc(var(--size-solid-600) * 2.6);
     transform: translateX(0);
     border-style: solid;
-    top: 20%;
+    top: 15%;
   }
 
   .profile img {
