@@ -87,6 +87,18 @@
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
 
+          if (!email || !password) {
+            e.target.querySelectorAll("input").forEach((inp) => {
+              inp.style.outline = "1px solid crimson";
+
+              setTimeout(() => {
+                inp.style.outline = "";
+              }, 500);
+            });
+
+            return;
+          }
+
           const res = await fetch(
             "https://code-islah-official-website.onrender.com/api/auth/login",
             {

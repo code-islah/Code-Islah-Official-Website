@@ -903,7 +903,7 @@ iframe {
   transform: translateY(100%);
   transition: transform 900ms;
   position: fixed;
-  left: 50%;
+  left: 30%;
   z-index: 1000 !important;
 }
 
@@ -1338,6 +1338,16 @@ iframe {
 }
 
 /* Media For Profile Section */
+@media (max-width: 400px) {
+  .profile.active {
+    width: 65%;
+  }
+  .profile > div:last-child {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-100);
+  }
+}
 @media (min-width: 1400px) {
   .profile {
     display: flex;

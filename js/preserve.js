@@ -136,7 +136,7 @@ function updateNodeModules(container) {
 }
 
 let notice = document.createElement("div");
-document.body.insertBefore(notice, document.querySelector("div"));
+document.body.insertBefore(notice, document.body.firstElementChild);
 function logout(container) {
   list.innerHTML = `<div><h4 class="h4">Are you sure?</h4> <div class="gap-300" style="display: flex !important;place-content:center !important; padding-bottom: var(--size-200)"><span class="clr-text-light">Yes</span><span class="clr-text-warn">No</span></div></div>`;
 
