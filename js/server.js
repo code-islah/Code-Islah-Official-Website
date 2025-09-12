@@ -8,8 +8,8 @@ const authMiddleware = require("./middleware/auth");
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({limit: "10mb"}));
+app.use(express.urlencoded({ extended: true,  limit: "10mb"}));
 
 // Allow both your live site and local development
 const allowedOrigins = [
