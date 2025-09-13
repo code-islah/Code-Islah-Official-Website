@@ -1,4 +1,6 @@
 const { Octokit } = require("@octokit/rest");
+require("dotenv").config();
+
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
