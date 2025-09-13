@@ -22,7 +22,7 @@ exports.handler = async (event) => {
 
   const OWNER = process.env.GITHUB_OWNER;
   const REPO = process.env.GITHUB_REPO;
-  const TOKEN = process.env.GITHUB_TOKEN;
+  const TOKEN = process.env.GITHUB_TOKEN ? process.env.GITHUB_TOKEN.trim() : null;
   const BRANCH = process.env.GITHUB_BRANCH;
   const FILE_PATH = "challenges/data/challenges.json";
 
