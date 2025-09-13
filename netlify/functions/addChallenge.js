@@ -22,7 +22,7 @@ exports.handler = async (event) => {
   const REPO = process.env.GITHUB_REPO;
   const TOKEN = process.env.GITHUB_TOKEN;
   const BRANCH = process.env.GITHUB_BRANCH;
-  const FILE_PATH = process.env.CHALLENGES_FILE_PATH;
+  const FILE_PATH = "challenges/data/challenges.json";
 
   const octokit = new Octokit({ auth: TOKEN });
 
