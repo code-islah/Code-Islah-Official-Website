@@ -16,7 +16,7 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body); } 
   catch { return { statusCode: 400, headers: CORS_HEADERS, body: "Invalid JSON" }; }
 
-  const { itemName, itemInfo, htmlContent } = body;
+  const { itemName, itemInfo, htmlContent, itemCreatorName, itemCreatorEmail } = body;
   if (!itemName || !itemInfo || !htmlContent) 
     return { statusCode: 400, headers: CORS_HEADERS, body: "All fields required" };
 
@@ -45,6 +45,8 @@ exports.handler = async (event) => {
       name: itemName,
       info: itemInfo,
       htmlContent, // entire HTML file as string
+      itemCreatorName,
+      itemCreatorEmail,
       createdAt: new Date().toISOString()
     };
 

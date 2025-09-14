@@ -209,6 +209,7 @@
               class="border-common toggler p-tiny rounded d-flex place-content-center navbarToggler m-right"
             >
               <svg
+                class="pointer-none"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
@@ -253,7 +254,9 @@
         >
           JavaScript
         </h1>
-        <div class="d-flex justify-content-center align-items-center gap-300">
+        <div
+          class="d-flex justify-content-center align-items-center gap-300 pos-rel"
+        >
           <p class="clr-text-white">Search Challenge :</p>
           <input
             class="p-tiny"
@@ -262,8 +265,23 @@
             id="search"
             placeholder="Ex. Alif Baa"
           />
-          <button class="btn fs-100 createChallenge" type="button">
+          <button class="btn createChallenge" type="button">
             Create a new challenge
+          </button>
+          <button class="btn d-flex filter">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              width="24"
+              viewBox="0 0 640 640"
+              class="pointer-none"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M96 128C83.1 128 71.4 135.8 66.4 147.8C61.4 159.8 64.2 173.5 73.4 182.6L256 365.3L256 480C256 488.5 259.4 496.6 265.4 502.6L329.4 566.6C338.6 575.8 352.3 578.5 364.3 573.5C376.3 568.5 384 556.9 384 544L384 365.3L566.6 182.7C575.8 173.5 578.5 159.8 573.5 147.8C568.5 135.8 556.9 128 544 128L96 128z"
+              />
+            </svg>
+            Filter
           </button>
         </div>
       </div>
@@ -733,7 +751,7 @@
           <input type="text" name="inp" id="name" placeholder="Page Header Name" />
         </div>
         <div>
-          <label for="info">Add extra information :</label>
+          <label for="info">Add extra information :<br><span class="clr-text-warn d-block">* characters must be<br> greater than 30 words</span></label>
           <textarea
             style="height: 150px"
             name="inp"
@@ -791,11 +809,22 @@
               e.preventDefault();
               const itemName = creatorWindow.querySelector("#name").value;
               const itemInfo = creatorWindow.querySelector("#info").value;
-
+              const itemCreatorName =
+                JSON.parse(localStorage.getItem("user") || "null")?.name ??
+                undefined;
+              const itemCreatorEmail =
+                JSON.parse(localStorage.getItem("user") || "null")?.email ??
+                undefined;
               const res = await fetch("/.netlify/functions/addChallenge", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ itemName, itemInfo, htmlContent: pageFile }),
+                body: JSON.stringify({
+                  itemName,
+                  itemInfo,
+                  itemCreatorName,
+                  itemCreatorEmail,
+                  htmlContent: pageFile,
+                }),
               });
 
               const json = await res.json();
@@ -806,6 +835,83 @@
               }
             });
         });
+
+      let filterWindow = document.createElement("div");
+      document.querySelector(".filter").addEventListener("click", (e) => {
+        filterWindow.setAttribute(
+          "style",
+          "position: absolute;z-index: 2000;top: 100%;right:30%;backdrop-filter: blur(10px)"
+        );
+        filterWindow.innerHTML = `<div class="clr-bg-white rounded p-normal">
+          <span class="pos-ab top close" style="right: var(--size-solid-100)">&times;</span>
+            <div class="d-grid gap-200 clr-text-primary p-normal">
+              <p class="fw-300 fs-300 text-center border-bottom" style="color:rgba(68, 157, 143, 1)">Select one of the following:</p>
+              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />All Challenges</label>
+              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />Default Challenges</label>
+              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />User Created</label>
+            </div>
+          </div>`;
+        e.target.parentElement.appendChild(filterWindow);
+
+        filterWindow.querySelector(".close").addEventListener("click", (i) => {
+          i.stopPropagation();
+          e.target.parentElement.removeChild(filterWindow);
+        });
+      });
+
+      // USER CREATED CHALLENGES
+      fetch("./challenges/data/challenges.json")
+        .then((res) => res.json())
+        .then((data) => {
+          updateChlngPage(data);
+        })
+        .catch((err) => console.log(err.message));
+
+      function updateChlngPage(arr) {
+        const newChallenges = arr
+          .filter((item) => {
+            return item.info.length > 30;
+          })
+          .map((item) => {
+            return `
+          <h4 class="h4">${item.name}</h4>
+          <p class="p m-bottom-tiny">
+            ${item.info}
+            </p>
+            <p class="p fw-600 clr-text-light">
+              <span class="langDots"
+              ><span></span>
+              <span></span>
+              <span></span
+                ></span>
+                : HTML & JS
+                </p>
+                <span class="percentages"></span>
+                <button data-name="${item.name}" class="btn rounded m-top-tiny openBtn">Learn Now</button>
+                `;
+          });
+
+        for (let i = 0; i < newChallenges.length; i++) {
+          const div = document.createElement("div");
+          div.setAttribute("class", "border-common rounded p-medium shadow");
+          div.innerHTML = newChallenges[i];
+          document.querySelector(".counter").appendChild(div);
+
+          div.querySelectorAll(".openBtn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              for (let i = 0; i < arr.length; i++) {
+                if (arr[i].name === e.target.dataset.name) {
+                  const win = window.open("", "_blank");
+
+                  win.document.open();
+                  win.document.write(arr[i].htmlContent);
+                  win.document.close();
+                }
+              }
+            });
+          });
+        }
+      }
     </script>
   </body>
 </html>

@@ -211,6 +211,9 @@ body {
 input[type="checkbox"] {
   accent-color: var(--clr-light);
 }
+input[type="radio"] {
+  accent-color: var(--clr-accent);
+}
 
 .active {
   border-bottom: 1px solid var(--clr-accent);
@@ -277,6 +280,10 @@ i.bi {
 
 .flex-dir-col {
   flex-direction: column;
+}
+
+.justify-content-start {
+justify-content: start;
 }
 
 .justify-content-center {
@@ -544,7 +551,7 @@ i.bi {
 }
 
 .pointer-none {
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .opacity-1 {
@@ -663,6 +670,9 @@ i.bi {
 
 .border-left {
   border-left: 5px solid var(--clr-light);
+}
+.border-bottom {
+  border-bottom: 2px solid var(--clr-accent);
 }
 
 .outline-common {
