@@ -325,6 +325,9 @@ justify-content: start;
 .align-items-center {
   align-items: center;
 }
+.align-items-end {
+  align-items: end;
+}
 
 .d-grid {
   display: grid;
