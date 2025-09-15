@@ -608,315 +608,346 @@
     </main>
 
     <script>
-      //SHOW PERCENTAGES
-      const percentages = document.querySelectorAll(".percentages");
-      const links = document.querySelectorAll(".counter a");
+            //SHOW PERCENTAGES
+            const percentages = document.querySelectorAll(".percentages");
+            const links = document.querySelectorAll(".counter a");
 
-      fetch("/challenges/data/percentages.json")
-        .then((res) => res.json())
-        .then((values) => {
-          percentages.forEach((v, i) => {
-            showPercent(values, i);
-          });
-        });
-
-      function showPercent(data, i) {
-        const span1Value = data[i]["span1"];
-        const span2Value = data[i]["span2"];
-        const span3Value = data[i]["span3"];
-
-        let total = [
-          parseFloat(span1Value),
-          parseFloat(span2Value),
-          parseFloat(span3Value),
-        ];
-
-        dotsOutliner(total, i);
-
-        let percentage = 100 / total.reduce((acc, v) => acc + v);
-
-        let html = percentage * total[0];
-        let css = percentage * total[1];
-        let js = percentage * total[2];
-
-        percentages[
-          i
-        ].innerHTML = `<span class="htmlColor" style="width: ${html}%">${
-          parseInt(html) + "%"
-        }</span><span class="cssColor" style="width:${css}%">${
-          parseInt(css) + "%"
-        }</span><span class="jsColor" style="width:${js}%">${
-          parseInt(js) + "%"
-        }</span>`;
-      }
-
-      function dotsOutliner(arr, i) {
-        const dots = document.querySelectorAll(".langDots");
-
-        let values = arr.map((v) => parseFloat(v));
-        // Get sorted indices (descending)
-        let sortedIndices = values
-          .map((v, idx) => [v, idx])
-          .sort((a, b) => b[0] - a[0])
-          .map((pair) => pair[1]);
-
-        // Outline widths: highest gets 3px, middle 2px, lowest 1px
-        let outlines = [0, 0, 0];
-        outlines[sortedIndices[0]] = 3;
-        outlines[sortedIndices[1]] = 2;
-        outlines[sortedIndices[2]] = 1;
-
-        const colors = ["var(--clr-html)", "var(--clr-css)", "var(--clr-js)"];
-        dots[i].innerHTML = `
-          <span style="outline:${outlines[0]}px solid ${colors[0]}"></span>
-          <span style="outline:${outlines[1]}px solid ${colors[1]}"></span>
-          <span style="outline:${outlines[2]}px solid ${colors[2]}"></span>
-        `;
-      }
-
-      const search = document.querySelector("#search");
-      search.addEventListener("input", (e) => {
-        const searchValue = e.target.value.toLowerCase();
-        const items = document.querySelectorAll(".counter > div .h4");
-        let count = 0;
-        let emptyChecker = false;
-        for (const item of items) {
-          item.parentElement.style.order = 0;
-          if (
-            item.textContent.toLowerCase().startsWith(searchValue) &&
-            searchValue !== ""
-          ) {
-            count++;
-            item.classList.add("highlight");
-            emptyChecker = true;
-
-            reorder(item, count, e);
-          } else {
-            item.classList.remove("highlight");
-            item.parentElement.style.background = "";
-            item.parentElement.style.outline = "";
-          }
-        }
-        if (!emptyChecker) {
-          if (e.target.value.length <= 0) {
-            e.target.style.background = "";
-            items.forEach((i) => {
-              i.querySelector(".clr-text-primary")?.classList.remove(
-                "clr-text-primary"
-              );
-            });
-          } else {
-            e.target.style.background = "var(--clr-warn)";
-          }
-        } else {
-          e.target.style.background = "";
-        }
-      });
-
-      search.addEventListener("focus", (e) => {
-        e.target.style.outline = "3px solid var(--clr-white)";
-      });
-      search.addEventListener("blur", (e) => {
-        e.target.style.outline = "";
-      });
-
-      function reorder(el, i, ev) {
-        el.parentElement.style.order = -i;
-        el.parentElement.style.background = "var(--clr-accent)";
-        el.parentElement.style.outline = "2px solid var(--clr-flow)";
-
-        const text = el.textContent;
-        const marker = text.slice(0, ev.target.value.length);
-        el.innerHTML = text.replace(
-          marker,
-          `<span class="clr-text-primary">${marker}</span>`
-        );
-      }
-
-      const creatorWindow = document.createElement("div");
-      document
-        .querySelector(".createChallenge")
-        .addEventListener("click", () => {
-          creatorWindow.setAttribute(
-            "style",
-            "position: fixed;inset:0;height: " +
-              window.document.scrollingElement.offsetHeight +
-              "px;background: var(--clr-dark-50);backdrop-filter: blur(5px);z-index: 2000"
-          );
-          creatorWindow.innerHTML = ` <div class="container">
-      <form class="d-grid width-75 m-auto rounded" id="newChallenge">
-        <h2 class="text-center text-shadow">Add New Challenge</h2><span class="pos-ab top close" style="right: 1%">&times;</span>
-        <div>
-          <label for="name">Challenge Name :</label>
-          <input type="text" name="inp" id="name" placeholder="Page Header Name" />
-        </div>
-        <div>
-          <label for="info">Add extra information :<br><span class="clr-text-warn d-block">* characters must be<br> greater than 30 words</span></label>
-          <textarea
-            style="height: 150px"
-            name="inp"
-            id="info"
-            placeholder="Write its purpose..."
-          ></textarea>
-        </div>
-        <div class="d-flex">
-          <label for="file">Attach Your File (HTML)</label>
-          <input type="file" name="inp" id="file">
-        </div>
-        <div>
-          <button class="btn" type="submit">Submit</button>
-          <button class="btn" type="reset">Reset</button>
-        </div>
-      </form>
-    </div>`;
-
-          window.document.body.insertBefore(
-            creatorWindow,
-            document.body.firstElementChild
-          );
-
-          creatorWindow.querySelectorAll('[name="inp"]').forEach((e) => {
-            e.addEventListener("focus", (e) => {
-              e.target.style.outline = "3px solid var(--clr-flow)";
-            });
-            e.addEventListener("blur", (e) => {
-              e.target.style.outline = "";
-            });
-          });
-          creatorWindow
-            .querySelector(".close")
-            .addEventListener("click", (e) => {
-              e.stopPropagation();
-              window.document.body.removeChild(creatorWindow);
-            });
-          let pageFile;
-          creatorWindow
-            .querySelector("#file")
-            .addEventListener("change", (e) => {
-              const file = e.target.files[0];
-
-              if (file) {
-                const reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = (e) => {
-                  pageFile = e.target.result;
-                };
-              }
-            });
-          creatorWindow
-            .querySelector("#newChallenge")
-            .addEventListener("submit", async (e) => {
-              e.preventDefault();
-              const itemName = creatorWindow.querySelector("#name").value;
-              const itemInfo = creatorWindow.querySelector("#info").value;
-              const itemCreatorName =
-                JSON.parse(localStorage.getItem("user") || "null")?.name ??
-                undefined;
-              const itemCreatorEmail =
-                JSON.parse(localStorage.getItem("user") || "null")?.email ??
-                undefined;
-              const res = await fetch("/.netlify/functions/addChallenge", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  itemName,
-                  itemInfo,
-                  itemCreatorName,
-                  itemCreatorEmail,
-                  htmlContent: pageFile,
-                }),
+            fetch("/challenges/data/percentages.json")
+              .then((res) => res.json())
+              .then((values) => {
+                percentages.forEach((v, i) => {
+                  showPercent(values, i);
+                });
               });
 
-              const json = await res.json();
-              if (res.ok) {
-                alert("Saved: " + json.message);
-              } else {
-                alert("Error: " + (json.error || "unknown"));
-              }
-            });
-        });
+            function showPercent(data, i) {
+              const span1Value = data[i]["span1"];
+              const span2Value = data[i]["span2"];
+              const span3Value = data[i]["span3"];
 
-      let filterWindow = document.createElement("div");
-      document.querySelector(".filter").addEventListener("click", (e) => {
-        filterWindow.setAttribute(
-          "style",
-          "position: absolute;z-index: 2000;top: 100%;right:30%;backdrop-filter: blur(10px)"
-        );
-        filterWindow.innerHTML = `<div class="clr-bg-white rounded p-normal">
-          <span class="pos-ab top close" style="right: var(--size-solid-100)">&times;</span>
-            <div class="d-grid gap-200 clr-text-primary p-normal">
-              <p class="fw-300 fs-300 text-center border-bottom" style="color:rgba(68, 157, 143, 1)">Select one of the following:</p>
-              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />All Challenges</label>
-              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />Default Challenges</label>
-              <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />User Created</label>
-            </div>
-          </div>`;
-        e.target.parentElement.appendChild(filterWindow);
+              let total = [
+                parseFloat(span1Value),
+                parseFloat(span2Value),
+                parseFloat(span3Value),
+              ];
 
-        filterWindow.querySelector(".close").addEventListener("click", (i) => {
-          i.stopPropagation();
-          e.target.parentElement.removeChild(filterWindow);
-        });
-      });
+              dotsOutliner(total, i);
 
-      // USER CREATED CHALLENGES
-      fetch("./challenges/data/challenges.json")
-        .then((res) => res.json())
-        .then((data) => {
-          updateChlngPage(data);
-        })
-        .catch((err) => console.log(err.message));
+              let percentage = 100 / total.reduce((acc, v) => acc + v);
 
-      function updateChlngPage(arr) {
-        const newChallenges = arr
-          .filter((item) => {
-            return item.info.length > 30;
-          })
-          .map((item) => {
-            return `
-          <h4 class="h4">${item.name}</h4>
-          <p class="p m-bottom-tiny">
-            ${item.info}
-            </p>
-            <p class="p fw-600 clr-text-light">
-              <span class="langDots"
-              ><span></span>
-              <span></span>
-              <span></span
-                ></span>
-                : HTML & JS
-                </p>
-                <span class="percentages"></span>
-                <span class="d-flex align-items-end m-top">
-                <button data-name="${item.name}" class="btn rounded m-top-tiny openBtn">Learn Now</button>
-                <p class="d-grid pos-ab right bottom p-normal fs-200" style="overflow:hidden;text-overflow: ellipsis;width:60%"><span class="fw-300 clr-text-light">Crafted By <span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill-down" viewBox="0 0 16 16">
-  <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7m.354 5.854 1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V10.5a.5.5 0 0 0-1 0v2.793l-.646-.647a.5.5 0 0 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-  <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
-</svg></span></span><span class="clr-text-white fw-200">${item.itemCreatorName}</span><span class="clr-text-white" style="overflow:hidden;text-overflow: ellipsis;width:95%">${item.itemCreatorEmail}</span></p></span>
-                `;
-          });
+              let html = percentage * total[0];
+              let css = percentage * total[1];
+              let js = percentage * total[2];
 
-        for (let i = 0; i < newChallenges.length; i++) {
-          const div = document.createElement("div");
-          div.setAttribute("class", "border-common rounded p-medium shadow");
-          div.innerHTML = newChallenges[i];
-          document.querySelector(".counter").appendChild(div);
+              percentages[
+                i
+              ].innerHTML = `<span class="htmlColor" style="width: ${html}%">${
+                parseInt(html) + "%"
+              }</span><span class="cssColor" style="width:${css}%">${
+                parseInt(css) + "%"
+              }</span><span class="jsColor" style="width:${js}%">${
+                parseInt(js) + "%"
+              }</span>`;
+            }
 
-          div.querySelectorAll(".openBtn").forEach((btn) => {
-            btn.addEventListener("click", (e) => {
-              for (let i = 0; i < arr.length; i++) {
-                if (arr[i].name === e.target.dataset.name) {
-                  const win = window.open("", "_blank");
+            function dotsOutliner(arr, i) {
+              const dots = document.querySelectorAll(".langDots");
 
-                  win.document.open();
-                  win.document.write(arr[i].htmlContent);
-                  win.document.close();
+              let values = arr.map((v) => parseFloat(v));
+              // Get sorted indices (descending)
+              let sortedIndices = values
+                .map((v, idx) => [v, idx])
+                .sort((a, b) => b[0] - a[0])
+                .map((pair) => pair[1]);
+
+              // Outline widths: highest gets 3px, middle 2px, lowest 1px
+              let outlines = [0, 0, 0];
+              outlines[sortedIndices[0]] = 3;
+              outlines[sortedIndices[1]] = 2;
+              outlines[sortedIndices[2]] = 1;
+
+              const colors = ["var(--clr-html)", "var(--clr-css)", "var(--clr-js)"];
+              dots[i].innerHTML = `
+                <span style="outline:${outlines[0]}px solid ${colors[0]}"></span>
+                <span style="outline:${outlines[1]}px solid ${colors[1]}"></span>
+                <span style="outline:${outlines[2]}px solid ${colors[2]}"></span>
+              `;
+            }
+
+            const search = document.querySelector("#search");
+            search.addEventListener("input", (e) => {
+              const searchValue = e.target.value.toLowerCase();
+              const items = document.querySelectorAll(".counter > div .h4");
+              let count = 0;
+              let emptyChecker = false;
+              for (const item of items) {
+                item.parentElement.style.order = 0;
+                if (
+                  item.textContent.toLowerCase().startsWith(searchValue) &&
+                  searchValue !== ""
+                ) {
+                  count++;
+                  item.classList.add("highlight");
+                  emptyChecker = true;
+
+                  reorder(item, count, e);
+                } else {
+                  item.classList.remove("highlight");
+                  item.parentElement.style.background = "";
+                  item.parentElement.style.outline = "";
                 }
               }
+              if (!emptyChecker) {
+                if (e.target.value.length <= 0) {
+                  e.target.style.background = "";
+                  items.forEach((i) => {
+                    i.querySelector(".clr-text-primary")?.classList.remove(
+                      "clr-text-primary"
+                    );
+                  });
+                } else {
+                  e.target.style.background = "var(--clr-warn)";
+                }
+              } else {
+                e.target.style.background = "";
+              }
             });
-          });
-        }
-      }
+
+            search.addEventListener("focus", (e) => {
+              e.target.style.outline = "3px solid var(--clr-white)";
+            });
+            search.addEventListener("blur", (e) => {
+              e.target.style.outline = "";
+            });
+
+            function reorder(el, i, ev) {
+              el.parentElement.style.order = -i;
+              el.parentElement.style.background = "var(--clr-accent)";
+              el.parentElement.style.outline = "2px solid var(--clr-flow)";
+
+              const text = el.textContent;
+              const marker = text.slice(0, ev.target.value.length);
+              el.innerHTML = text.replace(
+                marker,
+                `<span class="clr-text-primary">${marker}</span>`
+              );
+            }
+
+            // INPUT FOR USERS TO POST NEW CHALLENGES
+            const creatorWindow = document.createElement("div");
+            document
+              .querySelector(".createChallenge")
+              .addEventListener("click", () => {
+                creatorWindow.setAttribute(
+                  "style",
+                  "position: fixed;inset:0;height: " +
+                    window.document.scrollingElement.offsetHeight +
+                    "px;background: var(--clr-dark-50);backdrop-filter: blur(5px);z-index: 2000"
+                );
+                const loggedUser = localStorage.getItem("user");
+                const loggedUserToken = localStorage.getItem("token");
+
+                if (loggedUserToken && loggedUser) {
+                  creatorWindow.innerHTML = ` <div class="container">
+                    <form class="d-grid width-75 m-auto rounded" id="newChallenge">
+                      <h2 class="text-center text-shadow">Add New Challenge</h2><span class="pos-ab top close" style="right: 1%">&times;</span>
+                      <div>
+                        <label for="name">Challenge Name :</label>
+                        <input type="text" name="inp" id="name" placeholder="Page Header Name" />
+                        </div>
+                        <div>
+                          <label for="info">Add extra information :<br><span class="clr-text-warn d-block">* characters must be<br> greater than 30 words</span></label>
+                          <textarea
+                          style="height: 150px"
+                          name="inp"
+                          id="info"
+                  placeholder="Write its purpose..."
+                  ></textarea>
+                  </div>
+                  <div class="d-flex">
+                    <label for="file">Attach Your File (HTML)</label>
+                    <input type="file" name="inp" id="file">
+                    </div>
+                    <div>
+                      <button class="btn" type="submit">Submit</button>
+                      <button class="btn" type="reset">Reset</button>
+                      </div>
+                      </form>
+                      </div>`;
+                } else {
+                  alert("You must login first!");
+                  return;
+                }
+
+                window.document.body.insertBefore(
+                  creatorWindow,
+                  document.body.firstElementChild
+                );
+
+                creatorWindow.querySelectorAll('[name="inp"]').forEach((e) => {
+                  e.addEventListener("focus", (e) => {
+                    e.target.style.outline = "3px solid var(--clr-flow)";
+                  });
+                  e.addEventListener("blur", (e) => {
+                    e.target.style.outline = "";
+                  });
+                });
+                creatorWindow
+                  .querySelector(".close")
+                  .addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    window.document.body.removeChild(creatorWindow);
+                  });
+                let pageFile;
+                creatorWindow
+                  .querySelector("#file")
+                  .addEventListener("change", (e) => {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.readAsText(file);
+                      reader.onload = (e) => {
+                        pageFile = e.target.result;
+                      };
+                    }
+                  });
+                creatorWindow
+                  .querySelector("#newChallenge")
+                  .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const itemName = creatorWindow.querySelector("#name").value;
+                    const itemInfo = creatorWindow.querySelector("#info").value;
+                    const itemCreatorName =
+                      JSON.parse(localStorage.getItem("user") || "null")?.name ??
+                      undefined;
+                    const itemCreatorEmail =
+                      JSON.parse(localStorage.getItem("user") || "null")?.email ??
+                      undefined;
+                    const res = await fetch("/.netlify/functions/addChallenge", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        itemName,
+                        itemInfo,
+                        itemCreatorName,
+                        itemCreatorEmail,
+                        htmlContent: pageFile,
+                      }),
+                    });
+
+                    const json = await res.json();
+                    if (res.ok) {
+                      alert("Saved: " + json.message);
+                    } else {
+                      alert("Error: " + (json.error || "unknown"));
+                    }
+                  });
+              });
+
+            // USER CREATED CHALLENGES
+            fetch("./challenges/data/challenges.json")
+              .then((res) => res.json())
+              .then((data) => {
+                updateChlngPage(data);
+              })
+              .catch((err) => console.log(err.message));
+
+      let isFiltered = false;
+            function updateChlngPage(arr) {
+              const newChallenges = arr
+                .filter((item) => {
+                  return item.info.length > 30;
+                })
+                .map((item) => {
+                  return `
+                <h4 class="h4">${item.name}</h4>
+                <p class="p m-bottom-tiny">
+                  ${item.info}
+                  </p>
+                  <p class="p fw-600 clr-text-light">
+                    <span class="langDots"
+                    ><span></span>
+                    <span></span>
+                    <span></span
+                      ></span>
+                      : HTML & JS
+                      </p>
+                      <span class="percentages"></span>
+                      <span class="d-flex align-items-end m-top">
+                        <button data-name="${item.name}" class="btn rounded m-top-tiny openBtn">Learn Now</button>
+                      <p class="d-grid pos-ab right bottom p-normal fs-200" style="overflow:hidden;text-overflow: ellipsis;width:60%"><span class="fw-300 clr-text-light">Crafted By <span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill-down" viewBox="0 0 16 16">
+                        <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7m.354 5.854 1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V10.5a.5.5 0 0 0-1 0v2.793l-.646-.647a.5.5 0 0 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                        </svg></span></span><span class="clr-text-white fw-200">${item.itemCreatorName}</span><span class="clr-text-white" style="overflow:hidden;text-overflow: ellipsis;width:95%">${item.itemCreatorEmail}</span></p></span>
+                      `;
+                });
+
+              for (let i = 0; i < newChallenges.length; i++) {
+                const div = document.createElement("div");
+                div.setAttribute("class", "border-common rounded p-medium shadow");
+                div.innerHTML = newChallenges[i];
+                document.querySelector(".counter").appendChild(div);
+                filterer();
+                div.querySelectorAll(".openBtn").forEach((btn) => {
+                  btn.addEventListener("click", (e) => {
+                    for (let i = 0; i < arr.length; i++) {
+                      if (arr[i].name === e.target.dataset.name) {
+                        const win = window.open("", "_blank");
+
+                        win.document.open();
+                        win.document.write(arr[i].htmlContent);
+                        win.document.close();
+                      }
+                    }
+                  });
+                });
+              }
+            }
+
+            // FILTER WINDOW
+            let filterWindow = document.createElement("div");
+            document.querySelector(".filter").addEventListener("click", (e) => {
+              isFiltered = true;
+              filterWindow.setAttribute(
+                "style",
+                "position: absolute;z-index: 2000;top: 100%;right:30%;backdrop-filter: blur(10px)"
+              );
+              filterWindow.innerHTML = `<div class="clr-bg-white rounded p-normal">
+                <span class="pos-ab top close" style="right: var(--size-solid-100)">&times;</span>
+                  <div class="d-grid gap-200 clr-text-primary p-normal">
+                    <p class="fw-300 fs-300 text-center border-bottom" style="color:rgba(68, 157, 143, 1)">Select one of the following:</p>
+                    <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />All Challenges</label>
+                    <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />Default Challenges</label>
+                    <label class="d-flex gap-200 align-items-center justify-content-start"><input type="radio" name="chlng" id="" />User Created</label>
+                  </div>
+                </div>`;
+              e.target.parentElement.appendChild(filterWindow);
+
+              filterWindow.querySelector(".close").addEventListener("click", (i) => {
+                i.stopPropagation();
+                e.target.parentElement.removeChild(filterWindow);
+              });
+
+              filterWindow.querySelectorAll('[type="radio"]').forEach((inp) => {
+                inp.addEventListener("click", (e) => {
+                  switch (e.target.nextSibling.textContent) {
+                    case "All Challenges":
+                      break;
+                    case "Default Challenges":
+                      break;
+                    case "User Created":
+                      break;
+                  }
+                });
+              });
+            });
+
+            function filterer() {
+              console.log(200);
+              
+              
+            }
     </script>
   </body>
 </html>
