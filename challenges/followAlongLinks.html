@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+
+    <title>Follow Along Links</title>
+    <style>
+      body {
+        background: linear-gradient(to right, #4cb16f, #a1d786);
+      }
+      h1:first-child {
+        position: relative;
+      }
+      h1:first-child::before {
+        content: "";
+        position: absolute;
+        left: -20%;
+        width: 40%;
+        height: 120px;
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: skewY(-10deg);
+        filter: blur(1px);
+        z-index: -100;
+      }
+
+      button:hover {
+        filter: brightness(95%);
+        transform: none;
+      }
+
+      .backSkew {
+        position: relative;
+      }
+      .backSkew::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        background-color: #fff;
+        width: 100%;
+        aspect-ratio: 1;
+        transform: skewY(-10deg);
+        z-index: -100;
+      }
+
+      @media (min-width: 880px) {
+        body {
+          margin-left: 20px;
+        }
+      }
+
+      /* FOLLOW ALONG LINKS */
+      nav {
+        position: relative;
+        perspective: 600px;
+        z-index: 100;
+      }
+      .highlight {
+        transition: all 0.2s;
+        border-bottom: 2px solid #fff;
+        position: absolute;
+        top: 0;
+        background-color: #fff;
+        left: 0;
+        z-index: -1;
+        border-radius: var(--size-200);
+        display: block;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+ 
+      .dropdown {
+        border-radius: var(--size-200);
+        box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: max-content;
+        position: absolute;
+
+        overflow: hidden;
+        opacity: 0;
+        display: none;
+        top: -20px;
+        transition: all 0.5s;
+        transform: translateY(60px);
+      }
+
+      .dropdown1 > div:first-child {
+        display: grid;
+        gap: var(--size-400);
+        grid-template-columns: repeat(3, 1fr);
+        padding: var(--padd-high);
+      }
+      .dropdown1 > div:first-child div {
+        display: flex;
+        gap: var(--size-200);
+      }
+      .dropdown1 div span {
+        font-size: var(--fs-600);
+      }
+      .dropdown1 > div:first-child div div {
+        display: grid;
+        gap: 0;
+      }
+      .dropdown1 div div h4 {
+        text-transform: uppercase;
+        display: grid;
+        gap: 0;
+      }
+
+      .dropdown1:last-child {
+        border-radius: var(--size-200);
+      }
+
+      .dropdown1 > div:last-child div {
+        display: flex;
+        justify-content: center;
+        gap: var(--size-700);
+        padding: var(--padd-high);
+      }
+      .dropdown1 > div:last-child span {
+        display: block;
+        font-weight: var(--fw-400);
+        font-size: var(--fs-200);
+        text-transform: uppercase;
+      }
+
+      .contentHolder li {
+        position: relative;
+        display: grid;
+        justify-content: center;
+        
+      }
+
+      .arrow {
+        position: absolute;
+        left: 5%;
+        width: 20px;
+        height: 20px;
+        display: block;
+        background: #fff;
+        transform: translateY(-20%) rotate(45deg);
+      }
+      .dropdownBackground {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
+          0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s, opacity 0.1s, translate 0.2s;
+        transform-origin: 50% 0%;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+
+      .dropdownBackground.open {
+        opacity: 1;
+      }
+
+      .trigger-enter .dropdown {
+        display: block;
+      }
+      .trigger-enter-active .dropdown {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <header>
+      <div
+        class="container d-flex align-items-center m-top-tiny"
+        style="color: #32324f"
+      >
+        <div>
+          <h2 class="arabic-bolder">Dummy</h2>
+        </div>
+        <nav class="top m-auto">
+          <div class="dropdownBackground">
+            <span class="arrow"></span>
+          </div>
+          <ul class="d-flex gap-300 justify-content-center contentHolder">
+            <li>
+              <a href="">Products</a>
+              <div class="dropdown dropdown1">
+                <div>
+                  <div>
+                    <span>🗂️</span>
+                    <div>
+                      <h4>Payments</h4>
+                      <p>A complete commerce toolkit, built for developers.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span>🧩</span>
+                    <div>
+                      <h4>Connect</h4>
+                      <p>Everything platforms need to get sellers paid.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span>🧭</span>
+                    <div>
+                      <h4>Atlas</h4>
+                      <p>A new way to start an internet business.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span>🛞</span>
+                    <div>
+                      <h4>Subscriptions</h4>
+                      <p>The smart engine for recurring payments.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span>⚙️</span>
+                    <div>
+                      <h4>Relay</h4>
+                      <p>Sell your products in other mobile apps.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span>🔐</span>
+                    <div>
+                      <h4>Radar</h4>
+                      <p>
+                        Modern tools to help beat fraud, integrated with your
+                        payments.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    style="
+                      background-color: #e6e8ed;
+                      width: 100%;
+                      grid-column: span 3;
+                      border-radius: 10px;
+                    "
+                  >
+                    <span>🏷️ Pricing</span><span>📦 Works with Dummy</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="">Developers</a>
+              <div class="dropdown dropdown2">
+                <div class="d-grid gap-400 p-high justify-content-center">
+                  <div class="d-grid">
+                    <h3 class="uppercase" style="text-indent: -10px">
+                      📖 Documentation
+                    </h3>
+                    <p>Start integrating This products and tools.</p>
+                  </div>
+                  <div class="d-flex gap-400">
+                    <div>
+                      <h3 style="color: gray">Get started</h3>
+                      <p>This.js</p>
+                      <p>Checkout</p>
+                      <p>Mobile apps</p>
+                      <p>Libraries</p>
+                    </div>
+                    <div>
+                      <h3 style="color: gray">Popular Topics</h3>
+                      <p>Apple Pay</p>
+                      <p>Testing</p>
+                      <p>Launch checklist</p>
+                      <p>Plug-ins</p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="p-high d-grid justify-content-center"
+                  style="background-color: #e6e8ed"
+                >
+                  <h3 class="uppercase" style="text-indent: -110px">
+                    🟰 Full api reference
+                  </h3>
+                  <h3 class="uppercase" style="text-indent: -110px">
+                    📶 Api status
+                  </h3>
+                  <h3 class="uppercase" style="text-indent: -110px">
+                    ↔️ Open source
+                  </h3>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="">Company</a>
+              <div class="dropdown dropdown3" style="color: #6b68d7">
+                <div class="d-grid gap-100 m-bottom p-high">
+                  <h3>💲About This</h3>
+                  <h3>🏭Customers</h3>
+                  <h3>💼Jobs</h3>
+                </div>
+                <div class="p-high" style="background-color: #e6e8ed">
+                  <h3>📤From the blog</h3>
+                  <p>Reproducible research: This approach to...</p>
+                  <p>Started on This Atlas</p>
+                  <p>Works with This</p>
+                </div>
+              </div>
+            </li>
+            <div class="d-flex gap-300">
+            <li><a href="">Support</a></li>
+            <li><a href="">Dashboard</a></li>
+            </div>
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="text-center m-top-tiny" style="padding: 45px">
+        <h1 class="fw-100" style="color: #32324f">
+          Simple, transparent pricing.
+        </h1>
+        <h1 class="fw-100 clr-text-white">Always know what you'll pay.</h1>
+      </div>
+
+      <div class="container d-flex p-normal">
+        <div
+          class="text-center rounded width-50 d-flex flex-dir-col space-between"
+          style="
+            background-color: #fff;
+            transform: scale(1.08);
+            margin-left: 10px;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+          "
+        >
+          <h2 style="color: #80ceb8" class="fw-300 uppercase p-high">
+            Pay as you go
+          </h2>
+          <h1
+            class="d-flex align-items-center justify-content-center gap-200 clr-text-dark fs-600 fw-100"
+          >
+            2.9% <span class="fs-300" style="color: lightgray">+</span
+            ><span class="fs-300">CA$0.30</span>
+          </h1>
+          <p class="m-bottom fs-200">per successful card charge</p>
+          <div class="p-normal m-bottom">
+            <ul
+              class="clr-text-dark text-left d-grid justify-content-center p-high"
+            >
+              <li>✳️ No setup, monthly, or hidden fees</li>
+              <li>🔽 Pay only for what you use</li>
+              <li>📊 Real-time fee reporting</li>
+            </ul>
+          </div>
+          <button
+            class="width-100 p-high uppercase align-self-end"
+            style="background-color: #e6e8ed"
+          >
+            Create account
+          </button>
+        </div>
+
+        <div
+          class="rounded clr-text-white text-center width-50 d-flex flex-dir-col space-between"
+          style="background-color: #303150; z-index: -1"
+        >
+          <h2 class="p-high">Enterprise</h2>
+          <p class="p-high">
+            This offers everything needed to run an online business at scale.
+            Get in touch for details.
+          </p>
+          <div class="p-high d-grid gap-400">
+            <div class="d-flex gap-300 justify-content-center">
+              <p>Account Management</p>
+              <p>Volume discounts</p>
+            </div>
+            <div class="d-flex gap-300 justify-content-center">
+              <p>Migration assistance</p>
+              <p>Dedicated support</p>
+            </div>
+          </div>
+          <button
+            class="width-100 p-high uppercase"
+            style="background-color: #3a3964; color: #bac4f0"
+          >
+            Contact sales
+          </button>
+        </div>
+      </div>
+      <div class="backSkew" style="background-color: #fff">
+        <p class="p-high m-top d-flex align-items-center gap-200">
+          <span class="fs-600">⏱️</span>
+          <span
+            ><strong class="clr-text-dark">Fast,predictable transfers.</strong>
+            Once you're set up, transfers arrive in your bank account on a 7-day
+            rolling basis.</span
+          >
+        </p>
+      </div>
+    </main>
+    <script>
+      const triggers = document.querySelectorAll(".contentHolder > li");
+      const background = document.querySelector(".dropdownBackground");
+      const nav = document.querySelector(".top");
+
+      function handleEnter() {
+        this.classList.add("trigger-enter");
+        background.classList.add("open");
+        setTimeout(() => {
+          if (this.classList.contains("trigger-enter")) {
+            this.classList.add("trigger-enter-active");
+          }
+        }, 150);
+        const dropdown = this.querySelector(".dropdown");
+        const dropdownCoords = dropdown.getBoundingClientRect();
+        const navCoords = nav.getBoundingClientRect();
+        const coords = {
+          height: dropdownCoords.height,
+          width: dropdownCoords.width,
+          top: dropdownCoords.top - navCoords.top,
+          left: dropdownCoords.left - navCoords.left,
+        };
+        background.style.setProperty("width", `${coords.width}px`);
+        background.style.setProperty("height", `${coords.height}px`);
+        background.style.setProperty(
+          "transform",
+          `translate(${coords.left}px, ${coords.top}px`
+        );
+      }
+      function handleLeave() {
+        this.classList.remove("trigger-enter", "trigger-enter-active");
+        background.classList.remove("open");
+      }
+
+      triggers.forEach((trigger) =>
+        trigger.addEventListener("mouseenter", handleEnter)
+      );
+      triggers.forEach((trigger) =>
+        trigger.addEventListener("mouseleave", handleLeave)
+      );
+    </script>
+  </body>
+</html>

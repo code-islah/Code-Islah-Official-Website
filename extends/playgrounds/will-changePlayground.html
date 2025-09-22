@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS will-change Playground</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .warning {
+            background: #ffecb3;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .demo-box {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .demo-element {
+            width: 100px;
+            height: 100px;
+            background: #3498db;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.5s, opacity 0.5s;
+            cursor: pointer;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        button.active {
+            background: #16a085;
+        }
+        
+        .performance-metrics {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1abc9c;
+        }
+        
+        .comparison {
+            margin-top: 40px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .property {
+            color: #ff79c6;
+        }
+        
+        .value {
+            color: #50fa7b;
+        }
+        
+        .comment {
+            color: #6272a4;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS will-change Property Playground</h1>
+            <p class="subtitle">Experiment with the will-change property and understand its impact on performance</p>
+            
+            <div class="info-box">
+                <p>The <code>will-change</code> CSS property hints to browsers how an element is expected to change. 
+                This allows browsers to optimize rendering before the element is actually changed.</p>
+            </div>
+            
+            <div class="warning info-box">
+                <p><strong>Use with caution:</strong> Overuse of will-change can cause performance issues due to increased memory usage and complex rendering layers.</p>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">Without will-change</div>
+                <div class="card-body">
+                    <div class="demo-box" style="background: #ecf0f1;">
+                        <div class="demo-element" id="elementWithout">Hover me</div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button onclick="animateWithout('transform')">Animate Transform</button>
+                        <button onclick="animateWithout('opacity')">Animate Opacity</button>
+                        <button onclick="animateWithout('both')">Animate Both</button>
+                        <button onclick="resetElement('without')">Reset</button>
+                    </div>
+                    
+                    <div class="code-block">
+                        <span class="property">.element</span> {<br>
+                        &nbsp;&nbsp;transition: <span class="value">transform 0.5s, opacity 0.5s</span>;<br>
+                        }<br><br>
+                        
+                        <span class="comment">/* No will-change optimization */</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">With will-change</div>
+                <div class="card-body">
+                    <div class="demo-box" style="background: #ecf0f1;">
+                        <div class="demo-element" id="elementWith">Hover me</div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button onclick="enableWillChange('transform')">will-change: transform</button>
+                        <button onclick="enableWillChange('opacity')">will-change: opacity</button>
+                        <button onclick="enableWillChange('transform, opacity')">will-change: both</button>
+                        <button onclick="resetElement('with')">Reset</button>
+                    </div>
+                    
+                    <div class="code-block">
+                        <span class="property">.element</span> {<br>
+                        &nbsp;&nbsp;transition: <span class="value">transform 0.5s, opacity 0.5s</span>;<br>
+                        &nbsp;&nbsp;will-change: <span class="value" id="willChangeValue">auto</span>;<br>
+                        }<br><br>
+                        
+                        <span class="comment">/* Browser prepares optimizations in advance */</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="performance-metrics">
+            <h2>Performance Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <p>Animation FPS</p>
+                    <div class="metric-value" id="fpsValue">60</div>
+                </div>
+                <div class="metric">
+                    <p>Memory Usage</p>
+                    <div class="metric-value" id="memoryValue">0.2MB</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comparison">
+            <h2>When to Use will-change</h2>
+            
+            <div class="info-box">
+                <p>Use <code>will-change</code> for elements that will definitely change and where you've experienced performance issues.</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="card">
+                    <div class="card-header">Appropriate Uses</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Complex animations that need to be smooth</li>
+                            <li>Elements with 3D transforms</li>
+                            <li>Fixed-position elements that change often</li>
+                            <li>When you've identified specific performance bottlenecks</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">Inappropriate Uses</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Applying to too many elements</li>
+                            <li>Using it as a premature optimization</li>
+                            <li>Setting it far before the change happens</li>
+                            <li>Applying it to large parts of the page</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <span class="comment">/* Good usage - applied just before animation */</span><br>
+                element.addEventListener('mouseenter', function() {<br>
+                &nbsp;&nbsp;this.style.willChange = 'transform';<br>
+                });<br><br>
+                
+                element.addEventListener('transitionend', function() {<br>
+                &nbsp;&nbsp;this.style.willChange = 'auto';<br>
+                &nbsp;&nbsp;<span class="comment">// Reset after animation to free resources</span><br>
+                });
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created for educational purposes. The will-change property should be used judiciously.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Elements
+        const elementWithout = document.getElementById('elementWithout');
+        const elementWith = document.getElementById('elementWith');
+        const willChangeValue = document.getElementById('willChangeValue');
+        const fpsValue = document.getElementById('fpsValue');
+        const memoryValue = document.getElementById('memoryValue');
+        
+        // Animation states
+        let animationFrame;
+        let lastFrameTime = performance.now();
+        let frameCount = 0;
+        let lastFpsUpdate = 0;
+        
+        // Function to animate without will-change
+        function animateWithout(type) {
+            resetElement('without');
+            
+            setTimeout(() => {
+                if (type === 'transform' || type === 'both') {
+                    elementWithout.style.transform = 'scale(1.5) rotate(15deg)';
+                }
+                
+                if (type === 'opacity' || type === 'both') {
+                    elementWithout.style.opacity = '0.5';
+                }
+            }, 100);
+        }
+        
+        // Function to enable will-change and animate
+        function enableWillChange(property) {
+            resetElement('with');
+            elementWith.style.willChange = property;
+            willChangeValue.textContent = property;
+            
+            setTimeout(() => {
+                if (property.includes('transform') || property === 'both') {
+                    elementWith.style.transform = 'scale(1.5) rotate(15deg)';
+                }
+                
+                if (property.includes('opacity') || property === 'both') {
+                    elementWith.style.opacity = '0.5';
+                }
+            }, 100);
+        }
+        
+        // Function to reset elements
+        function resetElement(type) {
+            if (type === 'without') {
+                elementWithout.style.transform = '';
+                elementWithout.style.opacity = '';
+            } else {
+                elementWith.style.transform = '';
+                elementWith.style.opacity = '';
+                elementWith.style.willChange = 'auto';
+                willChangeValue.textContent = 'auto';
+            }
+        }
+        
+        // Simulate performance metrics (in a real scenario, these would be measured)
+        function updateMetrics() {
+            const now = performance.now();
+            frameCount++;
+            
+            // Update FPS every second
+            if (now - lastFpsUpdate >= 1000) {
+                const elapsed = now - lastFpsUpdate;
+                const fps = Math.round((frameCount * 1000) / elapsed);
+                fpsValue.textContent = fps;
+                
+                // Simulate memory usage changes based on will-change
+                const memory = elementWith.style.willChange !== 'auto' ? 
+                    (0.3 + Math.random() * 0.2).toFixed(1) : 
+                    (0.2 + Math.random() * 0.1).toFixed(1);
+                memoryValue.textContent = memory + 'MB';
+                
+                frameCount = 0;
+                lastFpsUpdate = now;
+            }
+            
+            animationFrame = requestAnimationFrame(updateMetrics);
+        }
+        
+        // Add hover effects for demonstration
+        elementWithout.addEventListener('mouseenter', function() {
+            this.textContent = 'Animating...';
+        });
+        
+        elementWithout.addEventListener('mouseleave', function() {
+            this.textContent = 'Hover me';
+        });
+        
+        elementWith.addEventListener('mouseenter', function() {
+            this.textContent = 'Animating...';
+        });
+        
+        elementWith.addEventListener('mouseleave', function() {
+            this.textContent = 'Hover me';
+        });
+        
+        // Start metrics update
+        lastFpsUpdate = performance.now();
+        updateMetrics();
+    </script>
+</body>
+</html>

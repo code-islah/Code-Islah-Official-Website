@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Geometry Properties</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 200vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0 30px;
+            color: #2c3e50;
+        }
+        
+        .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .element-container {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .demo-element {
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            margin: 30px auto;
+            border: 15px solid #3498db;
+            overflow: auto;
+            background: #ecf0f1;
+            position: relative;
+        }
+        
+        .content {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .properties {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .property-group {
+            margin-bottom: 25px;
+        }
+        
+        .property-group h3 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .property {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .property-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .property-value {
+            color: #e74c3c;
+            font-family: monospace;
+        }
+        
+        .visualization {
+            width: 100%;
+            margin-top: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .visualization h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        
+        #demo-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .demo-element-wrapper {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 200px;
+        }
+        
+        .instructions {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .highlight {
+            background: #fff8e1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DOM Element Geometry Properties Demo</h1>
+        
+        <div class="demo-area">
+            <div class="element-container">
+                <h2>Interactive Element</h2>
+                <div class="demo-element" id="demo-element">
+                    <div class="content">
+                        Scrollable Content Area
+                    </div>
+                </div>
+            </div>
+            
+            <div class="properties">
+                <div class="property-group">
+                    <h3>client* Properties</h3>
+                    <div class="property">
+                        <span class="property-name">clientWidth:</span>
+                        <span class="property-value" id="clientWidth">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">clientHeight:</span>
+                        <span class="property-value" id="clientHeight">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">clientTop:</span>
+                        <span class="property-value" id="clientTop">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">clientLeft:</span>
+                        <span class="property-value" id="clientLeft">0</span>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h3>offset* Properties</h3>
+                    <div class="property">
+                        <span class="property-name">offsetWidth:</span>
+                        <span class="property-value" id="offsetWidth">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">offsetHeight:</span>
+                        <span class="property-value" id="offsetHeight">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">offsetTop:</span>
+                        <span class="property-value" id="offsetTop">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">offsetLeft:</span>
+                        <span class="property-value" id="offsetLeft">0</span>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h3>scroll* Properties</h3>
+                    <div class="property">
+                        <span class="property-name">scrollWidth:</span>
+                        <span class="property-value" id="scrollWidth">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">scrollHeight:</span>
+                        <span class="property-value" id="scrollHeight">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">scrollTop:</span>
+                        <span class="property-value" id="scrollTop">0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">scrollLeft:</span>
+                        <span class="property-value" id="scrollLeft">0</span>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h3>getBoundingClientRect()</h3>
+                    <div class="property">
+                        <span class="property-name">x, y:</span>
+                        <span class="property-value" id="rectXY">0, 0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">width, height:</span>
+                        <span class="property-value" id="rectWH">0, 0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">top, right:</span>
+                        <span class="property-value" id="rectTR">0, 0</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">bottom, left:</span>
+                        <span class="property-value" id="rectBL">0, 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visualization">
+            <h2>Visual Representation</h2>
+            <div class="canvas-container">
+                <canvas id="demo-canvas"></canvas>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>What These Properties Mean:</h3>
+            <ul>
+                <li><span class="highlight">clientWidth/Height</span>: Inner content area including padding but excluding scrollbar</li>
+                <li><span class="highlight">clientTop/Left</span>: Width of top/left borders (border width)</li>
+                <li><span class="highlight">offsetWidth/Height</span>: Element's visible dimensions including padding, border and scrollbar</li>
+                <li><span class="highlight">offsetTop/Left</span>: Distance from closest positioned ancestor</li>
+                <li><span class="highlight">scrollWidth/Height</span>: Total scrollable content size</li>
+                <li><span class="highlight">scrollTop/Left</span>: How much content has been scrolled</li>
+                <li><span class="highlight">getBoundingClientRect()</span>: Returns position relative to viewport</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const demoElement = document.getElementById('demo-element');
+            const canvas = document.getElementById('demo-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size to match container
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Update all property values
+            function updateProperties() {
+                // client* properties
+                document.getElementById('clientWidth').textContent = demoElement.clientWidth;
+                document.getElementById('clientHeight').textContent = demoElement.clientHeight;
+                document.getElementById('clientTop').textContent = demoElement.clientTop;
+                document.getElementById('clientLeft').textContent = demoElement.clientLeft;
+                
+                // offset* properties
+                document.getElementById('offsetWidth').textContent = demoElement.offsetWidth;
+                document.getElementById('offsetHeight').textContent = demoElement.offsetHeight;
+                document.getElementById('offsetTop').textContent = demoElement.offsetTop;
+                document.getElementById('offsetLeft').textContent = demoElement.offsetLeft;
+                
+                // scroll* properties
+                document.getElementById('scrollWidth').textContent = demoElement.scrollWidth;
+                document.getElementById('scrollHeight').textContent = demoElement.scrollHeight;
+                document.getElementById('scrollTop').textContent = demoElement.scrollTop;
+                document.getElementById('scrollLeft').textContent = demoElement.scrollLeft;
+                
+                // getBoundingClientRect()
+                const rect = demoElement.getBoundingClientRect();
+                document.getElementById('rectXY').textContent = `${Math.round(rect.x)}, ${Math.round(rect.y)}`;
+                document.getElementById('rectWH').textContent = `${Math.round(rect.width)}, ${Math.round(rect.height)}`;
+                document.getElementById('rectTR').textContent = `${Math.round(rect.top)}, ${Math.round(rect.right)}`;
+                document.getElementById('rectBL').textContent = `${Math.round(rect.bottom)}, ${Math.round(rect.left)}`;
+                
+                // Draw visualization
+                drawVisualization(rect);
+            }
+            
+            // Draw visualization of the element's geometry
+            function drawVisualization(rect) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw viewport
+                ctx.strokeStyle = '#2c3e50';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+                ctx.setLineDash([]);
+                ctx.fillStyle = 'rgba(44, 62, 80, 0.1)';
+                ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+                ctx.font = '14px Arial';
+                ctx.fillStyle = '#2c3e50';
+                ctx.fillText('Viewport', 20, 30);
+                
+                // Draw element
+                const scale = 0.7;
+                const elX = (canvas.width - demoElement.offsetWidth * scale) / 2;
+                const elY = 100;
+                
+                // Element border
+                ctx.fillStyle = 'rgba(52, 152, 219, 0.3)';
+                ctx.fillRect(elX, elY, demoElement.offsetWidth * scale, demoElement.offsetHeight * scale);
+                
+                // Element padding + content
+                ctx.fillStyle = 'rgba(236, 240, 241, 0.8)';
+                const paddingX = elX + demoElement.clientLeft * scale;
+                const paddingY = elY + demoElement.clientTop * scale;
+                ctx.fillRect(
+                    paddingX, 
+                    paddingY, 
+                    demoElement.clientWidth * scale, 
+                    demoElement.clientHeight * scale
+                );
+                
+                // Content area (scrollable)
+                ctx.fillStyle = 'rgba(255, 154, 158, 0.6)';
+                ctx.fillRect(
+                    paddingX, 
+                    paddingY, 
+                    Math.min(demoElement.clientWidth, demoElement.scrollWidth) * scale, 
+                    Math.min(demoElement.clientHeight, demoElement.scrollHeight) * scale
+                );
+                
+                // Draw scroll position indicator
+                if (demoElement.scrollHeight > demoElement.clientHeight) {
+                    const scrollRatio = demoElement.scrollTop / (demoElement.scrollHeight - demoElement.clientHeight);
+                    const scrollbarHeight = (demoElement.clientHeight / demoElement.scrollHeight) * demoElement.clientHeight;
+                    const scrollbarY = paddingY + scrollRatio * (demoElement.clientHeight - scrollbarHeight);
+                    
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    ctx.fillRect(
+                        paddingX + demoElement.clientWidth * scale - 10,
+                        paddingY,
+                        5,
+                        demoElement.clientHeight * scale
+                    );
+                    
+                    ctx.fillStyle = '#e74c3c';
+                    ctx.fillRect(
+                        paddingX + demoElement.clientWidth * scale - 10,
+                        scrollbarY * scale,
+                        5,
+                        scrollbarHeight * scale
+                    );
+                }
+                
+                // Draw labels
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = '12px Arial';
+                
+                // clientWidth/Height
+                ctx.fillText(
+                    `clientWidth: ${demoElement.clientWidth}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 20
+                );
+                ctx.fillText(
+                    `clientHeight: ${demoElement.clientHeight}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 40
+                );
+                
+                // offsetWidth/Height
+                ctx.fillText(
+                    `offsetWidth: ${demoElement.offsetWidth}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 70
+                );
+                ctx.fillText(
+                    `offsetHeight: ${demoElement.offsetHeight}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 90
+                );
+                
+                // scrollWidth/Height
+                ctx.fillText(
+                    `scrollWidth: ${demoElement.scrollWidth}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 120
+                );
+                ctx.fillText(
+                    `scrollHeight: ${demoElement.scrollHeight}`, 
+                    elX + demoElement.offsetWidth * scale + 10, 
+                    elY + 140
+                );
+                
+                // Draw dimensions lines
+                drawDimensionLine(ctx, elX, elY, elX + demoElement.offsetWidth * scale, elY, -30, `offsetWidth: ${demoElement.offsetWidth}`);
+                drawDimensionLine(ctx, elX, elY, elX, elY + demoElement.offsetHeight * scale, -50, `offsetHeight: ${demoElement.offsetHeight}`);
+                
+                drawDimensionLine(ctx, paddingX, paddingY, paddingX + demoElement.clientWidth * scale, paddingY, -10, `clientWidth: ${demoElement.clientWidth}`);
+                drawDimensionLine(ctx, paddingX, paddingY, paddingX, paddingY + demoElement.clientHeight * scale, -70, `clientHeight: ${demoElement.clientHeight}`);
+            }
+            
+            // Helper to draw dimension lines with labels
+            function drawDimensionLine(ctx, x1, y1, x2, y2, offset, text) {
+                ctx.strokeStyle = '#7f8c8d';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 3]);
+                
+                // Horizontal line
+                if (y1 === y2) {
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1 + offset);
+                    ctx.lineTo(x2, y2 + offset);
+                    ctx.stroke();
+                    
+                    // Vertical markers
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1 + offset - 5);
+                    ctx.lineTo(x1, y1 + offset + 5);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x2, y2 + offset - 5);
+                    ctx.lineTo(x2, y2 + offset + 5);
+                    ctx.stroke();
+                    
+                    // Text
+                    ctx.fillStyle = '#2c3e50';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(text, (x1 + x2) / 2 - ctx.measureText(text).width / 2, y1 + offset - 10);
+                } 
+                // Vertical line
+                else if (x1 === x2) {
+                    ctx.beginPath();
+                    ctx.moveTo(x1 + offset, y1);
+                    ctx.lineTo(x2 + offset, y2);
+                    ctx.stroke();
+                    
+                    // Horizontal markers
+                    ctx.beginPath();
+                    ctx.moveTo(x1 + offset - 5, y1);
+                    ctx.lineTo(x1 + offset + 5, y1);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x2 + offset - 5, y2);
+                    ctx.lineTo(x2 + offset + 5, y2);
+                    ctx.stroke();
+                    
+                    // Text
+                    ctx.save();
+                    ctx.translate(x1 + offset - 10, (y1 + y2) / 2);
+                    ctx.rotate(-Math.PI / 2);
+                    ctx.fillStyle = '#2c3e50';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(text, 0, 0);
+                    ctx.restore();
+                }
+                
+                ctx.setLineDash([]);
+            }
+            
+            // Update on scroll and resize
+            demoElement.addEventListener('scroll', updateProperties);
+            window.addEventListener('resize', updateProperties);
+            
+            // Initial update
+            updateProperties();
+            
+            // Update continuously for smooth animation
+            setInterval(updateProperties, 100);
+        });
+    </script>
+</body>
+</html>

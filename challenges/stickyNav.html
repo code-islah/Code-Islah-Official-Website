@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+    <title>Sticky NavBar</title>
+    <style>
+      h1 {
+        font-size: var(--fs-700);
+        text-align: center;
+      }
+      .showcase {
+        background-image: url("../img/nature_24.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 520px;
+        display: grid;
+        place-content: center;
+      }
+
+      nav {
+        top: 0;
+        transition: all 0.5s;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+      }
+
+      .fixedNav nav {
+        position: fixed;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+      }
+      nav ul {
+        display: flex;
+        justify-content: space-between;
+        background-color: var(--clr-dark);
+        color: var(--clr-light);
+      }
+      nav ul > li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: var(--padd-normal);
+        flex: 1;
+        transition: all 300ms;
+      }
+      nav ul > li:hover {
+        background-color: var(--clr-accent);
+        color: var(--clr-dark);
+      }
+
+      li.logo {
+        max-width: 0;
+        padding: 0;
+        overflow: hidden;
+        transition: all 0.5s;
+        font-weight: var(--fw-600);
+      }
+
+      .fixedNav li.logo {
+        max-width: 500px;
+        height: auto;
+      }
+
+      main > div {
+        display: grid;
+        place-content: center;
+        padding: var(--size-500);
+        width: min(98%, 840px);
+        margin: 0 auto;
+      }
+
+      div > p {
+        text-align: justify;
+        transform: scale(0.98);
+        transition: transform 0.5s;
+      }
+
+      .fixedNav div > p {
+        transform: scale(1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+    <header>
+      <div class="showcase">
+        <h1 class="arabic-bolder clr-text-light text-shadow">
+          Islam is all about submission to the will of The Creator
+        </h1>
+      </div>
+      <nav>
+        <ul>
+          <li class="logo uppercase">.Logo</li>
+          <li>Home</li>
+          <li>About</li>
+          <li>Images</li>
+          <li>Locations</li>
+          <li>Maps</li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div>
+        <p
+          class="m-top clr-text-dark p-medium border-common shadow clr-bg-white rounded"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et
+          asperiores sunt quas, corrupti accusantium cupiditate architecto
+          voluptas dolorem ex deserunt commodi rem pariatur! Maxime magni
+          ratione eos a dicta at modi velit alias fugit reiciendis sapiente sit
+          hic inventore repellat aperiam dolorem, quis suscipit deleniti
+          obcaecati explicabo iste. Minima, nostrum necessitatibus maiores hic
+          dolore voluptatum soluta voluptate voluptas, vel at repellendus. Optio
+          in error illum voluptas, tempore sit architecto quas excepturi illo
+          laudantium mollitia quaerat nihil, aspernatur sunt? In deserunt cum
+          sint, voluptas, ullam iste incidunt blanditiis quidem facere itaque
+          voluptate accusamus voluptates odio libero veniam, ea laudantium qui
+          modi provident minima. Dolorum, quasi perferendis unde expedita animi
+          praesentium impedit rerum repellat omnis repellendus nam nulla?
+          Consequatur voluptate ducimus, quia maxime a labore magni fugit
+          doloremque voluptatem magnam reiciendis saepe sapiente aliquam quos,
+          laboriosam hic enim nostrum aperiam. Iusto quaerat corporis nam ea
+          sapiente ut vero fuga voluptates possimus exercitationem, nulla in
+          nobis, officia sed error repellat? Laboriosam, voluptatum quia. At
+          praesentium quibusdam deserunt explicabo quia alias a dicta pariatur
+          facilis, eveniet natus illo, ducimus nisi quam sit ut labore nobis
+          debitis illum? Reiciendis, modi nisi deserunt cumque qui quis officiis
+          veniam voluptates cupiditate omnis aspernatur facilis fugiat aut sunt
+          exercitationem blanditiis assumenda doloribus. Vitae in odit
+          quibusdam, ut qui enim. Velit tempore voluptatem hic, modi distinctio
+          praesentium! Fuga quaerat mollitia doloribus quas. Dolore voluptates
+          recusandae ipsam consectetur, eius vel. Debitis magni repellendus
+          suscipit at reiciendis possimus eos quo id, pariatur ducimus adipisci
+          accusantium libero eligendi consectetur assumenda odio recusandae,
+          fuga, neque unde earum ipsam aspernatur molestias? Eos aliquam,
+          accusamus cupiditate, harum error quis fuga autem consectetur
+          distinctio vero ea corporis consequatur earum tenetur dolore soluta
+          necessitatibus non voluptatibus, sapiente ducimus! Obcaecati quia
+          assumenda odit deserunt sed repudiandae ipsam reiciendis, enim autem
+          dolor libero doloremque modi, iure optio necessitatibus vel quas, et
+          ipsa quaerat exercitationem dignissimos aliquam? Facilis corrupti amet
+          iste illo porro ea eum eligendi, perspiciatis sequi in voluptates
+          quas, quibusdam eius. Soluta quos repellendus, minus incidunt facere
+          dolore id et consectetur officia laudantium earum ut sunt, possimus
+          hic eaque quam omnis quibusdam, ab dolor eveniet dolorem quisquam.
+          Incidunt ut, totam repellat nobis officiis excepturi libero nemo sequi
+          voluptatibus error sapiente illo maxime, et aliquid velit atque
+          tempora fugiat repellendus? Tenetur odio harum inventore facere
+          consectetur quia praesentium sit culpa itaque corrupti, et maiores
+          odit aperiam labore delectus? Ex totam eaque porro est quidem. Nostrum
+          obcaecati asperiores, a id commodi architecto, esse, eaque natus
+          tempora quam culpa velit perspiciatis atque vitae neque quos est iste
+          distinctio accusamus rerum quae labore ab. Libero sapiente cum saepe
+          minima necessitatibus commodi laboriosam veniam magni veritatis
+          laudantium, fugit eius! Cumque maxime minima facere nesciunt magni
+          delectus quam aut nam modi itaque laudantium doloribus nulla esse rem
+          assumenda vitae, natus, inventore autem amet deleniti saepe porro,
+          beatae officia! Commodi, illo. Voluptatem natus ratione magnam
+          distinctio rerum tenetur, maxime eaque voluptate impedit, repellat
+          corporis possimus facere rem consequatur aspernatur incidunt hic earum
+          debitis doloremque consequuntur inventore dignissimos officia. Ipsam
+          eveniet fugiat ad voluptate consequatur dolor?<br /><br />
+          <img class="rounded" src="../img/nature_11.jpg" alt="" />
+          <br /><br />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quas id
+          exercitationem possimus, ex molestiae quae inventore itaque! Ut
+          mollitia, laudantium voluptate ipsum perferendis sapiente itaque totam
+          dolore eveniet corporis, corrupti incidunt odit omnis ullam unde
+          harum, possimus nesciunt! Praesentium placeat assumenda culpa? Numquam
+          ad repellat non dolore fugit labore eius corporis dolor nemo rerum ab
+          similique tenetur esse, neque quia totam ipsum nesciunt. Magni
+          repudiandae iusto labore blanditiis, recusandae facilis in assumenda
+          cumque sint exercitationem beatae iste? Facilis animi voluptatibus
+          nobis, doloribus architecto dolor dolores voluptates deserunt
+          molestiae corrupti? Dolores vitae fugit soluta illo cupiditate ducimus
+          vel aut. Dolore.<br /><br />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quas id
+          exercitationem possimus, ex molestiae quae inventore itaque! Ut
+          mollitia, laudantium voluptate ipsum perferendis sapiente itaque totam
+          dolore eveniet corporis, corrupti incidunt odit omnis ullam unde
+          harum, possimus nesciunt! Praesentium placeat assumenda culpa? Numquam
+          ad repellat non dolore fugit labore eius corporis dolor nemo rerum ab
+          similique tenetur esse, neque quia totam ipsum nesciunt. Magni
+          repudiandae iusto labore blanditiis, recusandae facilis in assumenda
+          cumque sint exercitationem beatae iste? Facilis animi voluptatibus
+          nobis, doloribus architecto dolor dolores voluptates deserunt
+          molestiae corrupti? Dolores vitae fugit soluta illo cupiditate ducimus
+          vel aut. Dolore.<br /><br />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quas id
+          exercitationem possimus, ex molestiae quae inventore itaque! Ut
+          mollitia, laudantium voluptate ipsum perferendis sapiente itaque totam
+          dolore eveniet corporis, corrupti incidunt odit omnis ullam unde
+          harum, possimus nesciunt! Praesentium placeat assumenda culpa? Numquam
+          ad repellat non dolore fugit labore eius corporis dolor nemo rerum ab
+          similique tenetur esse, neque quia totam ipsum nesciunt. Magni
+          repudiandae iusto labore blanditiis, recusandae facilis in assumenda
+          cumque sint exercitationem beatae iste? Facilis animi voluptatibus
+          nobis, doloribus architecto dolor dolores voluptates deserunt
+          molestiae corrupti? Dolores vitae fugit soluta illo cupiditate ducimus
+          vel aut. Dolore.<br /><br />
+          <img class="rounded" src="../img/nature_17.jpg" alt="" srcset="" />
+        </p>
+      </div>
+    </main>
+
+    <script>
+      const nav = document.querySelector("nav");
+      const topOfNav = nav.offsetTop;
+
+      function fixNav() {
+        if (window.scrollY >= topOfNav) {
+          setTimeout(() => {
+            document.body.classList.add("fixedNav");
+            document.body.style.paddingTop = nav.offsetHeight + "px";
+          }, 100);
+        } else {
+          document.body.classList.remove("fixedNav");
+          document.body.style.paddingTop = 0;
+        }
+      }
+
+      window.addEventListener("scroll", fixNav);
+    </script>
+  </body>
+</html>

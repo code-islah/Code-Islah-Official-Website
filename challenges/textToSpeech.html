@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+    <title>Text to Speech JS</title>
+    <style>
+      body {
+        height: 90vh;
+        max-height: 90vh;
+        display: grid;
+        place-content: center;
+        background-image: radial-gradient(
+            circle at 100% 150%,
+            #3bc1ac 24%,
+            #42d2bb 25%,
+            #42d2bb 28%,
+            #3bc1ac 29%,
+            #3bc1ac 36%,
+            #42d2bb 36%,
+            #42d2bb 40%,
+            transparent 40%,
+            transparent
+          ),
+          radial-gradient(
+            circle at 0 150%,
+            #3bc1ac 24%,
+            #42d2bb 25%,
+            #42d2bb 28%,
+            #3bc1ac 29%,
+            #3bc1ac 36%,
+            #42d2bb 36%,
+            #42d2bb 40%,
+            transparent 40%,
+            transparent
+          ),
+          radial-gradient(
+            circle at 50% 100%,
+            #42d2bb 10%,
+            #3bc1ac 11%,
+            #3bc1ac 23%,
+            #42d2bb 24%,
+            #42d2bb 30%,
+            #3bc1ac 31%,
+            #3bc1ac 43%,
+            #42d2bb 44%,
+            #42d2bb 50%,
+            #3bc1ac 51%,
+            #3bc1ac 63%,
+            #42d2bb 64%,
+            #42d2bb 71%,
+            transparent 71%,
+            transparent
+          ),
+          radial-gradient(
+            circle at 100% 50%,
+            #42d2bb 5%,
+            #3bc1ac 6%,
+            #3bc1ac 15%,
+            #42d2bb 16%,
+            #42d2bb 20%,
+            #3bc1ac 21%,
+            #3bc1ac 30%,
+            #42d2bb 31%,
+            #42d2bb 35%,
+            #3bc1ac 36%,
+            #3bc1ac 45%,
+            #42d2bb 46%,
+            #42d2bb 49%,
+            transparent 50%,
+            transparent
+          ),
+          radial-gradient(
+            circle at 0 50%,
+            #42d2bb 5%,
+            #3bc1ac 6%,
+            #3bc1ac 15%,
+            #42d2bb 16%,
+            #42d2bb 20%,
+            #3bc1ac 21%,
+            #3bc1ac 30%,
+            #42d2bb 31%,
+            #42d2bb 35%,
+            #3bc1ac 36%,
+            #3bc1ac 45%,
+            #42d2bb 46%,
+            #42d2bb 49%,
+            transparent 50%,
+            transparent
+          );
+        background-size: 100px 50px;
+      }
+
+      .wrapper {
+        display: grid;
+        place-items: center;
+        margin: 0 auto;
+        max-width: 460px;
+        width: 460px;
+        background: #fff;
+        border-radius: var(--rounded);
+        font-family: "Pacifico", cursive;
+      }
+      .wrapper * {
+        width: 100%;
+      }
+
+      input[type="range"] {
+        accent-color: #e0bf56;
+        font-size: 0.5rem;
+      }
+      textarea {
+        height: 150px;
+        padding: var(--size-200);
+        filter: brightness(95%);
+      }
+      select {
+        filter: brightness(95%);
+      }
+      label {
+        font-size: var(--fs-100);
+        color: var(--clr-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"
+        ><i class="bi bi-arrow-90deg-left clr-text-white"></i
+      ></a>
+    </div>
+
+    <div class="wrapper flow-tiny shadow">
+      <h4
+        style="
+          border-top-left-radius: var(--rounded);
+          border-top-right-radius: var(--rounded);
+          background: var(--clr-btn);
+        "
+        class="p-high arabic-bolder fs-600 text-center clr-text-dark"
+      >
+        The Voiceinator 5000
+      </h4>
+      <div
+        class="p-normal"
+        style="
+          border-bottom-left-radius: var(--rounded);
+          border-bottom-right-radius: var(--rounded);
+        "
+      >
+        <select name="voice" id="voices" class="p-normal">
+          <option value="">Select A Voice</option>
+          <option value="">Male</option>
+          <option value="">Female</option>
+        </select>
+        <div>
+          <label for="rate">Rate:</label>
+          <input
+            type="range"
+            min="0"
+            max="3"
+            value="1"
+            step="0.1"
+            name="rate"
+            id="rate"
+          />
+        </div>
+        <div>
+          <label for="pitch">Pitch:</label>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            name="pitch"
+            id="pitch"
+          />
+        </div>
+        <textarea name="text" id="">
+JavaScript is a wonderful language.</textarea
+        >
+        <div class="d-flex gap-200">
+          <button id="stop" class="p-tiny btn">Stop</button>
+          <button id="speak" class="p-tiny btn" style="margin: 0 !important">
+            Speak
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const msg = new SpeechSynthesisUtterance();
+      const voices = [];
+      const options = document.querySelectorAll(
+        '[type="range"], [name="text"]'
+      );
+      const speakBtn = document.querySelector("#speak");
+      const stopBtn = document.querySelector("#stop");
+      msg.text = document.querySelector('[name="text"]').value;
+
+      function populateVoices() {
+        voices = this.getVoices();
+        console.log(voices);
+      }
+
+      // speechSynthesis is available everywhere as its a global variable
+      speechSynthesis.addEventListener("voiceschanged", populateVoices);
+    </script>
+  </body>
+</html>

@@ -11,12 +11,15 @@
     <link rel="stylesheet" href="/style/bootstrap-icons.css" />
     <title>Register New Account</title>
     <style>
+      body > div {
+        height: 90vh;
+      }
       #signinForm {
         display: grid;
         gap: var(--size-300);
-        border: 1px solid var(--clr-secondary);
+        border: 1px solid var(--clr-white);
         background-color: var(--clr-glass);
-        color: var(--clr-secondary);
+        color: var(--clr-dark-50);
         border-radius: var(--rounded);
       }
       #signinForm div {
@@ -57,7 +60,7 @@
       }
 
       label::after {
-        color: var(--clr-light);
+        color: var(--clr-primary);
       }
 
       label[for="name"]::after {
@@ -125,9 +128,7 @@
 
   <body>
     <!-- LOGIN PAGE -->
-    <div
-      class="d-grid place-content-center pos-fixed top inset-0 clr-bg-primary blur-effect"
-    >
+    <div class="d-grid place-content-center">
       <div class="pos-ab left m-high">
         <a href="/index.html"
           ><i class="bi bi-arrow-90deg-left clr-text-white"></i
@@ -195,7 +196,7 @@
 
       inputs.forEach((inp) => {
         inp.addEventListener("focus", (e) => {
-          e.target.style.outline = "3px solid var(--clr-white)";
+          e.target.style.outline = "3px solid var(--clr-accent)";
         });
         inp.addEventListener("blur", (e) => {
           e.target.style.outline = "";
@@ -255,7 +256,7 @@
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = (e) => {
-            document.querySelector('.preview').src = e.target.result;
+            document.querySelector(".preview").src = e.target.result;
           };
         }
       });
@@ -267,7 +268,7 @@
         const email = document.querySelector("#email").value.trim();
         const password = document.querySelector("#password").value.trim();
         const inputRePass = document.querySelector("#rePass").value.trim();
-        const imageFile = document.querySelector('.preview').src;
+        const imageFile = document.querySelector(".preview").src;
 
         if (
           name.length > 6 &&

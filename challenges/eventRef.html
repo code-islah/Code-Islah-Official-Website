@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+    <title>Sticky NavBar</title>
+    <style>
+      div.padd {
+        max-width: 100%;
+        padding: var(--size-solid-600);
+      }
+
+      body::before {
+        content: "";
+        width: 100%;
+        height: var(--size-solid-600);
+        padding: var(--size-solid-100);
+        margin-top: var(--size-solid-600);
+      }
+      .one {
+        background-color: var(--clr-accent);
+        border-radius: var(--rounded);
+        position: relative;
+      }
+      .one::before {
+        content: "* Experimental";
+        color: var(--clr-warn);
+        padding: var(--size-solid-200);
+        position: absolute;
+        top: 5%;
+      }
+      .two {
+        background-color: var(--clr-flow);
+        border-radius: var(--rounded);
+      }
+      .three {
+        background-color: var(--clr-light);
+        border-radius: var(--rounded);
+      }
+
+      button {
+        padding: var(--padd-normal);
+        margin: var(--size-200) 0;
+        transition: all 300ms;
+      }
+
+      div {
+        width: 95%;
+        margin: 0 auto;
+      }
+      textarea {
+        width: 100%;
+        height: 250px;
+        padding: var(--size-solid-100);
+      }
+
+      .highlight {
+        outline: 3px solid var(--clr-light);
+        background-color: var(--clr-accent);
+        color: var(--clr-light);
+      }
+      /* RIPPLE */
+      span.ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 900ms linear;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
+      @keyframes ripple {
+        to {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left">
+      <a href="/chlng.html"><i class="bi bi-arrow-90deg-left"></i></a>
+    </div>
+
+    <div class="one padd">
+      <div class="two padd">
+        <div class="three padd"></div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-200">
+      <button data-bubble="false">Bubbling - false (default)</button>
+      <button data-bubble="true">Bubbling - true</button>
+      <button data-prop="true">Stop Propagation</button>
+      <button data-once="true">Once: true (As removeEventListener)</button>
+    </div>
+    <div>
+      <div class="d-flex align-items-center gap-200">
+        <h4 class="h4 clr-text-secondary">console.log()</h4>
+        <span class="clr-text-warn cursorPointer">Clear</span>
+      </div>
+      <textarea name="" id=""></textarea>
+    </div>
+
+    <script>
+      const divs = document.querySelectorAll(".padd");
+      const textArea = document.querySelector("textarea");
+      const btns = document.querySelectorAll("button");
+      const reset = document.querySelector(".cursorPointer");
+      let texts = [];
+      let propagator;
+      let bubble;
+
+      function showConsole(e) {
+        if (propagator) {
+          e.stopPropagation();
+        }
+        texts.push(this.classList.value + "\r");
+        textArea.innerHTML = texts
+          .map((el) => {
+            return `> ${el.replace("padd", "")}`;
+          })
+          .join("");
+      }
+
+      function caller(bubbler) {
+        divs.forEach((div) =>
+          div.addEventListener("click", showConsole, {
+            capture: bubbler,
+            once: arguments[1],
+          })
+        );
+        return;
+      }
+
+      btns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          if (e.target.dataset.prop === "true") {
+            propagator = true;
+            bubble = false;
+            caller(bubble);
+          }
+          if (e.target.dataset.bubble === "true") {
+            bubble = true;
+            propagator = false;
+            caller(bubble);
+          }
+          if (e.target.dataset.bubble === "false") {
+            bubble = false;
+            propagator = false;
+            caller(bubble);
+          }
+          if (e.target.dataset.once === "true") {
+            bubble = false;
+            propagator = false;
+            caller(bubble, "true");
+          }
+        });
+      });
+      btns.forEach((btn) =>
+        btn.addEventListener("focus", () => btn.classList.add("highlight"))
+      );
+      btns.forEach((btn) =>
+        btn.addEventListener("blur", () => btn.classList.remove("highlight"))
+      );
+
+      reset.addEventListener("click", () => {
+        location.reload();
+      });
+
+      //ripple effect
+      function createRipple(event) {
+        const button = event.currentTarget;
+
+        const circle = document.createElement("span");
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+        circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+        circle.classList.add("ripple");
+
+        const ripple = button.getElementsByClassName("ripple")[0];
+
+        if (ripple) {
+          ripple.remove();
+        }
+
+        button.appendChild(circle);
+
+        this.childNodes[1].classList.toggle("expand");
+      }
+
+      divs.forEach((div) => {
+        div.addEventListener("click", createRipple);
+      });
+    </script>
+  </body>
+</html>

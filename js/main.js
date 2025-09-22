@@ -99,3 +99,30 @@ function navigate() {
     }
   }
 }
+
+// SPINNER
+let spinText = document.querySelector(".main .h1 span");
+
+function spinner() {
+  let textFromElem = spinText.innerHTML;
+
+  let spinTextSaver = "";
+  let spinTextLengthCount = -1;
+  let int = setInterval(() => {
+    spinText.style.transform = "scaleX(-1)";
+    setTimeout(() => {
+      spinText.style.transform = "";
+    }, 200);
+
+    spinTextLengthCount++;
+    spinTextSaver += textFromElem[spinTextLengthCount];
+    spinText.innerHTML = spinTextSaver;
+    if (textFromElem.length - 1 <= spinTextLengthCount) {
+      let spinTextSibling = document.querySelector(".main .h1 span + span");
+      spinTextSibling.style.color = "var(--clr-white)";
+      clearInterval(int);
+    }
+  }, 300);
+}
+
+spinner();

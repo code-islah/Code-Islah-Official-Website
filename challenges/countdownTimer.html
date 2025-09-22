@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content=" " />
+    <meta name="description" content=" " />
+    <meta name="keywords" content=" " />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/chlng.css" />
+    <link rel="stylesheet" href="/style/bootstrap-icons.css" />
+    <script defer src="../js/count.js"></script>
+
+    <title>Countdown Timer</title>
+    <style>
+      body {
+        background-color: var(--clr-accent);
+        height: 100vh;
+        color: var(--clr-primary);
+      }
+
+      .counterApp {
+        background: linear-gradient(
+          to top right,
+          var(--clr-light),
+          var(--clr-light-50)
+        );
+        max-width: 840px;
+        margin: 0 auto;
+        border-color: var(--clr-light);
+      }
+
+      ul li {
+        display: grid;
+        place-content: center;
+        flex: 1;
+        transition: 300ms;
+      }
+      ul li:hover {
+        background-color: var(--clr-accent);
+        color: var(--clr-light);
+      }
+
+      ul li:not(:last-child) {
+        border-bottom: 1px solid var(--clr-dark-50);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+
+      ul li:last-child {
+        align-self: stretch;
+      }
+      ul li:last-child input {
+        width: 100%;
+        padding: var(--size-100);
+        background: #fff;
+        border-radius: 0;
+        border-top-right-radius: var(--rounded);
+      }
+
+      .timerDisplayer {
+        height: 75vh;
+      }
+
+      .timedata > span {
+        font-size: calc(var(--fs-700) * 3);
+        color: var(--clr-dark-50);
+      }
+      .timedata > p {
+        font-size: var(--fs-500);
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- percentage count -->
+    <div class="percentage">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="pos-ab left m-high">
+      <a href="/chlng.html"><i class="bi bi-arrow-90deg-left"></i></a>
+    </div>
+
+    <h4
+      class="arabic-bolder fs-600 text-center clr-text-light text-shadow p-high"
+    >
+      Countdown Timer
+    </h4>
+    <div class="clr-bg-glass border-common m-medium rounded counterApp shadow">
+      <div class="timer">
+        <ul class="d-flex clr-bg-light timer__controls">
+          <li class="timer__btn" data-time="20" class="p-tiny">20 SECS</li>
+          <li class="timer__btn" data-time="300" class="p-tiny">WORK 5</li>
+          <li class="timer__btn" data-time="900" class="p-tiny">QUICK 15</li>
+          <li class="timer__btn" data-time="1200" class="p-tiny">SNACK 20</li>
+          <li class="timer__btn" data-time="3600" class="p-tiny">
+            LUNCH BREAK
+          </li>
+          <li>
+            <form class="timedata" name="customForm">
+              <input type="text" name="minutes" placeholder="Enter Minutes" />
+            </form>
+          </li>
+        </ul>
+      </div>
+      <div class="d-grid place-content-center | timerDisplayer">
+        <div>
+          <div class="timedata">
+            <span class="display__time-left">0:00</span>
+            <p class="display__end-time">Be Back At 0:0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let countdown;
+      const timerDisplay = document.querySelector(".display__time-left");
+      const endTime = document.querySelector(".display__end-time");
+      const btns = document.querySelectorAll("[data-time]");
+
+      function timer(seconds) {
+        clearInterval(countdown);
+        const now = Date.now();
+        const then = now + seconds * 1000;
+        displayTimeLeft(seconds);
+        displayEndTime(then);
+
+        countdown = setInterval(() => {
+          const secondsLeft = Math.round((then - Date.now()) / 1000);
+
+          if (secondsLeft < 0) {
+            clearInterval(countdown);
+            return;
+          }
+          displayTimeLeft(secondsLeft);
+        }, 1000);
+      }
+
+      function displayTimeLeft(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainderSeconds = seconds % 60;
+        const display = `${minutes}:${
+          remainderSeconds < 10 ? "0" : ""
+        }${remainderSeconds}`;
+        timerDisplay.textContent = display;
+        document.title = display;
+      }
+
+      function displayEndTime(timestamp) {
+        const end = new Date(timestamp);
+        const hour = end.getHours();
+        const adjustedHour = hour > 12 ? hour - 12 : hour;
+        const minutes = end.getMinutes();
+        endTime.textContent = `Be Back At ${adjustedHour}:${
+          minutes < 10 ? "0" : ""
+        }${minutes}`;
+      }
+
+      function startTimer() {
+        const seconds = parseInt(this.dataset.time);
+        timer(seconds);
+      }
+
+      btns.forEach((btn) => btn.addEventListener("click", startTimer));
+
+      document.customForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const mins = e.target.minutes.value;
+
+        if (isNaN(mins)) {
+          alert("Enter Number value");
+          return;
+        }
+        timer(mins * 60);
+        e.target.reset();
+      });
+    </script>
+  </body>
+</html>
