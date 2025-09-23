@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events XY Coordinates</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0 30px;
+            color: #2c3e50;
+        }
+        
+        .playground {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .interactive-area {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        #tracking-container {
+            width: 100%;
+            height: 400px;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background: #f8f9fa;
+            cursor: crosshair;
+        }
+        
+        #mouse-pointer {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .coordinates-display {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .coordinate-group {
+            margin-bottom: 25px;
+        }
+        
+        .coordinate-group h3 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .coordinate {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .coordinate-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .coordinate-value {
+            color: #e74c3c;
+            font-family: monospace;
+        }
+        
+        .instructions {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .highlight {
+            background: #fff8e1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .click-spot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(231, 76, 60, 0.7);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        @media (max-width: 768px) {
+            .playground {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mouse Events XY Coordinates Playground</h1>
+        
+        <div class="playground">
+            <div class="interactive-area">
+                <h2>Interactive Area</h2>
+                <p>Move your mouse and click to see coordinates in action</p>
+                <div id="tracking-container">
+                    <div id="mouse-pointer"></div>
+                    <!-- Click spots will be added here dynamically -->
+                </div>
+            </div>
+            
+            <div class="coordinates-display">
+                <div class="coordinate-group">
+                    <h3>Screen Coordinates</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">screenX:</span>
+                        <span class="coordinate-value" id="screenX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">screenY:</span>
+                        <span class="coordinate-value" id="screenY">0</span>
+                    </div>
+                </div>
+                
+                <div class="coordinate-group">
+                    <h3>Page Coordinates</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">pageX:</span>
+                        <span class="coordinate-value" id="pageX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">pageY:</span>
+                        <span class="coordinate-value" id="pageY">0</span>
+                    </div>
+                </div>
+                
+                <div class="coordinate-group">
+                    <h3>Client Coordinates</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">clientX:</span>
+                        <span class="coordinate-value" id="clientX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">clientY:</span>
+                        <span class="coordinate-value" id="clientY">0</span>
+                    </div>
+                </div>
+                
+                <div class="coordinate-group">
+                    <h3>Offset Coordinates</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">offsetX:</span>
+                        <span class="coordinate-value" id="offsetX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">offsetY:</span>
+                        <span class="coordinate-value" id="offsetY">0</span>
+                    </div>
+                </div>
+                
+                <div class="coordinate-group">
+                    <h3>Movement Coordinates</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">movementX:</span>
+                        <span class="coordinate-value" id="movementX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">movementY:</span>
+                        <span class="coordinate-value" id="movementY">0</span>
+                    </div>
+                </div>
+                
+                <div class="coordinate-group">
+                    <h3>Layer Coordinates (Mozilla)</h3>
+                    <div class="coordinate">
+                        <span class="coordinate-name">layerX:</span>
+                        <span class="coordinate-value" id="layerX">0</span>
+                    </div>
+                    <div class="coordinate">
+                        <span class="coordinate-name">layerY:</span>
+                        <span class="coordinate-value" id="layerY">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>What These Coordinates Mean:</h3>
+            <ul>
+                <li><span class="highlight">screenX/Y</span>: Position relative to the entire screen</li>
+                <li><span class="highlight">pageX/Y</span>: Position relative to the entire document (including scrolling)</li>
+                <li><span class="highlight">clientX/Y</span>: Position relative to the viewport (excluding scrolling)</li>
+                <li><span class="highlight">offsetX/Y</span>: Position relative to the target element's padding edge</li>
+                <li><span class="highlight">movementX/Y</span>: Position change since the last mousemove event</li>
+                <li><span class="highlight">layerX/Y</span>: Position relative to the current layer (Mozilla-based browsers)</li>
+            </ul>
+            <p>Move your mouse around the interactive area and click to see these values change. The red dot shows your pointer position, and click locations will be marked with smaller red dots.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackingContainer = document.getElementById('tracking-container');
+            const mousePointer = document.getElementById('mouse-pointer');
+            
+            // Get all coordinate display elements
+            const screenXEl = document.getElementById('screenX');
+            const screenYEl = document.getElementById('screenY');
+            const pageXEl = document.getElementById('pageX');
+            const pageYEl = document.getElementById('pageY');
+            const clientXEl = document.getElementById('clientX');
+            const clientYEl = document.getElementById('clientY');
+            const offsetXEl = document.getElementById('offsetX');
+            const offsetYEl = document.getElementById('offsetY');
+            const movementXEl = document.getElementById('movementX');
+            const movementYEl = document.getElementById('movementY');
+            const layerXEl = document.getElementById('layerX');
+            const layerYEl = document.getElementById('layerY');
+            
+            // Track previous coordinates for movement calculation
+            let prevClientX = 0;
+            let prevClientY = 0;
+            
+            // Update mouse pointer position and all coordinates
+            function updateCoordinates(e) {
+                // Update mouse pointer position
+                mousePointer.style.left = e.offsetX + 'px';
+                mousePointer.style.top = e.offsetY + 'px';
+                
+                // Update all coordinate displays
+                screenXEl.textContent = e.screenX;
+                screenYEl.textContent = e.screenY;
+                pageXEl.textContent = e.pageX;
+                pageYEl.textContent = e.pageY;
+                clientXEl.textContent = e.clientX;
+                clientYEl.textContent = e.clientY;
+                offsetXEl.textContent = e.offsetX;
+                offsetYEl.textContent = e.offsetY;
+                
+                // Calculate movement values
+                const movementX = e.clientX - prevClientX;
+                const movementY = e.clientY - prevClientY;
+                movementXEl.textContent = movementX;
+                movementYEl.textContent = movementY;
+                
+                // Update previous coordinates
+                prevClientX = e.clientX;
+                prevClientY = e.clientY;
+                
+                // Layer coordinates (for Mozilla-based browsers)
+                if (e.layerX !== undefined) {
+                    layerXEl.textContent = e.layerX;
+                    layerYEl.textContent = e.layerY;
+                } else {
+                    // Fallback for browsers that don't support layerX/Y
+                    layerXEl.textContent = 'N/A';
+                    layerYEl.textContent = 'N/A';
+                }
+            }
+            
+            // Create a visual marker for click location
+            function markClickLocation(e) {
+                const clickSpot = document.createElement('div');
+                clickSpot.className = 'click-spot';
+                clickSpot.style.left = e.offsetX + 'px';
+                clickSpot.style.top = e.offsetY + 'px';
+                
+                trackingContainer.appendChild(clickSpot);
+                
+                // Remove the marker after 2 seconds
+                setTimeout(() => {
+                    trackingContainer.removeChild(clickSpot);
+                }, 2000);
+            }
+            
+            // Event listeners
+            trackingContainer.addEventListener('mousemove', updateCoordinates);
+            trackingContainer.addEventListener('click', markClickLocation);
+            
+            // Initialize with some values
+            const initEvent = {
+                screenX: 0,
+                screenY: 0,
+                pageX: 0,
+                pageY: 0,
+                clientX: 0,
+                clientY: 0,
+                offsetX: 0,
+                offsetY: 0
+            };
+            
+            updateCoordinates(initEvent);
+        });
+    </script>
+</body>
+</html>

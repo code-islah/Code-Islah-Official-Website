@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Image Storage in JSON</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .image-preview {
+            max-width: 100%;
+            margin: 15px 0;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            padding: 3px;
+            background-color: white;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        .instructions {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .code {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Storing Tiny Images in JSON</h1>
+        
+        <div class="instructions">
+            <p>This demo shows how to encode small images as Base64 strings and store them in JSON format.</p>
+        </div>
+        
+        <div class="section">
+            <h2>1. Upload a Small Image</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <div class="image-preview">
+                <p>Uploaded image will appear here</p>
+                <img id="preview" src="" alt="Image preview">
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Convert to Base64 and Store in JSON</h2>
+            <button id="encodeBtn">Encode Image to Base64</button>
+            <div id="jsonOutput">
+                <p>JSON data will appear here</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Decode and Display from JSON</h2>
+            <button id="decodeBtn">Decode and Display Image</button>
+            <div class="image-preview">
+                <p>Decoded image will appear here</p>
+                <img id="decodedPreview" src="" alt="Decoded image preview">
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Sample JSON Structure</h2>
+            <textarea id="sampleJson" readonly>{
+  "imageData": {
+    "filename": "example.png",
+    "mimeType": "image/png",
+    "data": "base64-encoded-string-here"
+  }
+}</textarea>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('preview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('encodeBtn').addEventListener('click', function() {
+            const imageSrc = document.getElementById('preview').src;
+            if (!imageSrc || imageSrc.trim() === '') {
+                alert('Please upload an image first');
+                return;
+            }
+            
+            // Extract base64 data from data URL
+            const base64Data = imageSrc.split(',')[1];
+            
+            // Create JSON object
+            const jsonData = {
+                imageData: {
+                    filename: 'uploaded_image.png',
+                    mimeType: 'image/png',
+                    data: base64Data
+                }
+            };
+            
+            // Display JSON
+            document.getElementById('jsonOutput').innerHTML = 
+                `<p>JSON data:</p>
+                 <textarea readonly>${JSON.stringify(jsonData, null, 2)}</textarea>`;
+        });
+
+        document.getElementById('decodeBtn').addEventListener('click', function() {
+            const jsonText = document.querySelector('#jsonOutput textarea');
+            if (!jsonText) {
+                alert('Please encode an image first');
+                return;
+            }
+            
+            try {
+                const jsonData = JSON.parse(jsonText.value);
+                const base64Data = jsonData.imageData.data;
+                const mimeType = jsonData.imageData.mimeType;
+                
+                // Create data URL from base64
+                const dataUrl = `data:${mimeType};base64,${base64Data}`;
+                
+                // Display decoded image
+                document.getElementById('decodedPreview').src = dataUrl;
+            } catch (error) {
+                alert('Error parsing JSON: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

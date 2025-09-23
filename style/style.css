@@ -505,15 +505,15 @@ i.bi {
 }
 
 .m-block-normal {
-  padding-block: var(--padd-normal);
+  margin-block: var(--padd-normal);
 }
 
 .m-block-medium {
-  padding-block: var(--padd-medium);
+  margin-block: var(--padd-medium);
 }
 
 .m-block-high {
-  padding-block: var(--padd-high);
+  margin-block: var(--padd-high);
 }
 
 .m-normal {
@@ -584,8 +584,7 @@ i.bi {
 }
 
 .text-shadow {
-  text-shadow: 0 0 5px var(--clr-dark-50), 0 0 7px var(--clr-dark-50),
-    0 0 25px var(--clr-light-50);
+  text-shadow: 0 0 3px var(--clr-dark), 0 0 25px var(--clr-white);
 }
 
 .rounded {
@@ -678,7 +677,7 @@ i.bi {
 }
 
 .border-common {
-  border: 1px solid var(--clr-border);
+  border: 1px solid var(--clr-accent);
 }
 
 .border-left {
@@ -774,7 +773,7 @@ i.bi {
 }
 
 .clr-text-accent {
-  color: var(--clr-border);
+  color: var(--clr-accent);
 }
 
 .clr-text-light {
@@ -830,9 +829,8 @@ a:active {
   transform: scale(0.95);
 }
 
-
 .post > div:hover {
-  transform: scale(1.010);
+  transform: scale(1.01);
 }
 
 /* COMMON CLASSES */
@@ -989,7 +987,6 @@ iframe {
   }
 }
 
-
 .explore,
 .layout,
 .mentorWrapper {
@@ -1003,7 +1000,7 @@ body::before,
 .layout::after,
 .layout::before,
 .mentorWrapper::after,
-.mentorWrapper::before  {
+.mentorWrapper::before {
   content: "";
   position: absolute;
   right: 0;
@@ -1054,13 +1051,12 @@ body::before {
   right: -5%;
   width: 35%;
   height: 300px;
-
 }
 
 .header__text {
   background-color: var(--clr-light-50);
   clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-  color: var(--clr-dark);
+  color: var(--clr-dark-50) !important;
 }
 
 .post {
@@ -1152,7 +1148,7 @@ body::before {
   border-radius: var(--rounded);
 }
 
-/* test */
+/* WHY ANALOGY GLOWING EFFECT */
 
 .whyAnalogy ul li {
   padding-bottom: 10px;
@@ -1164,7 +1160,6 @@ body::before {
   position: absolute;
   bottom: 0;
   left: 0;
-
   margin: 0 auto;
   height: 3px;
   border-radius: var(--rounded);
